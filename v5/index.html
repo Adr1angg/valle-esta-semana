@@ -24,6 +24,7 @@
   --lima:oklch(86% .155 122);
   --agua:oklch(74% .078 178);
   --musgo:oklch(63% .085 152);
+  --khaki:oklch(80% .08 104);
   --acc:oklch(63% .175 44);            /* el único que grita */
   --acc-ink:oklch(99% .01 60);
 
@@ -40,7 +41,7 @@
   --ground:oklch(22% .038 168);--sunk:oklch(18.5% .036 170);--card:oklch(26% .04 165);--lift:oklch(29% .042 163);
   --ink:oklch(94% .03 130);--mid:oklch(76% .036 140);--soft:oklch(60% .034 145);
   --line:oklch(34% .04 165);--hair:oklch(30% .036 166);
-  --olive:oklch(72% .09 130);--lima:oklch(84% .15 122);--agua:oklch(76% .08 180);--musgo:oklch(72% .09 152);
+  --olive:oklch(72% .09 130);--lima:oklch(84% .15 122);--agua:oklch(76% .08 180);--musgo:oklch(72% .09 152);--khaki:oklch(78% .085 104);
   --acc:oklch(70% .16 48);--acc-ink:oklch(18% .03 60);
   --sh:0 1px 0 oklch(100% 0 0/.07) inset, 0 24px 40px -26px oklch(0% 0 0/.7);
   --sh2:0 1px 0 oklch(100% 0 0/.07) inset, 0 36px 58px -30px oklch(0% 0 0/.75);
@@ -362,7 +363,7 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
 var D=window.VS,C=D.cats,R=document.documentElement,$=function(s,r){return (r||document).querySelector(s)};
 /* cada categoría toma un lugar dentro de la familia verde */
 var KC={noche:"var(--acc)",musica:"var(--agua)",bienestar:"var(--musgo)",
-        mercado:"var(--lima)",cultura:"var(--olive)",aire:"var(--agua)"};
+        mercado:"var(--lima)",cultura:"var(--khaki)",aire:"var(--agua)"};
 var GL={noche:'<path d="M5 4h14l-6 7v7l-2 2v-9L5 4Z"/>',
   musica:'<path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/>',
   bienestar:'<path d="M12 4c-3 2.6-5 5-5 7.5a5 5 0 0 0 10 0C17 9 15 6.6 12 4Z"/><path d="M12 21v-4"/>',
@@ -412,14 +413,11 @@ D.days.forEach(function(d){
 
 /* reparto de tamaños: destacado ocupa todo, el resto se acomoda de a pares */
 function spans(n,leadIdx){
-  var out=[],rest=[];
+  var out=new Array(n), rest=[];
   for(var i=0;i<n;i++){ if(i===leadIdx) out[i]="full"; else rest.push(i); }
-  for(var j=0;j<rest.length;j++){
-    var left=rest.length-j;
-    if(left===1) out[rest[j]]="full";
-    else if(left===3){ out[rest[j]]="two"; }
-    else out[rest[j]]="";
-  }
+  /* si sobran nones, el primero que no es destacado tambien va completo */
+  if(rest.length%2===1 && rest.length>0){ out[rest[0]]="full"; rest.shift(); }
+  rest.forEach(function(i){ out[i]=""; });
   return out;
 }
 function render(date){
@@ -455,17 +453,20 @@ pick(sel);
 (function(){
   var g=$("#rej"),h="",wk={}; D.days.forEach(function(d){wk[d.date]=1});
   ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(function(x){h+='<div class="h">'+x+'</div>'});
-  var y=2026,mo=7,first=new Date(y,mo,1),off=(first.getDay()+6)%7,dim=new Date(y,mo+1,0).getDate();
-  for(var i=0;i<off;i++) h+='<div></div>';
-  for(var d=1;d<=dim;d++){
-    var ds=y+"-"+String(mo+1).padStart(2,"0")+"-"+String(d).padStart(2,"0");
+  var y=2026,mo=7,dim=new Date(y,mo+1,0).getDate();
+  function lunes(d){var x=new Date(d);x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
+  var ini=lunes(new Date(D.week.start+"T12:00:00"));
+  ini.setDate(ini.getDate()-7);                      /* una semana antes */
+  for(var k=0;k<3*7;k++){                            /* tres semanas: antes, esta, despues */
+    var cur=new Date(ini); cur.setDate(ini.getDate()+k);
+    var ds=cur.getFullYear()+"-"+String(cur.getMonth()+1).padStart(2,"0")+"-"+String(cur.getDate()).padStart(2,"0");
     var ev=D.events.filter(function(e){return e.date===ds});
     var cls="cd"+(ds===HOY?" hoy":"")+(ds<HOY?" pas":"")+(ds===sel?" sel":"");
-    var body='<span class="n">'+d+'</span>';
+    var body='<span class="n">'+cur.getDate()+'</span>';
     ev.slice(0,2).forEach(function(e){body+='<span class="bq" style="--kc:'+KC[e.cat]+'">'+E(e.title)+'</span>'});
     if(ev.length>2) body+='<span class="mas">+'+(ev.length-2)+'</span>';
     h+= wk[ds] ? '<button type="button" class="'+cls+'" data-date="'+ds+'">'+body+'</button>'
-               : '<div class="cd" style="opacity:.34;cursor:default">'+body+'</div>';
+               : '<div class="cd" style="opacity:.36;cursor:default">'+body+'</div>';
   }
   g.innerHTML=h;
   [].forEach.call(g.querySelectorAll("button.cd"),function(b){
