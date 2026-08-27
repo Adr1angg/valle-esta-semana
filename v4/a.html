@@ -475,7 +475,7 @@ $("#cdxp").textContent=D.cdmx.length+" sets que sí justifican manejar dos horas
 /* ── motion: reveals + hero parallax ── */
 if("IntersectionObserver" in window){
   var io=new IntersectionObserver(function(es){es.forEach(function(e){
-    if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.12});
+    if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:0,rootMargin:'0px 0px -8% 0px'});
   [].forEach.call(document.querySelectorAll(".reveal"),function(el){io.observe(el)});
 }else{[].forEach.call(document.querySelectorAll(".reveal"),function(el){el.classList.add("in")})}
 var hero=document.querySelector(".hero .w"), raf=0;

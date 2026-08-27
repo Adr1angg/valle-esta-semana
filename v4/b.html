@@ -63,12 +63,12 @@ header,main,footer,.topbar{position:relative;z-index:2}
   font-variation-settings:'opsz' 144,'wght' 700,'SOFT' 90,'WONK' 1;
   font-size:clamp(52px,13vw,152px);line-height:.82;letter-spacing:-.04em;position:relative;z-index:2}
 .hero h1 em{font-style:italic;font-variation-settings:'opsz' 144,'wght' 400,'SOFT' 100,'WONK' 1;color:var(--ink1)}
-/* riso mis-registration ghost */
-.hero h1::before{content:attr(data-t);position:absolute;inset:0;z-index:-1;color:var(--ink2);opacity:.42;
-  transform:translate(5px,4px);mix-blend-mode:multiply;pointer-events:none;
-  animation:reg 7s var(--ease) infinite alternate}
-@media (prefers-color-scheme:dark){.hero h1::before{mix-blend-mode:screen;opacity:.34}}
-@keyframes reg{0%{transform:translate(5px,4px)}100%{transform:translate(-3px,6px)}}
+/* riso mis-registration: offset ink ghost that follows the real glyphs */
+.hero h1{text-shadow:5px 4px 0 rgba(31,95,139,.34), -2px -2px 0 rgba(226,71,46,.14);
+  animation:reg 8s var(--ease) infinite alternate}
+@media (prefers-color-scheme:dark){.hero h1{text-shadow:5px 4px 0 rgba(102,174,222,.26),-2px -2px 0 rgba(255,116,84,.14)}}
+@keyframes reg{0%{text-shadow:5px 4px 0 rgba(31,95,139,.34),-2px -2px 0 rgba(226,71,46,.14)}
+  100%{text-shadow:-3px 6px 0 rgba(31,95,139,.30),3px -3px 0 rgba(226,71,46,.16)}}
 .subline{margin:clamp(20px,3vw,30px) 0 0;max-width:36ch;font-size:clamp(17px,2vw,21px);color:var(--mid)}
 .dateline{display:inline-block;margin-top:22px;padding:8px 16px;background:var(--ink3);color:#1d1a17;
   font-weight:600;font-size:13px;letter-spacing:.05em;transform:rotate(-.8deg);
@@ -250,7 +250,7 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14.5px}
       stroke="var(--ink3)" stroke-width="2.4" opacity=".85"/>
     <path class="dash" d="M20 278c60 10 120 10 180 0s140-12 200 2" stroke="var(--ink2)" stroke-width="2" opacity=".4"/>
   </svg>
-  <h1 data-t="Valle Esta Semana">Valle <em>Esta</em> Semana</h1>
+  <h1>Valle <em>Esta</em> Semana</h1>
   <p class="subline">Todo lo que pasa junto al lago, impreso una vez por semana.</p>
   <div><span class="dateline" id="wk"></span></div>
   <p class="upd mono">Actualizado <span id="upd"></span> · próxima edición <span id="nx"></span></p>
@@ -431,7 +431,7 @@ $("#cards").innerHTML=D.always.map(function(a,i){
 }).join("");
 
 if("IntersectionObserver" in window){
-  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:.1});
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}})},{threshold:0,rootMargin:'0px 0px -8% 0px'});
   [].forEach.call(document.querySelectorAll(".reveal"),function(e){io.observe(e)});
 }else{[].forEach.call(document.querySelectorAll(".reveal"),function(e){e.classList.add("in")})}
 
