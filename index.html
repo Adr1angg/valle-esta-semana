@@ -835,7 +835,7 @@ if("IntersectionObserver" in window){
   };
 
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var pal = {}, prog01 = 0, target01 = 0, t0 = performance.now(), tPrev = t0;
+  var pal = {}, prog01 = 0, target01 = 0, t0 = performance.now(), tPrev = t0, cuadros = 0;
 
   function esNoche() {
     var t = document.documentElement.getAttribute('data-t');
@@ -883,6 +883,7 @@ if("IntersectionObserver" in window){
   var L = { az: cur.az, el: cur.el, warm: cur.warm.slice(), sky: cur.sky.slice(), night: cur.night };
 
   function draw(now) {
+    cuadros++;
     var t = (now - t0) / 1000, tgt = SOL[tod()];
     /* suavizado por tiempo, no por cuadro: en un equipo lento la
        transición tarda lo mismo en segundos que en uno rápido */
@@ -984,7 +985,11 @@ if("IntersectionObserver" in window){
     for (var i = 0; i < 4; i++) if (v[i] !== prevS[i]) { prevS[i] = v[i]; host.style.setProperty(nm[i], v[i]); }
   }
 
-  /* ── bucle a 30 fps, en pausa si la pestaña no se ve ─────────── */
+  /* ── bucle a 30 fps, en pausa si la pestaña no se ve ───────────
+     Ojo: una página precargada o abierta en segundo plano arranca con
+     document.hidden = true y el rAF congelado. Por eso el primer cuadro
+     se dibuja a mano y se vuelve a dibujar al hacerse visible: si no,
+     el lienzo se queda en blanco hasta que el usuario haga algo. */
   var last = 0;
   function loop(now) {
     requestAnimationFrame(loop);
@@ -999,7 +1004,11 @@ if("IntersectionObserver" in window){
   }
 
   resize(); onScroll();
-  addEventListener('resize', resize, { passive: true });
+  draw(performance.now());                    /* primer cuadro, pase lo que pase */
+  addEventListener('visibilitychange', function () {
+    if (!document.hidden) { tPrev = performance.now(); draw(tPrev); }
+  });
+  addEventListener('resize', function () { resize(); draw(performance.now()); }, { passive: true });
   addEventListener('scroll', onScroll, { passive: true });
   new MutationObserver(readPal).observe(document.documentElement, { attributes: true, attributeFilter: ['data-t'] });
   try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readPal); } catch (e) {}
@@ -1016,7 +1025,8 @@ if("IntersectionObserver" in window){
   };
   window.VALLE_STATS = {
     instancias: N, columnas: G * G, casas: nCasas, luces: nLuz, arboles: nArb, luzInicio: luzInicio,
-    triangulos: N * (I.length / 3), gpuBytes: insArr.byteLength + exArr.byteLength
+    triangulos: N * (I.length / 3), gpuBytes: insArr.byteLength + exArr.byteLength,
+    cuadros: function () { return cuadros; }
   };
 })();
 </script>
