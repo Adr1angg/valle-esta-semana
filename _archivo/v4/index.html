@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tres direcciones · Valle Esta Semana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#0b0c12;--ink:#f0eefa;--mid:rgba(240,238,250,.66);--soft:rgba(240,238,250,.4);
+  --edge:rgba(255,255,255,.12);--panel:rgba(255,255,255,.05);--ease:cubic-bezier(.2,.9,.25,1)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Manrope,system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;line-height:1.55}
+a{color:inherit}
+.w{max-width:1080px;margin:0 auto;padding:clamp(40px,7vw,88px) clamp(20px,4vw,40px) 80px}
+h1{margin:0;font-family:"Instrument Serif",Georgia,serif;font-weight:400;font-size:clamp(40px,8vw,84px);
+  line-height:.92;letter-spacing:-.03em}
+h1 em{font-style:italic;color:#ff5f9e}
+p.l{margin:20px 0 0;max-width:52ch;color:var(--mid);font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:44px}
+.card{display:block;text-decoration:none;border:1px solid var(--edge);border-radius:20px;padding:26px;
+  background:var(--panel);position:relative;overflow:hidden;isolation:isolate;
+  transition:transform .45s var(--ease),border-color .45s,background .45s}
+.card::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.6;
+  background:radial-gradient(120% 130% at 0% 0%,var(--k) 0,transparent 60%)}
+.card:hover{transform:translateY(-5px);border-color:var(--kb);background:rgba(255,255,255,.08)}
+.card .n{font-family:"Instrument Serif",serif;font-size:15px;letter-spacing:.2em;text-transform:uppercase;color:var(--soft)}
+.card h2{margin:10px 0 0;font-family:"Instrument Serif",serif;font-weight:400;font-size:36px;line-height:1;letter-spacing:-.02em}
+.card p{margin:12px 0 0;color:var(--mid);font-size:14.5px}
+.card ul{margin:16px 0 0;padding:0;list-style:none;font-size:13px;color:var(--soft)}
+.card li{padding:5px 0;border-top:1px solid var(--edge)}
+.card .arw{display:inline-block;margin-top:18px;font-size:13px;color:var(--ink)}
+.note{margin-top:44px;padding:22px;border:1px dashed var(--edge);border-radius:16px;color:var(--mid);font-size:14.5px}
+.note b{color:var(--ink)}
+</style>
+</head>
+<body>
+<div class="w">
+  <h1>Tres <em>direcciones</em></h1>
+  <p class="l">Los mismos eventos, el mismo contenido, tres maneras muy distintas de verse.
+     Ábrelas en el teléfono y en la compu — cambian bastante. CDMX ya vive en su propia página en las tres.</p>
+
+  <div class="grid">
+    <a class="card" href="a.html" style="--k:rgba(255,46,126,.34);--kb:rgba(255,46,126,.7)">
+      <span class="n">A</span>
+      <h2>Cabina</h2>
+      <p>Noche de club. Fondo de aurora en movimiento, vidrio, grano y scanlines. Color saturado que sí jala.</p>
+      <ul>
+        <li>Calendario tipo Google: rejilla de horas × 7 días</li>
+        <li>Barra "ahora mismo" fija arriba</li>
+        <li>Riel de días con pastilla deslizante</li>
+      </ul>
+      <span class="arw">Ver A →</span>
+    </a>
+
+    <a class="card" href="b.html" style="--k:rgba(240,162,2,.3);--kb:rgba(226,71,46,.7)">
+      <span class="n">B</span>
+      <h2>Papel</h2>
+      <p>Risografía impresa. Papel con fibra, medios tonos, tinta fuera de registro, sombras duras y stickers.</p>
+      <ul>
+        <li>Widget de mes + widget de agenda</li>
+        <li>Pestañas de folder por día</li>
+        <li>Vectores dibujados a mano</li>
+      </ul>
+      <span class="arw">Ver B →</span>
+    </a>
+
+    <a class="card" href="c.html" style="--k:rgba(91,140,255,.32);--kb:rgba(91,140,255,.7)">
+      <span class="n">C</span>
+      <h2>Estación</h2>
+      <p>Cielo vivo. Todo son widgets de vidrio sobre un degradado que cambia con la hora real del día.</p>
+      <ul>
+        <li>Calendario de línea de tiempo horizontal</li>
+        <li>Widget "estado" con cuenta regresiva</li>
+        <li>Curvas topográficas con parallax</li>
+      </ul>
+      <span class="arw">Ver C →</span>
+    </a>
+  </div>
+
+  <p class="note"><b>Las tres ya traen:</b> abre en el día de hoy, switcher de días real, CDMX en
+    <a href="cdmx.html">su propia página</a>, calendario tipo widget, capas y textura, y bastante movimiento.
+    Dime cuál te late — o qué robarle a cada una — y esa se vuelve el sitio.</p>
+</div>
+</body>
+</html>
