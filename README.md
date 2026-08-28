@@ -80,10 +80,10 @@ Reglas que la plantilla da por hechas:
 - **Un solo `lead`.** Es el widget grande y oscuro con la cinta coral.
 - Un día sin eventos se muestra solo (tile apagado + "Nada programado"). No hay que hacer nada.
 - CDMX **nunca** va en `events` — va en `cdmx` y sale en su propia página.
-- Los `always` (hoy 18, agrupados por categoria) se quedan salvo que algo haya cambiado de
-  verdad. Sostienen las semanas flojas y son el catalogo de lo que siempre esta abierto:
-  aire libre, mercados, cultura, bienestar, noche. Se pueden agregar mas — la rejilla es
-  `auto-fill`, no hay numero fijo.
+- Los `always` (hoy 18, agrupados por categoría) se quedan salvo que algo haya cambiado de
+  verdad. Sostienen las semanas flojas y son el catálogo de lo que siempre está abierto:
+  aire libre, mercados, cultura, bienestar, noche. Se pueden agregar más — la rejilla es
+  `auto-fill`, no hay número fijo.
 
 ---
 
