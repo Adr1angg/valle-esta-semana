@@ -100,3 +100,31 @@ altura de cámara, `dist`, `offX`/`offY`, `dim` presencia, `azScroll`).
 
 También: el suavizado de las transiciones va **por tiempo, no por cuadro**, para
 que en un teléfono lento el amanecer tarde lo mismo.
+
+---
+
+## Añadidos del 28 ago (tarde)
+
+- **El lago ya no tiene puntitos.** Usaba `sin(x)*sin(z)` con un brillo `pow(w,5)`:
+  eso pintaba una retícula regular de destellos. Ahora son dos ondas diagonales de
+  baja frecuencia que se suman, con poca amplitud y sin destello.
+- **Los pines se agrupan por coordenada.** Como varios lugares todavía apuntan a su
+  zona y no a su puerta, tres etiquetas caían en el mismo punto. Ahora sale una sola
+  con `+N`. La solución de fondo sigue siendo poner el punto exacto en `LUGARES`.
+- **CDMX** tenía el nombre viejo, y su liga de regreso era `href="./"`. Publicado eso
+  resuelve a la portada, pero abriendo el archivo desde el disco resuelve a la
+  carpeta y el navegador enseña el índice de archivos. Ahora apunta a `index.html`.
+
+### Lugares que faltan afinar
+
+Verificados en OSM: `Centro`, `Avándaro`, `Del Salitre 104`, `El Santuario, San Gaspar`.
+Todavía apuntan a su zona, no a su puerta: `El Cuenco`, `Fünk`, `YuYu`,
+`Casa Sadhana`, `Chamma Ling`, `Espacio Odisea`. Se arreglan uno por uno en
+`LUGARES`, cambiando el nombre de zona por `[lat, lon]`.
+
+### Ojo con el punto 5 del bloque "LEE ESTO PRIMERO" del README
+
+Dice que ante un push rechazado no se intente rebase, sino clonar `main` de nuevo y
+publicar desde el clon limpio copiando encima `data.js`. **Eso descarta cualquier
+commit que no venga de la tarea del jueves.** En esta sesión habría borrado tres.
+Conviene cambiarlo por `git pull --rebase` y volver a publicar.
