@@ -537,7 +537,8 @@ var ZONAS={centro:[19.19367,-100.13174],avandaro:[19.16366,-100.12938],
   santamaria:[19.18628,-100.12825],salitre:[19.18971,-100.12993],
   pena:[19.20285,-100.14416],rincon:[19.20999,-100.11978],sangaspar:[19.23770,-100.15292]};
 var LUGARES={"Centro":"centro","Avándaro":"avandaro","Del Salitre 104":"salitre",
-  "El Cuenco":"centro","Fünk":"centro","YuYu":"centro",
+  "El Santuario, San Gaspar":"sangaspar",
+  "El Cuenco":"centro","Fünk":"centro","YuYu":"centro","Espacio Odisea":"centro",
   "Casa Sadhana":"avandaro","Chamma Ling":"centro"};
 if(D.lugares) for(var _k in D.lugares) LUGARES[_k]=D.lugares[_k];
 function punto(v){var z=LUGARES[v];
@@ -820,9 +821,12 @@ if("IntersectionObserver" in window){
     '    base = mix(cTree, cTree*0.72, 1.0 - vLocal);',
     '    if (!topFace) base *= 0.88;',
     '  } else if (vKind > 0.5 && vKind < 1.5 && topFace) {',    /* agua */
-    '    float w = sin(vW.x*52.0 + uT*0.8) * sin(vW.z*41.0 - uT*0.55);',
-    '    base = cWater * (1.0 + 0.13*w);',
-    '    gloss = pow(max(0.0, w), 5.0) * 0.30;',
+    /* Dos ondas diagonales de baja frecuencia que se suman. Antes era
+       sin(x)*sin(z) con un brillo pow(w,5): eso hacia una reticula de
+       puntitos sobre el lago. Esto es oleaje suave, sin destellos. */
+    '    float w = sin(vW.x*11.0 + vW.z*7.5 + uT*0.30)',
+    '          + sin(vW.x*6.0 - vW.z*9.5 - uT*0.19);',
+    '    base = cWater * (1.0 + 0.028*w);',
     '  } else if (vKind > 4.5 && topFace) {',                   /* calle */
     '    base = cCalle;',
     '  } else {',                                              /* terreno */
@@ -1195,11 +1199,20 @@ if("IntersectionObserver" in window){
   window.VALLE_FOCO = function (pts) {
     limpiaPines();
     if (!pts || !pts.length) { focoTgt = 0; foco = null; return; }
+    /* Varios lugares pueden caer en el mismo punto (los que todavia
+       apuntan a su zona). Se agrupan para no encimar las etiquetas. */
+    var grupos = {}, orden = [];
+    pts.forEach(function (p) {
+      var k = p.lat.toFixed(4) + ',' + p.lon.toFixed(4);
+      if (!grupos[k]) { grupos[k] = { lat: p.lat, lon: p.lon, nombres: [] }; orden.push(k); }
+      if (grupos[k].nombres.indexOf(p.label) < 0) grupos[k].nombres.push(p.label);
+    });
     var sx = 0, sz = 0, sy = 0;
-    pts.slice(0, 6).forEach(function (p) {
-      var w = mundo(p.lat, p.lon);
+    orden.slice(0, 6).forEach(function (k) {
+      var g = grupos[k], w = mundo(g.lat, g.lon);
       sx += w.x; sz += w.z; sy += w.y;
-      pines.push({ x: w.x, y: w.y, z: w.z, el: creaPin(p.label) });
+      var txt = g.nombres[0] + (g.nombres.length > 1 ? '  +' + (g.nombres.length - 1) : '');
+      pines.push({ x: w.x, y: w.y, z: w.z, el: creaPin(txt) });
     });
     var n = pines.length;
     foco = { x: sx / n, z: sz / n, y: sy / n };
