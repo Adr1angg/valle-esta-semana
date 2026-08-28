@@ -1,5 +1,24 @@
 # Valle Esta Semana
 
+> ## LEE ESTO PRIMERO — actualizado 28 ago 2026
+>
+> Si algo del prompt de la tarea del jueves contradice esta sección, **gana esta sección**.
+>
+> 1. **Esto no es un sitio de DJs.** El alcance son las seis categorías: noche, música en
+>    vivo, mercado, cultura, bienestar y aire libre. Museos, la casa de cultura, la
+>    biblioteca comunitaria, temazcales, mercados de a diario, clubes de vela y de bici
+>    cuentan igual que los bares.
+> 2. **`sources.md` es la lista maestra. Léelo completo cada corrida.** Está organizado por
+>    categoría, con handles, horarios, y una sección de callejones sin salida.
+> 3. **`always` ya no son seis.** Hoy son 18, agrupados por categoría. La rejilla es
+>    `auto-fill`: agrega o quita libremente.
+> 4. **La API de Instagram `/api/v1/users/web_profile_info/` está muerta** (400, schema
+>    borrado). La técnica que sí funciona — leer el `alt` de las miniaturas, que transcribe
+>    el texto del volante — está documentada arriba de todo en `sources.md`.
+> 5. **Si el push se rechaza con "fetch first":** no intentes rebase. Clona `main` de nuevo,
+>    copia encima tu `data.js`, commitea y publica desde el clon limpio.
+
+
 Sitio público de una sola página con lo que pasa cada semana en Valle de Bravo.
 Vive en **https://valle-esta-semana.pages.dev** (Cloudflare Pages conectado a
 `Adr1angg/valle-esta-semana`). **Se publica haciendo push a `main`.** Cloudflare
