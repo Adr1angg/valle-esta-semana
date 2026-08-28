@@ -1,4 +1,4 @@
-/* Valle Esta Semana — shared data for all three design directions */
+/* Valle Esta Semana — contenido de la semana. Lo unico que cambia cada jueves. */
 window.VS = {
   week: {
     label: "24 – 30 agosto 2026",

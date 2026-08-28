@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Todo lo que pasa en Valle de Bravo esta semana — noches, mercados, agua y montaña. Se actualiza los jueves.">
+<meta name="theme-color" content="#0f1312" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f7f6f3" media="(prefers-color-scheme: light)">
+<link rel="canonical" href="https://valle-esta-semana.pages.dev/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Valle Esta Semana">
+<meta property="og:title" content="Valle Esta Semana">
+<meta property="og:description" content="Todo lo que pasa en Valle de Bravo esta semana — noches, mercados, agua y montaña. Se actualiza los jueves.">
+<meta property="og:url" content="https://valle-esta-semana.pages.dev/">
+<meta property="og:locale" content="es_MX">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Valle Esta Semana">
+<meta name="twitter:description" content="Todo lo que pasa en Valle de Bravo esta semana — noches, mercados, agua y montaña. Se actualiza los jueves.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23163f4a'/%3E%3Cpath d='M8 74 L30 44 L44 62 L62 30 L80 58 L92 44 L92 82 L8 82 Z' fill='%23e8ddc8'/%3E%3Ccircle cx='72' cy='22' r='9' fill='%23f2c88a'/%3E%3C/svg%3E">
+<style>*{margin:0}</style>
+<title>Valle Esta Semana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Karla:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+/* ══════════════ tokens ══════════════ */
+:root{
+  --paper:oklch(97% .007 190); --sunk:oklch(94.5% .009 190); --raise:oklch(100% 0 0);
+  --ink:oklch(22% .015 220); --mid:oklch(46% .015 215); --soft:oklch(62% .012 210);
+  --rule:oklch(88% .011 200); --hair:oklch(92% .008 200);
+  --accent:oklch(48% .11 215);
+  --h1:250; --h2:200; --h3:230; --sky:oklch(70% .085 230);
+  --orb:oklch(97% .05 95); --glow:oklch(95% .08 95/.4);
+  --r1:oklch(56% .10 240); --r2:oklch(44% .085 232); --r3:oklch(32% .065 226); --wtr:oklch(38% .06 232);
+  --grain:.11;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:oklch(16.5% .014 220); --sunk:oklch(19.5% .015 220); --raise:oklch(21% .015 220);
+  --ink:oklch(93% .008 200); --mid:oklch(72% .012 205); --soft:oklch(58% .012 205);
+  --rule:oklch(27% .014 210); --hair:oklch(23% .012 210); --accent:oklch(72% .10 215);
+}}
+:root[data-theme="dark"]{
+  --paper:oklch(16.5% .014 220); --sunk:oklch(19.5% .015 220); --raise:oklch(21% .015 220);
+  --ink:oklch(93% .008 200); --mid:oklch(72% .012 205); --soft:oklch(58% .012 205);
+  --rule:oklch(27% .014 210); --hair:oklch(23% .012 210); --accent:oklch(72% .10 215);
+}
+/* time of day — shifts the sky and the accent hue only */
+:root[data-time="dawn"]{--h1:305;--h2:20;--h3:340;--sky:oklch(60% .10 330);--accent:oklch(48% .12 355);
+  --orb:oklch(93% .07 50);--glow:oklch(88% .10 40/.4);
+  --r1:oklch(54% .10 335);--r2:oklch(41% .085 325);--r3:oklch(30% .065 315);--wtr:oklch(35% .06 320)}
+:root[data-time="day"]{--h1:250;--h2:70;--h3:200;--sky:oklch(72% .085 230);--accent:oklch(46% .11 218);
+  --orb:oklch(98% .04 95);--glow:oklch(96% .07 95/.42);
+  --r1:oklch(58% .09 232);--r2:oklch(45% .08 226);--r3:oklch(33% .06 222);--wtr:oklch(39% .055 228)}
+:root[data-time="dusk"]{--h1:300;--h2:50;--h3:25;--sky:oklch(57% .12 40);--accent:oklch(49% .12 45);
+  --orb:oklch(90% .10 68);--glow:oklch(84% .13 55/.42);
+  --r1:oklch(49% .10 25);--r2:oklch(36% .08 355);--r3:oklch(26% .06 335);--wtr:oklch(31% .055 345)}
+:root[data-time="night"]{--h1:265;--h2:235;--h3:290;--sky:oklch(23% .065 265);--accent:oklch(58% .10 275);
+  --orb:oklch(94% .02 270);--glow:oklch(88% .04 270/.3);
+  --r1:oklch(33% .07 268);--r2:oklch(25% .06 265);--r3:oklch(18% .05 262);--wtr:oklch(21% .05 265)}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"])[data-time="dawn"]{--accent:oklch(74% .10 355)}
+  :root:not([data-theme="light"])[data-time="day"]{--accent:oklch(72% .10 218)}
+  :root:not([data-theme="light"])[data-time="dusk"]{--accent:oklch(75% .11 55)}
+  :root:not([data-theme="light"])[data-time="night"]{--accent:oklch(72% .10 278)}
+}
+:root[data-theme="dark"][data-time="dawn"]{--accent:oklch(74% .10 355)}
+:root[data-theme="dark"][data-time="day"]{--accent:oklch(72% .10 218)}
+:root[data-theme="dark"][data-time="dusk"]{--accent:oklch(75% .11 55)}
+:root[data-theme="dark"][data-time="night"]{--accent:oklch(72% .10 278)}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--paper);color:var(--ink);overflow-x:clip;
+  font-family:Karla,"Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.6;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums}
+.w{max-width:1080px;margin:0 auto;padding:0 clamp(20px,5vw,48px)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-variant-numeric:tabular-nums}
+.tag{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--soft)}
+a{color:var(--accent)}
+.star{color:var(--accent);font-style:normal}
+
+/* one fixed grain layer */
+.grain{position:fixed;inset:0;z-index:9999;pointer-events:none;opacity:var(--grain);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+/* ══════════════ 1 · sky ══════════════ */
+.sky{position:relative;overflow:clip;isolation:isolate;min-height:min(88vh,780px);display:flex;flex-direction:column;
+  background:
+    radial-gradient(58% 52% at 16% 20%, oklch(72% .15 var(--h1)/.68) 0, transparent 62%),
+    radial-gradient(52% 48% at 86% 14%, oklch(78% .12 var(--h2)/.56) 0, transparent 58%),
+    radial-gradient(68% 58% at 60% 84%, oklch(66% .13 var(--h3)/.52) 0, transparent 66%),
+    var(--sky);
+  background-blend-mode:screen,screen,normal,normal;transition:background 1.6s ease}
+.sky::after{content:"";position:absolute;inset:0 0 40% 0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,oklch(14% .03 260/.34) 0%,oklch(14% .03 260/.12) 60%,transparent 100%)}
+.orb{position:absolute;z-index:1;width:132px;height:132px;border-radius:50%;background:var(--orb);
+  left:80%;top:20%;transform:translate(-50%,-50%);box-shadow:0 0 80px 38px var(--glow);transition:all 1.6s ease}
+:root[data-time="dawn"] .orb{left:78%;top:62%}
+:root[data-time="dusk"] .orb{left:74%;top:60%}
+:root[data-time="night"] .orb{left:83%;top:17%}
+.ridges{position:absolute;z-index:2;left:0;right:0;bottom:0;width:100%;height:230px;display:block}
+.ridges path,.ridges rect{transition:fill 1.6s ease}
+.sky-in{position:relative;z-index:3;margin:auto 0;padding:clamp(56px,9vw,104px) 0 clamp(150px,20vw,210px);width:100%}
+.sky-in .tag{color:oklch(100% 0 0/.82);display:block;text-shadow:0 1px 10px oklch(14% 0 0/.4)}
+h1{margin:.22em 0 0;color:#fff;font-family:Fraunces,Georgia,serif;
+  font-variation-settings:'opsz' 144,'wght' 620,'SOFT' 60,'WONK' 1;
+  font-size:clamp(52px,11.5vw,124px);line-height:.9;letter-spacing:-.035em;
+  text-wrap:balance;text-shadow:0 2px 34px oklch(14% 0 0/.26)}
+.lede{margin:clamp(22px,3.5vw,34px) 0 0;max-width:30ch;color:oklch(100% 0 0/.94);
+  font-size:clamp(18px,2.3vw,23px);line-height:1.45;text-shadow:0 1px 14px oklch(14% 0 0/.34)}
+.stamp{margin:clamp(26px,4vw,40px) 0 0;color:oklch(100% 0 0/.86);font-size:12px;letter-spacing:.1em;
+  text-transform:uppercase;text-shadow:0 1px 10px oklch(14% 0 0/.42);line-height:2}
+.stamp b{font-weight:500;color:#fff}
+
+/* ══════════════ zones ══════════════ */
+.zone{padding:clamp(64px,10vw,132px) 0;position:relative}
+.zone.sunken{background:var(--sunk)}
+.zhead{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;
+  border-bottom:1px solid var(--ink);padding-bottom:14px;margin-bottom:clamp(34px,5vw,58px)}
+.zhead h2{margin:0;font-family:Fraunces,Georgia,serif;font-size:clamp(28px,4.4vw,44px);line-height:1;
+  font-variation-settings:'opsz' 90,'wght' 560,'SOFT' 55,'WONK' 1;letter-spacing:-.022em}
+.zhead .tag{margin-left:auto}
+
+/* ── day heading ── */
+.day{margin-top:clamp(48px,7vw,86px)}
+.day:first-of-type{margin-top:0}
+.dh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px;scroll-margin-top:24px}
+.dh h3{margin:0;font-family:Fraunces,Georgia,serif;
+  font-variation-settings:'opsz' 120,'wght' 500,'SOFT' 70,'WONK' 1;
+  font-size:clamp(40px,7.6vw,86px);line-height:.92;letter-spacing:-.035em;color:var(--ink)}
+.dh .num{font-family:"IBM Plex Mono",monospace;font-size:13px;letter-spacing:.14em;color:var(--soft);text-transform:uppercase}
+.dh .now{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--paper);background:var(--accent);padding:4px 10px;border-radius:2px}
+.day.past .dh h3,.day.past .ev{opacity:.44}
+
+/* ── entry ── */
+.ev{display:grid;grid-template-columns:7.5rem 1fr;gap:0 clamp(20px,3vw,40px);
+  padding:clamp(26px,3.6vw,40px) 0;border-top:1px solid var(--hair);scroll-margin-top:28px}
+.day .ev:first-of-type{border-top:1px solid var(--ink)}
+.ev:target{background:linear-gradient(90deg,oklch(from var(--accent) l c h/.09),transparent 60%)}
+.when{padding-top:.5em}
+.when .t{display:block;font-family:"IBM Plex Mono",monospace;font-size:15px;color:var(--ink);letter-spacing:-.01em}
+.when .rep{display:block;font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--soft);margin-top:5px}
+.ev h4{margin:0;font-family:Fraunces,Georgia,serif;
+  font-variation-settings:'opsz' 48,'wght' 480,'SOFT' 40,'WONK' 0;
+  font-size:clamp(24px,3.5vw,34px);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+.ev h4 a{color:inherit;text-decoration:none;box-shadow:inset 0 -1px 0 0 var(--rule)}
+.ev h4 a:hover{box-shadow:inset 0 -2px 0 0 var(--accent);color:var(--accent)}
+.ev p{margin:.6em 0 0;color:var(--mid);max-width:52ch;font-size:16.5px;text-wrap:pretty}
+.meta{margin-top:1.1em;display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--soft);letter-spacing:.02em}
+.meta svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.meta i{font-style:normal;color:var(--rule)}
+.meta .free{color:var(--accent)}
+.go{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent);text-decoration:none;
+  box-shadow:inset 0 -1px 0 0 currentColor}
+.go:hover{opacity:.6}
+
+/* lead entry */
+.ev.lead{grid-template-columns:1fr;gap:0;padding:clamp(30px,4vw,46px) 0 clamp(34px,4.5vw,52px);position:relative}
+.ev.lead .when{padding:0 0 1em;display:flex;gap:18px;align-items:baseline;flex-wrap:wrap}
+.ev.lead .when .t,.ev.lead .when .rep{display:inline;margin:0}
+.ev.lead h4{font-size:clamp(36px,7vw,72px);line-height:.98;letter-spacing:-.032em;
+  font-variation-settings:'opsz' 144,'wght' 560,'SOFT' 65,'WONK' 1}
+.ev.lead p{font-size:clamp(17px,2.2vw,21px);max-width:44ch;color:var(--ink);opacity:.78}
+.ev.lead::after{content:"";position:absolute;left:0;top:0;width:clamp(48px,8vw,96px);height:2px;background:var(--accent)}
+
+/* ══════════════ 3 · week view ══════════════ */
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;background:var(--rule);
+  border:1px solid var(--rule);border-radius:3px;overflow:clip}
+.wd{background:var(--paper);min-height:190px;padding:14px 12px 16px;display:flex;flex-direction:column;gap:9px}
+
+.wd.is-past .blk{opacity:.42}
+.wd.is-past .dn,.wd.is-past .dow{opacity:.6}
+.wd.is-today{background:oklch(from var(--accent) l c h/.07)}
+.wd header{display:flex;align-items:baseline;justify-content:space-between;gap:6px;
+  border-bottom:1px solid var(--hair);padding-bottom:8px;margin-bottom:2px}
+.wd .dow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
+.wd.is-today .dow{color:var(--accent)}
+.wd .dn{font-family:Fraunces,Georgia,serif;font-size:19px;line-height:1;
+  font-variation-settings:'opsz' 36,'wght' 500,'SOFT' 40,'WONK' 0}
+.blk{display:block;text-decoration:none;color:inherit;border-left:2px solid var(--accent);
+  padding:5px 0 5px 9px;transition:background .15s ease,padding .15s ease}
+.blk:hover{background:oklch(from var(--accent) l c h/.1);padding-left:12px}
+.blk .bt{display:block;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--soft)}
+.blk .bn{display:block;font-size:13.5px;line-height:1.3;margin-top:2px;text-wrap:pretty}
+.blk.soft{border-left-color:var(--rule)}
+.wd .none{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--rule);margin-top:auto}
+
+/* ══════════════ 4 · siempre ══════════════ */
+.always{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:1px;background:var(--rule);
+  border:1px solid var(--rule)}
+.al{background:var(--paper);padding:clamp(20px,2.6vw,28px)}
+.zone.sunken .al{background:var(--sunk)}
+.al .meta{margin-top:0;margin-bottom:.7em}
+.al h4{margin:0;font-family:Fraunces,Georgia,serif;font-size:21px;line-height:1.15;letter-spacing:-.015em;
+  font-variation-settings:'opsz' 36,'wght' 500,'SOFT' 40,'WONK' 0}
+.al p{margin:.5em 0 0;font-size:15px;color:var(--mid);text-wrap:pretty}
+.al .rep{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--soft);display:block;margin-top:.7em}
+
+/* ══════════════ 5 · foot ══════════════ */
+footer{padding:clamp(56px,8vw,96px) 0 clamp(70px,10vw,120px);border-top:1px solid var(--ink)}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(28px,4vw,56px)}
+footer h3{margin:0 0 .6em;font-family:Fraunces,Georgia,serif;font-size:20px;letter-spacing:-.015em;
+  font-variation-settings:'opsz' 36,'wght' 520,'SOFT' 45,'WONK' 0}
+footer p{margin:0 0 1em;color:var(--mid);font-size:15.5px;text-wrap:pretty}
+.share{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.sb{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink);text-decoration:none;cursor:pointer;
+  border:1px solid var(--rule);background:none;padding:9px 15px;border-radius:2px;min-height:40px;
+  display:inline-flex;align-items:center;transition:border-color .15s,color .15s}
+.sb:hover{border-color:var(--accent);color:var(--accent)}
+.fine{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--soft);line-height:2;margin-top:2.5em}
+.fine a{color:var(--soft)}
+
+/* ══════════════ responsive ══════════════ */
+@media (max-width:820px){
+  .week{grid-template-columns:repeat(2,1fr)}
+  .wd{min-height:auto}
+}
+@media (max-width:620px){
+  .sky{min-height:auto}
+  .orb{width:88px;height:88px;top:auto!important;left:74%!important;bottom:118px;transform:translateX(-50%);box-shadow:0 0 52px 24px var(--glow)}
+  .sky::after{inset:0 0 52% 0}
+  .ev{grid-template-columns:1fr}
+  .when{padding:0 0 .8em;display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+  .when .t,.when .rep{display:inline;margin:0}
+  .week{grid-template-columns:1fr}
+  .wd{min-height:auto;padding:13px 14px 15px}
+  .wd.is-empty{display:none}
+}
+@media (prefers-reduced-motion:no-preference){
+  .ev,.al,.wd{animation:up .55s cubic-bezier(.2,.7,.3,1) both;animation-delay:calc(var(--i,0)*45ms)}
+  @keyframes up{from{opacity:0;transform:translateY(14px)}}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ════════ 1 · SKY ════════ -->
+<header class="sky">
+  <div class="orb" aria-hidden="true"></div>
+  <svg class="ridges" viewBox="0 0 1200 230" preserveAspectRatio="none" aria-hidden="true">
+    <path fill="var(--r1)" d="M0 130 L118 82 L212 118 L318 62 L430 114 L534 76 L648 122 L760 80 L876 116 L988 74 L1094 114 L1200 88 L1200 230 L0 230 Z"/>
+    <path fill="var(--r2)" d="M0 162 L96 124 L206 158 L322 108 L438 154 L560 118 L684 164 L800 124 L922 160 L1046 120 L1200 156 L1200 230 L0 230 Z"/>
+    <path fill="var(--r3)" d="M0 190 L140 166 L270 194 L410 162 L548 192 L690 166 L828 198 L968 168 L1104 194 L1200 176 L1200 230 L0 230 Z"/>
+    <rect fill="var(--wtr)" y="206" width="1200" height="24"/>
+  </svg>
+  <div class="sky-in"><div class="w">
+    <span class="tag">Valle de Bravo</span>
+    <h1>Valle Esta&nbsp;Semana</h1>
+    <p class="lede">Todo lo que pasa junto al lago.</p>
+    <p class="stamp mono">
+      <b>24 – 30 agosto 2026</b><br>
+      Actualizado <time datetime="2026-08-27T15:04:00-06:00" id="upd">jue 27 ago, 15:04</time>
+      · Próxima actualización jueves 3 sep
+    </p>
+  </div></div>
+</header>
+
+<!-- ════════ 2 · LA SEMANA ════════ -->
+<section class="zone" id="semana">
+  <div class="w">
+    <div class="zhead">
+      <h2>La semana</h2>
+      <span class="tag" id="count">9 fechas</span>
+    </div>
+
+    <!-- JUEVES -->
+    <div class="day" data-date="2026-08-27">
+      <div class="dh" id="d-thu"><h3>Jueves</h3><span class="num">27 ago</span></div>
+
+      <article class="ev" id="ev-kirtan">
+        <div class="when"><span class="t">18:30</span></div>
+        <div>
+          <h4><a href="https://allevents.in/valle-de-bravo/kirtan-jueves-27-casa-sadhana-valle-de-bravo-con-pablo-narayana-e-invitados/100001998366938307" target="_blank" rel="noopener">Canta en el kirtan de Pablo Narayana</a></h4>
+          <p>Dos horas de canto devocional de llamada y respuesta, con Ana Prana, Durga Stef y Andrés Galindo.</p>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c-3 2.6-5 5-5 7.5a5 5 0 0 0 10 0C17 9 15 6.6 12 4Z"/><path d="M12 21v-4"/></svg>
+            Bienestar <i>·</i> Casa Sadhana <i>·</i> $270 <i>·</i>
+            <a class="go" href="https://allevents.in/valle-de-bravo/kirtan-jueves-27-casa-sadhana-valle-de-bravo-con-pablo-narayana-e-invitados/100001998366938307" target="_blank" rel="noopener">Info ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="ev" id="ev-isis">
+        <div class="when"><span class="t">21:00</span></div>
+        <div>
+          <h4><a href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">Escucha a Isis Bordetas y quédate al jam</a></h4>
+          <p>Un set con Jero Zoé, y después se abre a jam con quien ande por ahí con un instrumento.</p>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+            Música en vivo <i>·</i> El Cuenco <i>·</i>
+            <a class="go" href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">Instagram ↗</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- VIERNES -->
+    <div class="day" data-date="2026-08-28">
+      <div class="dh" id="d-fri"><h3>Viernes</h3><span class="num">28 ago</span></div>
+
+      <article class="ev lead" id="ev-hongosto">
+        <div class="when"><span class="t">19:00</span><span class="rep">Lo del fin</span></div>
+        <div>
+          <h4><a href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">Báilate la Fiesta Hongosto</a></h4>
+          <p>El equipo del Cuenco armando su propia fiesta — y la única noche del pueblo esta semana programada con DJs de principio a fin. Samu, ESGO y Yisus, derecho.</p>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14l-6 7v7l-2 2v-9L5 4Z"/></svg>
+            Noche <i>·</i> El Cuenco <i>·</i> Sin cover anunciado <i>·</i>
+            <a class="go" href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">Instagram ↗</a> <i>·</i>
+            <a class="go" href="https://calendar.google.com/calendar/render?action=TEMPLATE&text=Fiesta%20Hongosto&dates=20260829T010000Z/20260829T060000Z&location=El%20Cuenco%2C%20Valle%20de%20Bravo&ctz=America/Mexico_City" target="_blank" rel="noopener">Agendar ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="ev" id="ev-pangaea">
+        <div class="when"><span class="t">23:00</span><span class="rep">CDMX</span></div>
+        <div>
+          <h4><a href="https://ra.co/events/2497141" target="_blank" rel="noopener">Maneja a CDMX por Pangaea</a></h4>
+          <p>Cofundador de Hessle Audio, quince años metido en UK garage y bass. Lo mejor al alcance este fin, si tienes el sábado para recuperarte.</p>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17h16"/><path d="M6 17V9l3-4h6l3 4v8"/><circle cx="8" cy="19" r="1.6"/><circle cx="16" cy="19" r="1.6"/></svg>
+            Vale el viaje <i>·</i> Fünk, CDMX <i>·</i> $300–600 <i>·</i>
+            <a class="go" href="https://ra.co/events/2497141" target="_blank" rel="noopener">Boletos ↗</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- SÁBADO -->
+    <div class="day" data-date="2026-08-29">
+      <div class="dh" id="d-sat"><h3>Sábado</h3><span class="num">29 ago</span></div>
+
+      <article class="ev" id="ev-el100">
+        <div class="when"><span class="t">11:00–18:00</span><span class="rep">cada sábado</span></div>
+        <div>
+          <h4>Haz el súper en el Mercado El 100</h4>
+          <p>Todo lo que se vende aquí se cultiva o se hace a menos de cien millas. Lácteos, verdura, fruta, pan.</p>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1.5 11h-13L4 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+            Mercado <i>·</i> Del Salitre 104
+          </div>
+        </div>
+      </article>
+
+      <article class="ev" id="ev-akira">
+        <div class="when"><span class="t">19:00</span></div>
+        <div>
+          <h4><a href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">Cierra la semana con Akira + Adris</a></h4>
+          <p>Dos DJs para rematar. El volante no dice género — El Cuenco se mueve entre deep house y soul.</p>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14l-6 7v7l-2 2v-9L5 4Z"/></svg>
+            Noche <i>·</i> El Cuenco <i>·</i>
+            <a class="go" href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">Instagram ↗</a>
+          </div>
+        </div>
+      </article>
+
+      <article class="ev" id="ev-brc">
+        <div class="when"><span class="t">23:00</span><span class="rep">CDMX</span></div>
+        <div>
+          <h4><a href="https://ra.co/events/2496966" target="_blank" rel="noopener">Black Rave Culture en el YuYu</a></h4>
+          <p>Trío de Washington DC en el filo rápido y percusivo entre house y club.</p>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17h16"/><path d="M6 17V9l3-4h6l3 4v8"/><circle cx="8" cy="19" r="1.6"/><circle cx="16" cy="19" r="1.6"/></svg>
+            Vale el viaje <i>·</i> YuYu, CDMX <i>·</i>
+            <a class="go" href="https://ra.co/events/2496966" target="_blank" rel="noopener">Boletos ↗</a>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- DOMINGO -->
+    <div class="day" data-date="2026-08-30">
+      <div class="dh" id="d-sun"><h3>Domingo</h3><span class="num">30 ago</span></div>
+
+      <article class="ev" id="ev-tianguis">
+        <div class="when"><span class="t">Desde temprano</span><span class="rep">cada domingo</span></div>
+        <div>
+          <h4>Piérdete en el domingo de tianguis</h4>
+          <p>Día de plaza. El tianguis llena el centro — fruta, ropa, ferretería y la mejor comida de calle de la semana.</p>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1.5 11h-13L4 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+            Mercado <i>·</i> Centro <i>·</i> <span class="free">Gratis</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="ev" id="ev-medi">
+        <div class="when"><span class="t">12:30</span><span class="rep">cada domingo</span></div>
+        <div>
+          <h4><a href="https://ligmincha.org/center-mexico-valledebravo/" target="_blank" rel="noopener">Medita con los lamas en Chamma Ling</a></h4>
+          <p>Práctica guiada por los lamas residentes, en la tradición bön. El terreno solo ya vale el viaje.</p>
+          <div class="meta">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4c-3 2.6-5 5-5 7.5a5 5 0 0 0 10 0C17 9 15 6.6 12 4Z"/><path d="M12 21v-4"/></svg>
+            Bienestar <i>·</i> Chamma Ling <i>·</i> <span class="free">Gratis</span> <i>·</i>
+            <a class="go" href="https://ligmincha.org/center-mexico-valledebravo/" target="_blank" rel="noopener">Info ↗</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 3 · VISTA DE SEMANA ════════ -->
+<section class="zone sunken" id="calendario">
+  <div class="w">
+    <div class="zhead">
+      <h2>Vista de semana</h2>
+      <span class="tag">Toca un bloque para ir al evento</span>
+    </div>
+    <div class="week">
+      <div class="wd" data-date="2026-08-24">
+        <header><span class="dow">Lun</span><span class="dn">24</span></header>
+        <a class="blk soft" href="#al-avandaro"><span class="bt">Todo el día</span><span class="bn">Tianguis de Avándaro</span></a>
+      </div>
+      <div class="wd is-empty" data-date="2026-08-25">
+        <header><span class="dow">Mar</span><span class="dn">25</span></header>
+        <span class="none">—</span>
+      </div>
+      <div class="wd is-empty" data-date="2026-08-26">
+        <header><span class="dow">Mié</span><span class="dn">26</span></header>
+        <span class="none">—</span>
+      </div>
+      <div class="wd" data-date="2026-08-27">
+        <header><span class="dow">Jue</span><span class="dn">27</span></header>
+        <a class="blk" href="#ev-kirtan"><span class="bt">18:30</span><span class="bn">Kirtan · Casa Sadhana</span></a>
+        <a class="blk" href="#ev-isis"><span class="bt">21:00</span><span class="bn">Isis Bordetas + jam</span></a>
+      </div>
+      <div class="wd" data-date="2026-08-28">
+        <header><span class="dow">Vie</span><span class="dn">28</span></header>
+        <a class="blk" href="#ev-hongosto"><span class="bt">19:00</span><span class="bn">Fiesta Hongosto</span></a>
+        <a class="blk soft" href="#ev-pangaea"><span class="bt">23:00</span><span class="bn">Pangaea · CDMX</span></a>
+      </div>
+      <div class="wd" data-date="2026-08-29">
+        <header><span class="dow">Sáb</span><span class="dn">29</span></header>
+        <a class="blk" href="#ev-el100"><span class="bt">11:00</span><span class="bn">Mercado El 100</span></a>
+        <a class="blk" href="#ev-akira"><span class="bt">19:00</span><span class="bn">Akira + Adris</span></a>
+        <a class="blk soft" href="#ev-brc"><span class="bt">23:00</span><span class="bn">Black Rave Culture · CDMX</span></a>
+      </div>
+      <div class="wd" data-date="2026-08-30">
+        <header><span class="dow">Dom</span><span class="dn">30</span></header>
+        <a class="blk" href="#ev-tianguis"><span class="bt">Temprano</span><span class="bn">Domingo de tianguis</span></a>
+        <a class="blk" href="#ev-medi"><span class="bt">12:30</span><span class="bn">Meditación · Chamma Ling</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 4 · SIEMPRE ════════ -->
+<section class="zone" id="siempre">
+  <div class="w">
+    <div class="zhead">
+      <h2>Siempre</h2>
+      <span class="tag">No depende de que alguien publique nada</span>
+    </div>
+    <div class="always">
+      <div class="al">
+        <div class="meta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-5 9 5-9 4-9-4Z"/><path d="M12 13v7"/><path d="M7 11v4c0 1.7 2.2 3 5 3s5-1.3 5-3v-4"/></svg> Aire libre</div>
+        <h4>Parapente en El Peñón y Divisadero</h4>
+        <p>Por lo que Valle es famoso. Agosto es plena temporada de lluvias, así que habla antes de subir.</p>
+        <span class="rep">A diario, según el clima</span>
+      </div>
+      <div class="al">
+        <div class="meta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1.5 11h-13L4 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Mercado</div>
+        <h4>Mercado de Artesanías</h4>
+        <p>Cerámica, vidrio soplado, herrería y textiles, en Av. Benito Juárez.</p>
+        <span class="rep">A diario · 11:00–19:00</span>
+      </div>
+      <div class="al">
+        <div class="meta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19V6l8-2 8 2v13"/><path d="M9 19v-6h6v6"/></svg> Cultura</div>
+        <h4>La ruta del arte</h4>
+        <p>Museo de Arte Popular, Galería Zopolite y el Centro Ceramista en Otumba.</p>
+        <span class="rep">Horario variable</span>
+      </div>
+      <div class="al">
+        <div class="meta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v13"/><path d="M12 6l7 8h-7"/><path d="M3 19h18"/></svg> Aire libre</div>
+        <h4>Vela en Avándaro</h4>
+        <p>Navegación de club y clínicas. Ninguna regata con nombre cae en agosto.</p>
+        <span class="rep">Fines de semana</span>
+      </div>
+      <div class="al">
+        <div class="meta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14l-6 7v7l-2 2v-9L5 4Z"/></svg> Noche</div>
+        <h4>Marina 33</h4>
+        <p>Rooftop con cabina y vista al lago. Nada anunciado, pero abre todo el fin.</p>
+        <span class="rep">Jue–dom · 13:00–23:00</span>
+      </div>
+      <div class="al" id="al-avandaro">
+        <div class="meta"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16l-1.5 11h-13L4 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg> Mercado</div>
+        <h4>Tianguis de Avándaro</h4>
+        <p>El mercado tradicional de Avándaro, con comida típica.</p>
+        <span class="rep">Cada lunes</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════ 5 · FOOT ════════ -->
+<footer>
+  <div class="w">
+    <div class="fgrid">
+      <div>
+        <h3>Cómo funciona</h3>
+        <p>Se reconstruye sola cada jueves a mediodía, siempre en la misma dirección. Guárdala y mándala a quien quieras.</p>
+        <p>Los colores siguen al reloj: amanece, se hace de día, atardece y anochece contigo.</p>
+        <div class="share">
+          <a class="sb" id="wa" href="#" target="_blank" rel="noopener">WhatsApp</a>
+          <button class="sb" id="shr" type="button">Compartir</button>
+          <button class="sb" id="cpy" type="button">Copiar liga</button>
+        </div>
+      </div>
+      <div>
+        <h3>Semana tranquila</h3>
+        <p>Finales de agosto es temporada baja en Valle. Los calendarios del pueblo saltan del triatlón de julio directo a septiembre, así que esta semana se apoya en lo de siempre. Es la foto real, no una búsqueda floja.</p>
+        <p class="fine" style="margin-top:1.4em">
+          <span class="star">✳</span> Se viene: Trail Run Avándaro y el Grito en septiembre · Festival de Vela 9 oct · Triatlón 24 oct · Festival de las Almas fin de oct.
+        </p>
+      </div>
+    </div>
+    <p class="fine">
+      Revisado y sin novedad: Mestizo · Doña Barra · La Pila Seca · Monkeys · R27 · Kuun · Cinco Rodavento · El Santuario · Surreal · Basilico · Blue Social Club · La Playa · Los Pericos.<br>
+      Fuentes: <a href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">@elcuencovalle</a> · <a href="https://ra.co/events/mx/mexicocity" target="_blank" rel="noopener">Resident Advisor</a> · <a href="https://ligmincha.org/center-mexico-valledebravo/" target="_blank" rel="noopener">Ligmincha</a> · <a href="https://www.clubnauticoavandaro.org/" target="_blank" rel="noopener">Club Náutico Avándaro</a>.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+"use strict";
+var root=document.documentElement;
+
+/* time of day — automatic */
+function tod(){var h=new Date().getHours();
+  return h>=5&&h<9?"dawn":h>=9&&h<17?"day":h>=17&&h<20?"dusk":"night";}
+function set(){root.setAttribute("data-time",tod());}
+set(); setInterval(set,10*60*1000);
+
+/* today / past marking */
+(function(){
+  var n=new Date(),
+      today=n.getFullYear()+"-"+String(n.getMonth()+1).padStart(2,"0")+"-"+String(n.getDate()).padStart(2,"0");
+  [].forEach.call(document.querySelectorAll(".day"),function(s){
+    var d=s.getAttribute("data-date"); if(!d)return;
+    if(d===today){var b=document.createElement("span");b.className="now";b.textContent="Hoy";s.querySelector(".dh").appendChild(b);}
+    else if(d<today){s.classList.add("past");}
+  });
+  [].forEach.call(document.querySelectorAll(".wd"),function(c){
+    var d=c.getAttribute("data-date"); if(!d)return;
+    if(d===today)c.classList.add("is-today"); else if(d<today)c.classList.add("is-past");
+  });
+})();
+
+/* stagger */
+[].forEach.call(document.querySelectorAll(".ev,.al,.wd"),function(el,i){el.style.setProperty("--i",Math.min(i,9));});
+
+/* counts */
+(function(){
+  var c=document.getElementById("count");
+  if(c) c.textContent=document.querySelectorAll(".ev").length+" cosas · "+document.querySelectorAll(".al").length+" siempre";
+})();
+
+/* relative "updated" */
+(function(){
+  var t=document.getElementById("upd"); if(!t)return;
+  var d=new Date(t.getAttribute("datetime")), diff=(Date.now()-d.getTime())/36e5;
+  var rel = diff<1 ? "hace un momento"
+          : diff<24 ? "hace "+Math.round(diff)+" h"
+          : diff<48 ? "ayer"
+          : "hace "+Math.round(diff/24)+" días";
+  t.textContent=t.textContent+" ("+rel+")";
+})();
+
+/* share */
+(function(){
+  var url=location.href.split("#")[0], txt="Valle Esta Semana · qué hay del 24 al 30 de agosto";
+  var wa=document.getElementById("wa"); if(wa) wa.href="https://wa.me/?text="+encodeURIComponent(txt+"\n"+url);
+  var s=document.getElementById("shr");
+  if(s){ if(navigator.share){s.addEventListener("click",function(){navigator.share({title:"Valle Esta Semana",text:txt,url:url}).catch(function(){})});} else {s.hidden=true;} }
+  var c=document.getElementById("cpy");
+  if(c) c.addEventListener("click",function(){
+    var done=function(){var o=c.textContent;c.textContent="¡Copiado!";setTimeout(function(){c.textContent=o},1500);};
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(url).then(done).catch(done);} else done();
+  });
+})();
+})();
+</script>
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebPage","name":"Valle Esta Semana","inLanguage":"es-MX",
+"dateModified":"2026-08-27T15:04:00-06:00",
+"about":{"@type":"Place","name":"Valle de Bravo","address":{"@type":"PostalAddress","addressLocality":"Valle de Bravo","addressRegion":"Estado de México","addressCountry":"MX"}},
+"mainEntity":[
+{"@type":"Event","name":"Kirtan con Pablo Narayana","startDate":"2026-08-27T18:30:00-06:00","eventStatus":"https://schema.org/EventScheduled","location":{"@type":"Place","name":"Casa Sadhana","address":{"@type":"PostalAddress","streetAddress":"Marina Nacional 129","addressLocality":"Valle de Bravo","addressCountry":"MX"}},"offers":{"@type":"Offer","price":"270","priceCurrency":"MXN"}},
+{"@type":"Event","name":"Isis Bordetas + Jam","startDate":"2026-08-27T21:00:00-06:00","location":{"@type":"Place","name":"El Cuenco","address":{"@type":"PostalAddress","addressLocality":"Valle de Bravo","addressCountry":"MX"}}},
+{"@type":"Event","name":"Fiesta Hongosto","startDate":"2026-08-28T19:00:00-06:00","location":{"@type":"Place","name":"El Cuenco","address":{"@type":"PostalAddress","streetAddress":"Santa María Ahuacatlán 120","addressLocality":"Valle de Bravo","addressCountry":"MX"}},"performer":[{"@type":"PerformingGroup","name":"Samu"},{"@type":"PerformingGroup","name":"ESGO"},{"@type":"PerformingGroup","name":"Yisus"}]},
+{"@type":"Event","name":"Mercado El 100","startDate":"2026-08-29T11:00:00-06:00","endDate":"2026-08-29T18:00:00-06:00","location":{"@type":"Place","name":"Mercado El 100","address":{"@type":"PostalAddress","streetAddress":"Del Salitre 104","addressLocality":"Valle de Bravo","addressCountry":"MX"}}},
+{"@type":"Event","name":"Akira + Adris","startDate":"2026-08-29T19:00:00-06:00","location":{"@type":"Place","name":"El Cuenco","address":{"@type":"PostalAddress","addressLocality":"Valle de Bravo","addressCountry":"MX"}}},
+{"@type":"Event","name":"Domingo de tianguis","startDate":"2026-08-30T08:00:00-06:00","location":{"@type":"Place","name":"Centro de Valle de Bravo","address":{"@type":"PostalAddress","addressLocality":"Valle de Bravo","addressCountry":"MX"}},"offers":{"@type":"Offer","price":"0","priceCurrency":"MXN"}},
+{"@type":"Event","name":"Meditación guiada en Chamma Ling","startDate":"2026-08-30T12:30:00-06:00","location":{"@type":"Place","name":"Chamma Ling","address":{"@type":"PostalAddress","addressLocality":"Valle de Bravo","addressCountry":"MX"}},"offers":{"@type":"Offer","price":"0","priceCurrency":"MXN"}}
+]}
+</script>
+</body>
+</html>

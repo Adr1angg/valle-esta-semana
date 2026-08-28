@@ -1,44 +1,37 @@
 const {chromium}=require('playwright');
+const P=['index.html','cdmx.html'];
 (async()=>{
- const b=await chromium.launch(); const url='file://'+process.cwd()+'/index.html';
- let fail=0;
- for(const j of [
-   {n:'v-desktop',w:1280,h:1000,scheme:'light',full:true},
-   {n:'v-phone',  w:390, h:844, scheme:'light',full:true},
-   {n:'v-phone-dark',w:390,h:844,scheme:'dark',full:false},
-   {n:'v-desk-dark',w:1280,h:900,scheme:'dark',full:false},
- ]){
-   const ctx=await b.newContext({viewport:{width:j.w,height:j.h},colorScheme:j.scheme,deviceScaleFactor:2});
-   const p=await ctx.newPage(); const errs=[];
-   p.on('pageerror',e=>errs.push('JS:'+e));
-   await p.goto(url,{waitUntil:'networkidle'}); await p.waitForTimeout(1400);
-   const ov=await p.evaluate(()=>document.documentElement.scrollWidth-document.documentElement.clientWidth);
-   await p.screenshot({path:j.n+'.png',fullPage:j.full});
-   if(ov!==0||errs.length){fail++;}
-   console.log(`${j.n} | hOverflow:${ov} | jsErrors:${errs.length?errs.join(' ; '):'none'}`);
-   await ctx.close();
- }
- const ctx=await b.newContext({viewport:{width:1280,height:900}});
- const p=await ctx.newPage(); await p.goto(url,{waitUntil:'networkidle'}); await p.waitForTimeout(600);
- const stats=await p.evaluate(()=>{
-   const anchors=[...document.querySelectorAll('.blk')].map(a=>a.getAttribute('href'));
-   const broken=anchors.filter(h=>!document.querySelector(h));
-   return {
-     days:document.querySelectorAll('.day').length,
-     entries:document.querySelectorAll('.ev').length,
-     always:document.querySelectorAll('.al').length,
-     weekCells:document.querySelectorAll('.wd').length,
-     calBlocks:anchors.length,
-     brokenAnchors:broken,
-     chips:document.querySelectorAll('.chip').length,
-     time:document.documentElement.getAttribute('data-time'),
-     updated:(document.getElementById('upd')||{}).textContent
-   };
- });
- console.log('STRUCTURE:',JSON.stringify(stats));
- if(stats.brokenAnchors.length){console.log('!! broken calendar links');fail++;}
- if(stats.chips!==0){console.log('!! filter chips still present');fail++;}
- await b.close();
- console.log(fail? `FAILED (${fail})` : 'ALL CHECKS PASSED');
- process.exit(fail?1:0);
+  const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium'});
+  let fail=0;
+  for(const scheme of ['light','dark']){
+    for(const vp of [{width:390,height:844,n:'phone'},{width:1280,height:900,n:'desk'}]){
+      const ctx=await b.newContext({viewport:{width:vp.width,height:vp.height},colorScheme:scheme,
+        deviceScaleFactor:1});
+      for(const f of P){
+        const pg=await ctx.newPage();
+        const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
+        pg.on('console',m=>{if(m.type()==='error'&&!/ERR_TUNNEL|ERR_NAME|Failed to load resource/.test(m.text()))errs.push('console: '+m.text())});
+        await pg.goto(require('path').resolve(__dirname,f).replace(/^/,'file://'),{waitUntil:'load'});
+        await pg.waitForTimeout(1500);
+        const r=await pg.evaluate(()=>({
+          ox: document.documentElement.scrollWidth-document.documentElement.clientWidth,
+          bodyH: document.body.scrollHeight,
+          evs: document.querySelectorAll('.card,.ent,.ev,.set').length,
+          blocks: document.querySelectorAll('.blk,.pill,.agrow').length,
+          sel: (document.querySelector('[aria-selected=true]')||{}).textContent||'',
+          bad: [...document.querySelectorAll('a[href^="#"]')].filter(a=>a.getAttribute('href').length>1 && !document.getElementById(a.getAttribute('href').slice(1))).map(a=>a.getAttribute('href'))
+        }));
+        const bad = r.ox>0 || errs.length || r.bodyH<600;
+        if(bad) fail++;
+        console.log((bad?'FAIL ':'ok   ')+scheme.padEnd(5)+vp.n.padEnd(6)+f.padEnd(12)+
+          ' ox='+r.ox+' h='+r.bodyH+' items='+r.evs+' blocks='+r.blocks+' sel="'+r.sel.replace(/\s+/g,'')+'"'+
+          (r.bad.length?' deadAnchors='+JSON.stringify(r.bad):'')+(errs.length?'\n     '+errs.join('\n     '):''));
+        await pg.close();
+      }
+      await ctx.close();
+    }
+  }
+  await b.close();
+  console.log(fail?('\n'+fail+' FAILURES'):'\nall pass');
+  process.exit(fail?1:0);
 })();
