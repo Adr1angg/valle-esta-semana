@@ -35,8 +35,25 @@ subida de archivos del dashboard.
 
 1. `node archivar.js` — archiva la semana que termina en `historial.js`.
 2. Reescribe `data.js` con la semana nueva.
-3. `node verify.js` — tiene que decir `todo pasa`.
-4. Commit y push a `main`.
+3. Si aparecieron venues nuevos, agrégalos a `lugares.js` con su ubicación
+   aproximada — basta la manzana correcta. Así no hay que volver a buscarla
+   la semana que viene.
+4. `node verify.js` — tiene que decir `todo pasa`.
+5. Commit y push a `main`.
+
+## Dónde caen los lugares
+
+`lugares.js` es la memoria: `{"Nombre del venue": [lat, lon]}`. Una vez que un
+lugar está ahí, ya no hay que volver a buscarlo. El diorama tiene 142 m por celda,
+así que la manzana correcta basta — la puerta exacta y la esquina se ven igual. Un
+venue que no esté cae al Centro. `data.js` puede mandar `lugares: {...}` para algo
+puntual, y eso gana sobre `lugares.js`.
+
+## Si la semana ya pasó
+
+Si `week.end` quedó atrás, la página lo dice sola: un aviso discreto los primeros
+siete días y uno en coral después. Así nadie lee una semana vieja creyendo que es
+la de hoy.
 
 ## Lo único que cambia cada semana: `data.js`
 
@@ -128,6 +145,9 @@ reemplaza **ese bloque completo** y nada más. No hay dependencias externas.
 | `cdmx.html` | página aparte de DJs en CDMX · plantilla |
 | `data.js` | **lo único que cambia cada semana** |
 | `historial.js` | eventos de semanas pasadas · **sólo crece, nunca se reescribe** |
+| `lugares.js` | dónde cae cada venue en el diorama · se le agregan los nuevos |
+| `og.jpg` | la imagen que sale al compartir la liga · 1200×630 |
+| `tarea-semanal.md` | copia versionada del prompt de la tarea del jueves |
 | `archivar.js` | guarda la semana en `historial.js` · se corre antes de tocar `data.js` |
 | `verify.js` | Playwright: desbordes, errores, y que la escena y el tablero existan |
 | `sources.md` | lista verificada de fuentes, con los callejones sin salida |

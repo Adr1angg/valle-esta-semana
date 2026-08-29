@@ -50,8 +50,9 @@ El token está en **`.gh_token`** dentro de la carpeta del proyecto. Es un PAT d
 
 1. **`node archivar.js`** — guarda los eventos de la semana que termina en `historial.js`. El calendario de tres semanas saca de ahí lo que pasó; si te saltas este paso, esa semana desaparece para siempre. `historial.js` **sólo crece**: no lo reescribas a mano ni lo borres.
 2. Reescribe **`data.js`** con la semana nueva.
-3. **`node verify.js`** — tiene que decir `todo pasa`.
-4. Commit y push a `main`.
+3. **Venues nuevos → `lugares.js`.** Si esta semana salió un lugar que no está en ese archivo, búscale la ubicación **aproximada** una sola vez y agrégalo. El diorama tiene 142 m por celda: la manzana correcta basta, la puerta exacta no cambia nada. Una vez guardado ya nunca hay que volver a buscarlo. Un lugar que falte cae al Centro — no truena, pero el pin queda flojo.
+4. **`node verify.js`** — tiene que decir `todo pasa`.
+5. Commit y push a `main`.
 
 ## El trabajo: SOLO se edita `data.js`
 
@@ -66,11 +67,13 @@ El token está en **`.gh_token`** dentro de la carpeta del proyecto. Es un PAT d
 - `checked` — venues revisados sin novedad. `soon` — lo que viene en semanas próximas.
 - `cats` no se toca.
 
-**`lugares` (opcional pero útil).** Al tocar un día, el diorama se acerca al lugar del evento y planta un pin. Los lugares conocidos ya están mapeados dentro de `index.html`; uno que no esté cae al Centro. Si esta semana aparece un venue nuevo y sabes dónde está, agrégalo desde `data.js` sin tocar la plantilla:
+**Los lugares del mapa.** Al tocar un día, el diorama se acerca al lugar del evento y planta un pin. Las coordenadas viven en **`lugares.js`**, que es la memoria del proyecto — así no se repite la misma búsqueda cada semana:
 
 ```js
-lugares: { "Nombre del venue": [19.1938, -100.1322] }
+window.VL = { "Nombre exacto del venue": [19.1938, -100.1322] };
 ```
+
+El nombre tiene que coincidir con el campo `venue` de `data.js`. También se puede mandar algo puntual desde `data.js` con `lugares: {...}`, que gana sobre `lugares.js`, pero lo normal es guardarlo en `lugares.js`.
 
 Un día sin eventos se muestra solo (tile apagado + "Nada programado"). No hay que hacer nada especial.
 
@@ -81,7 +84,7 @@ cd "$HOME/vs" && node -e "global.window={};require('./data.js');console.log(wind
 
 ## Verifica antes de publicar
 
-`node verify.js` necesita Playwright. Revisa desbordes, errores de página, que existan los widgets de evento, los siete tiles, las 21 celdas del calendario y los permanentes, que la escena 3D haya arrancado, y que no haya ligas internas rotas. Si Playwright no está en la Mac, sube `index.html`, `cdmx.html`, `data.js`, `historial.js` y `verify.js` al contenedor en la nube y córrelo ahí (Chromium en `/opt/pw-browsers/chromium`, `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`; **nunca** corras `playwright install`). Tiene que reportar `todo pasa` en 390px y 1280px, claro y oscuro.
+`node verify.js` necesita Playwright. Revisa desbordes, errores de página, que existan los widgets de evento, los siete tiles, las 21 celdas del calendario y los permanentes, que la escena 3D haya arrancado, y que no haya ligas internas rotas. Si Playwright no está en la Mac, sube `index.html`, `cdmx.html`, `data.js`, `historial.js`, `lugares.js` y `verify.js` al contenedor en la nube y córrelo ahí (Chromium en `/opt/pw-browsers/chromium`, `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`; **nunca** corras `playwright install`). Tiene que reportar `todo pasa` en 390px y 1280px, claro y oscuro.
 
 ## Publica
 
@@ -91,11 +94,11 @@ git -c user.name="Adrian" -c user.email="adriangispertgalvez@hotmail.com" commit
 git push "https://x-access-token:${T}@github.com/Adr1angg/valle-esta-semana.git" main:main 2>&1 | sed -E "s/${T}/***/g"
 ```
 
-**Si el push se rechaza con "fetch first"** alguien publicó mientras trabajabas. Haz `git pull --rebase` en el clon y vuelve a empujar. Si el rebase se complica, clona `main` otra vez, copia encima **sólo tus `data.js` y `historial.js`**, commitea y publica desde el clon nuevo — así conservas lo que hayan subido los demás. Nunca uses `push --force`.
+**Si el push se rechaza con "fetch first"** alguien publicó mientras trabajabas. Haz `git pull --rebase` en el clon y vuelve a empujar. Si el rebase se complica, clona `main` otra vez, copia encima **sólo tus `data.js`, `historial.js` y `lugares.js`**, commitea y publica desde el clon nuevo — así conservas lo que hayan subido los demás. Nunca uses `push --force`.
 
 **Confirma que de verdad quedó en vivo.** Espera ~90s, abre https://valle-esta-semana.pages.dev en Chrome y toma screenshot. Checa que se vean las fechas nuevas y que la página abra en el día de hoy. No reportes éxito solo porque Cloudflare lo diga — míralo.
 
-Copia el `data.js` y el `historial.js` actualizados a `$HOME/mnt/Valle Esta Semana/` para que su carpeta local coincida con lo que está en vivo.
+Copia el `data.js`, el `historial.js` y el `lugares.js` actualizados a `$HOME/mnt/Valle Esta Semana/` para que su carpeta local coincida con lo que está en vivo.
 
 Cierra las pestañas de Chrome que hayas abierto y mándale a Adrian un mensaje corto: qué hay esta semana en una frase, la liga, y lo que no pudiste confirmar. Recuérdale de vez en cuando que las sugerencias del público llegan a Supabase, proyecto `daily-brief`, tabla `valle_sugerencias` (él las lee en el panel; tú no tienes llave de lectura).
 

@@ -13,7 +13,12 @@
 <meta property="og:description" content="Los eventos de esta semana en Valle de Bravo.">
 <meta property="og:url" content="https://valle-esta-semana.pages.dev/">
 <meta property="og:locale" content="es_MX">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://valle-esta-semana.pages.dev/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="El vaso de la presa de Valle de Bravo como un diorama de vóxeles, junto al título Esta semana en Valle.">
+<meta name="twitter:image" content="https://valle-esta-semana.pages.dev/og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23dfe8cf'/%3E%3Cg fill='none' stroke='%233f5a30' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M10 40l11-13 8 9 7-11 14 15'/%3E%3C/g%3E%3Ccircle cx='45' cy='18' r='5' fill='%23a9c94f'/%3E%3Cpath d='M8 48h48' stroke='%235d8f9e' stroke-width='4' stroke-linecap='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -111,6 +116,8 @@ a{color:inherit}
 .grano{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.16;mix-blend-mode:multiply;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 :root[data-t="night"] .grano{mix-blend-mode:screen;opacity:.1}
+/* en el celular el grano se veia como una capa de polvo sobre el diorama */
+@media(max-width:760px){.grano{opacity:.07}:root[data-t="night"] .grano{opacity:.05}}
 body>header,body>main,body>footer,.barra{position:relative;z-index:2}
 
 /* ═══════════ barra ═══════════ */
@@ -140,6 +147,17 @@ h1 span{display:block;color:var(--olive)}
 .sello{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:9px 16px;border-radius:99px;
   background:var(--lima);color:oklch(28% .06 130);font-weight:600;font-size:12.5px;letter-spacing:.02em;
   box-shadow:var(--sh)}
+/* si la tarea del jueves no corrió, la página se queda mostrando una
+   semana que ya pasó como si fuera la de hoy. Esto lo dice en voz alta. */
+.viejo{margin-top:14px;display:inline-flex;align-items:center;gap:9px;
+  padding:9px 15px;border-radius:99px;font-size:12.5px;font-weight:600;
+  color:var(--ink);background:oklch(from var(--lima) l c h / .34);
+  border:1px solid oklch(from var(--olive) l c h / .35)}
+.viejo::before{content:"";width:8px;height:8px;border-radius:50%;flex:none;
+  background:var(--olive)}
+.viejo.alerta{background:oklch(from var(--acc) l c h / .14);
+  border-color:oklch(from var(--acc) l c h / .45);color:var(--acc)}
+.viejo.alerta::before{background:var(--acc)}
 .act{margin-top:14px;font-size:11.5px;letter-spacing:.06em;color:var(--soft)}
 
 /* ═══════════ tiles de día ═══════════ */
@@ -390,6 +408,7 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
   <p class="baja">Los eventos de esta semana en Valle de Bravo. Se actualiza solo cada jueves.</p>
   <div><span class="sello" id="sem"></span></div>
   <p class="act mono">Actualizado <span id="upd"></span> · próxima edición <span id="nx"></span></p>
+  <p class="viejo" id="viejo" hidden></p>
 
   <div class="dias" id="dias" role="tablist" aria-label="Día"></div>
   <div class="board" id="board"></div>
@@ -467,6 +486,7 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
     <a href="https://ligmincha.org/center-mexico-valledebravo/" target="_blank" rel="noopener">Ligmincha</a>.</p>
 </div></div></footer>
 
+<script src="lugares.js"></script>
 <script src="historial.js"></script>
 <script src="data.js"></script>
 <script>
@@ -574,6 +594,10 @@ var LUGARES={"Centro":"centro","Avándaro":"avandaro","Del Salitre 104":"salitre
   "El Santuario, San Gaspar":"sangaspar",
   "El Cuenco":"centro","Fünk":"centro","YuYu":"centro","Espacio Odisea":"centro",
   "Casa Sadhana":"avandaro","Chamma Ling":"centro"};
+/* precedencia: lo de esta semana gana sobre lo guardado, y lo guardado
+   sobre las zonas de aquí abajo. Así la tarea del jueves no tiene que
+   volver a buscar la ubicación de un venue que ya se buscó una vez. */
+if(window.VL) for(var _kv in window.VL) LUGARES[_kv]=window.VL[_kv];
 if(D.lugares) for(var _k in D.lugares) LUGARES[_k]=D.lugares[_k];
 function punto(v){var z=LUGARES[v];
   if(!z) return ZONAS.centro;
@@ -596,6 +620,20 @@ function pick(date,porClic){
   }
 }
 pick(sel);
+
+/* ── ¿la semana que se muestra ya pasó? ── */
+(function(){
+  var el=$("#viejo"); if(!el||!D.week||!D.week.end) return;
+  if(HOY<=D.week.end) return;
+  var dias=Math.round((new Date(HOY+"T12:00:00")-new Date(D.week.end+"T12:00:00"))/864e5);
+  el.hidden=false;
+  if(dias<=7){
+    el.textContent="Esta semana ya terminó · la nueva edición sale el jueves";
+  }else{
+    el.className="viejo alerta";
+    el.textContent="Esta página lleva "+dias+" días sin actualizarse · puede que ya nada de esto aplique";
+  }
+})();
 
 /* ── calendario widget ── */
 (function(){
@@ -1138,7 +1176,7 @@ if("IntersectionObserver" in window){
                tg[1] + Math.sin(el) * d,
                tg[2] + Math.cos(az) * Math.cos(el) * d];
     var vp = mmul(persp(P.fov, asp, 0.1, 40), look(eye, tg, [0, 1, 0]));
-    var ox = P.offX * (1 - estrecho), oy = P.offY + (-0.10 - P.offY) * estrecho;
+    var ox = P.offX * (1 - estrecho), oy = P.offY + (-0.36 - P.offY) * estrecho;
 
     gl.viewport(0, 0, cnv.width, cnv.height);
     gl.clearColor(0, 0, 0, 0);
@@ -1163,11 +1201,11 @@ if("IntersectionObserver" in window){
     gl.uniform1f(U.uY, P.exag);
     gl.uniform1f(U.uBase, P.base);
     gl.uniform1f(U.uT, t);
-    gl.uniform1f(U.uFog, P.fog);
+    gl.uniform1f(U.uFog, P.fog * (1 - estrecho * 0.42));
     gl.uniform1f(U.uBands, P.bands);
     gl.uniform1f(U.uAmb, P.amb);
     gl.uniform1f(U.uNight, L.night);
-    gl.uniform1f(U.uDim, Math.max(0.05, (P.dim - prog01 * P.dimScroll * (1 - 0.80 * focoAmt)) * (1 - estrecho * 0.22)));
+    gl.uniform1f(U.uDim, Math.max(0.05, (P.dim - prog01 * P.dimScroll * (1 - 0.80 * focoAmt)) * (1 + estrecho * 0.06)));
     gl.uniform3f(U.uSun, Math.sin(L.az) * Math.cos(L.el), Math.sin(L.el), Math.cos(L.az) * Math.cos(L.el));
     gl.uniform3fv(U.uWarm, L.warm);
     gl.uniform3fv(U.uSky, L.sky);
