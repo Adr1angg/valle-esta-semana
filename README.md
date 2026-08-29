@@ -15,7 +15,11 @@
 > 4. **La API de Instagram `/api/v1/users/web_profile_info/` está muerta** (400, schema
 >    borrado). La técnica que sí funciona — leer el `alt` de las miniaturas, que transcribe
 >    el texto del volante — está documentada arriba de todo en `sources.md`.
-> 5. **Si el push se rechaza con "fetch first":** no intentes rebase. Clona `main` de nuevo,
+> 5. **Antes de tocar `data.js`, corre `node archivar.js`.** Eso guarda los eventos
+>    de la semana que termina en `historial.js`, que es de donde el calendario saca
+>    las semanas pasadas. Si se te olvida, esa semana desaparece para siempre.
+>    `historial.js` **sólo crece**: nunca lo reescribas a mano ni lo borres.
+> 6. **Si el push se rechaza con "fetch first":** no intentes rebase. Clona `main` de nuevo,
 >    copia encima tu `data.js`, commitea y publica desde el clon limpio.
 
 
@@ -26,6 +30,13 @@ reconstruye solo en ~1 minuto. No usar wrangler, la API de Cloudflare, ni la
 subida de archivos del dashboard.
 
 ---
+
+## El orden de cada jueves
+
+1. `node archivar.js` — archiva la semana que termina en `historial.js`.
+2. Reescribe `data.js` con la semana nueva.
+3. `node verify.js` — tiene que decir `todo pasa`.
+4. Commit y push a `main`.
 
 ## Lo único que cambia cada semana: `data.js`
 
@@ -116,13 +127,17 @@ reemplaza **ese bloque completo** y nada más. No hay dependencias externas.
 | `index.html` | el sitio · plantilla, no se edita cada semana |
 | `cdmx.html` | página aparte de DJs en CDMX · plantilla |
 | `data.js` | **lo único que cambia cada semana** |
-| `verify.js` | Playwright: sin desbordes ni errores en 390px y 1280px, claro y oscuro |
+| `historial.js` | eventos de semanas pasadas · **sólo crece, nunca se reescribe** |
+| `archivar.js` | guarda la semana en `historial.js` · se corre antes de tocar `data.js` |
+| `verify.js` | Playwright: desbordes, errores, y que la escena y el tablero existan |
 | `sources.md` | lista verificada de fuentes, con los callejones sin salida |
-| `archivo/` | versiones anteriores del sitio, por si acaso |
+| `_archivo/` | versiones anteriores del sitio, por si acaso |
+| `_escena/` | el bloque de la escena suelto y sus notas (ya va incrustado en `index.html`) |
 
 ## Verificar antes de publicar
 
 ```
+node archivar.js     # primero: no perder la semana que termina
 node verify.js       # requiere playwright
 ```
 Tiene que reportar `ox=0`, sin errores de página, en las cuatro combinaciones.

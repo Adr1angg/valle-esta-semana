@@ -1,7 +1,24 @@
+/* Chequeo antes de publicar:  node verify.js
+   Necesita Playwright. Si no está en la Mac, sube index.html, cdmx.html,
+   data.js, historial.js y este archivo al contenedor y córrelo ahí
+   (Chromium en /opt/pw-browsers/chromium, PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1;
+   nunca corras `playwright install`).                                      */
 const {chromium}=require('playwright');
+const fs=require('fs'), path=require('path');
 const P=['index.html','cdmx.html'];
+
+/* la ruta del binario cambia entre maquinas: se prueban varias */
+function chrome(){
+  const cand=['/opt/pw-browsers/chromium'];
+  try{ for(const d of fs.readdirSync('/opt/pw-browsers')){
+    if(/^chromium-/.test(d)) cand.push('/opt/pw-browsers/'+d+'/chrome-linux/chrome'); } }catch(e){}
+  for(const c of cand){ try{ if(fs.statSync(c)) return c; }catch(e){} }
+  return undefined;              /* que Playwright use el suyo */
+}
+
 (async()=>{
-  const b=await chromium.launch({executablePath:'/opt/pw-browsers/chromium'});
+  const b=await chromium.launch({executablePath:chrome(),
+    args:['--use-gl=angle','--use-angle=swiftshader','--enable-unsafe-swiftshader']});
   let fail=0;
   for(const scheme of ['light','dark']){
     for(const vp of [{width:390,height:844,n:'phone'},{width:1280,height:900,n:'desk'}]){
@@ -11,27 +28,38 @@ const P=['index.html','cdmx.html'];
         const pg=await ctx.newPage();
         const errs=[]; pg.on('pageerror',e=>errs.push(String(e)));
         pg.on('console',m=>{if(m.type()==='error'&&!/ERR_TUNNEL|ERR_NAME|Failed to load resource/.test(m.text()))errs.push('console: '+m.text())});
-        await pg.goto(require('path').resolve(__dirname,f).replace(/^/,'file://'),{waitUntil:'load'});
-        await pg.waitForTimeout(1500);
+        await pg.goto('file://'+path.resolve(__dirname,f),{waitUntil:'load'});
+        await pg.waitForTimeout(2500);
         const r=await pg.evaluate(()=>({
           ox: document.documentElement.scrollWidth-document.documentElement.clientWidth,
           bodyH: document.body.scrollHeight,
-          evs: document.querySelectorAll('.card,.ent,.ev,.set').length,
-          blocks: document.querySelectorAll('.blk,.pill,.agrow').length,
-          sel: (document.querySelector('[aria-selected=true]')||{}).textContent||'',
-          bad: [...document.querySelectorAll('a[href^="#"]')].filter(a=>a.getAttribute('href').length>1 && !document.getElementById(a.getAttribute('href').slice(1))).map(a=>a.getAttribute('href'))
+          evs: document.querySelectorAll('.ww').length,
+          dias: document.querySelectorAll('.dia').length,
+          rej: document.querySelectorAll('#rej .cd').length,
+          siem: document.querySelectorAll('#siem .mn').length,
+          escena: !!window.VALLE_STATS,
+          respaldo: document.getElementById('escena3d')
+            ? document.getElementById('escena3d').classList.contains('sin-webgl') : null,
+          muertas: [...document.querySelectorAll('a[href^="#"]')]
+            .filter(a=>a.getAttribute('href').length>1 && !document.getElementById(a.getAttribute('href').slice(1)))
+            .map(a=>a.getAttribute('href'))
         }));
-        const bad = r.ox>0 || errs.length || r.bodyH<600;
-        if(bad) fail++;
-        console.log((bad?'FAIL ':'ok   ')+scheme.padEnd(5)+vp.n.padEnd(6)+f.padEnd(12)+
-          ' ox='+r.ox+' h='+r.bodyH+' items='+r.evs+' blocks='+r.blocks+' sel="'+r.sel.replace(/\s+/g,'')+'"'+
-          (r.bad.length?' deadAnchors='+JSON.stringify(r.bad):'')+(errs.length?'\n     '+errs.join('\n     '):''));
+        const esIndex = f==='index.html';
+        const mal = r.ox>0 || errs.length>0 || r.bodyH<600 || r.muertas.length>0 ||
+          (esIndex && (r.evs===0 || r.dias!==7 || r.rej!==21 || r.siem===0 || !r.escena));
+        if(mal) fail++;
+        console.log((mal?'FAIL ':'ok   ')+scheme.padEnd(5)+vp.n.padEnd(6)+f.padEnd(12)+
+          ' ox='+r.ox+' h='+r.bodyH+
+          (esIndex?(' eventos='+r.evs+' dias='+r.dias+' calendario='+r.rej+' siempre='+r.siem+
+                    ' escena='+(r.escena?'si':'NO')):'')+
+          (r.muertas.length?' ligasMuertas='+JSON.stringify(r.muertas):'')+
+          (errs.length?'\n     '+errs.join('\n     '):''));
         await pg.close();
       }
       await ctx.close();
     }
   }
   await b.close();
-  console.log(fail?('\n'+fail+' FAILURES'):'\nall pass');
+  console.log(fail?('\n'+fail+' FALLAS'):'\ntodo pasa');
   process.exit(fail?1:0);
 })();
