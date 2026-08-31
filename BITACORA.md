@@ -104,7 +104,16 @@ usuario: arrastrar gira, la rueda o el pellizco acercan, hay botones de
 del sitio y las ventanas del pueblo. Al salir del panel se suelta sola
 y vuelve al encuadre de siempre.
 
-Tres cosas que se corrigieron sobre la marcha:
+Cuatro cosas que se corrigieron sobre la marcha:
+
+- **El panel no tomaba la cámara en una pestaña de fondo.** La decisión
+  de "el marco está en pantalla, dale la cámara al usuario" iba envuelta
+  en un `requestAnimationFrame` como throttle, y el navegador congela
+  rAF en las pestañas que no se ven: marco dibujado, botones muertos, y
+  ni un error. Ahora `revisa()` va directo en el listener de scroll.
+  **Es el mismo tropiezo del primer cuadro de la escena, otra vez:**
+  atar lógica al bucle de dibujo se rompe en las pestañas ocultas.
+  Sólo salió porque la prueba corría en una pestaña de fondo.
 
 - `touch-action:none` dejaba el dedo atorado: el panel es lo último de
   la página, así que se pasó a `pan-y` — la página sigue bajando y nos

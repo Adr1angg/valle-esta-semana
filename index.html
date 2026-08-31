@@ -2133,16 +2133,19 @@ function toma(si){
    por cuadro y sólo cuando hubo scroll. Antes esto era un
    IntersectionObserver y hay entornos donde no dispara nunca — el
    panel se quedaba sin cámara sin decir nada. */
-var pendiente=0;
 function revisa(){
-  pendiente=0;
   var b=marco.getBoundingClientRect();
   var visible=Math.min(b.bottom,innerHeight)-Math.max(b.top,0);
   toma(visible > b.height*.55);
 }
-function alRodar(){ if(!pendiente){ pendiente=1; requestAnimationFrame(revisa); } }
-addEventListener("scroll",alRodar,{passive:true});
-addEventListener("resize",alRodar,{passive:true});
+/* Va directo en el listener, sin envolverlo en requestAnimationFrame:
+   el navegador ya junta los eventos de scroll a uno por cuadro, y un
+   rAF aquí ataba la decisión al bucle de dibujo — que se congela en
+   una pestaña de fondo. Es el mismo tropiezo que ya nos había pasado
+   con el primer cuadro de la escena. Leer un rect es barato. */
+addEventListener("scroll",revisa,{passive:true});
+addEventListener("resize",revisa,{passive:true});
+addEventListener("visibilitychange",function(){ if(!document.hidden) revisa(); });
 revisa();
 
 /* arrastrar gira · pellizcar y la rueda acercan */
