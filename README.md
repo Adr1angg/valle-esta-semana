@@ -150,10 +150,20 @@ difuminado de ventanas encendidas que se calcula una vez al cargar.
 la bruma, la dureza del sol y el oleaje. Lo llena Open-Meteo (ver abajo), pero cualquiera
 puede escribirlo desde la consola para probar.
 
-**Hasta abajo hay un panel** —"El valle, de cerca"— que le pasa la cámara al usuario:
-arrastrar gira, la rueda o el pellizco acercan, y una barra de horas mueve el sol, el color
-del sitio y las ventanas. Al salir del panel la cámara se suelta sola. La API es
-`window.VALLE_CAM` (`tomar`, `soltar`, `gira`, `zoom`, `reset`, `marco`, `estado`).
+**Al pie del último recuadro hay una línea chica** —"Explora el mapa"— que despliega el
+marco y le pasa la cámara al usuario: arrastrar gira, la rueda o el pellizco acercan, y una
+barra de horas mueve el sol, el color del sitio y las ventanas. Cerrada no ocupa nada; al
+salir del marco la cámara se suelta sola. La API es `window.VALLE_CAM` (`tomar`, `soltar`,
+`gira`, `zoom`, `reset`, `marco`, `estado`).
+
+Ojo con el desplegable: un `<details>` cerrado **conserva el layout** de sus hijos en Chrome
+(`content-visibility:hidden`, no `display:none`), así que el marco reporta su alto aunque no
+se vea nada. Cualquier cosa que mida ese rect tiene que preguntar antes si está abierto.
+
+**La fecha se relee sola.** Un latido cada 20 s vuelve a leer el día: si una pestaña abierta
+cruza la medianoche, el tile de "Hoy", el calendario del mes, el renglón de "Ahora / En 20
+min" y el aviso de semana vencida se reacomodan sin recargar y sin esperar al jueves. Si el
+lector eligió un día a mano, se respeta.
 
 Los anillos topográficos siguen ahí como plan B: si el navegador no da WebGL, la clase
 `sin-webgl` los saca y la página se ve bien igual.
