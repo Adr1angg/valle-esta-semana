@@ -327,7 +327,7 @@
     /* cada tipo se levanta lo suyo sobre el terreno; uY es la misma
        exageracion vertical que usan los bloques, asi que mover
        VALLE_TUNE.exag no descuadra las calcomanias */
-    '  float off = tipo < 0.5 ? 0.012 : (tipo < 1.5 ? 0.004 : (tipo < 2.5 ? 0.006 : 0.085));',
+    '  float off = tipo < 0.5 ? 0.012 : (tipo < 1.5 ? 0.004 : (tipo < 2.5 ? 0.006 : 0.048));',
     '  vec3 c = vec3(aS.x, aS.y*uY + off, aS.z);',
     '  float esc = 1.0;',
     '  if (tipo < 0.5) {',                                  /* resplandor de ventanas */
@@ -382,8 +382,17 @@
     '    a = max(max(vela, casco*0.94), estela) * inten;',
     '    col = mix(cVela*0.50, cVela, max(vela, estela));',
     '  } else {',
-    '    a = smoothstep(0.98, 0.42, r) * (0.5 + 0.5*smoothstep(0.34, 0.0, abs(vQ.y + 0.18))) * inten;',
-    '    col = mix(uWarm, vec3(0.95,0.95,0.95), 0.4);',
+    /* parapente: la campana es un arco de circulo con el centro por
+       DEBAJO del sprite, para que las puntas caigan y el centro suba
+       — al reves se ve como sonrisa y no como ala. */
+    '    vec2 q = vQ;',
+    '    float dd = length(vec2(q.x*0.76, q.y + 0.66));',
+    '    float campana = smoothstep(0.19, 0.05, abs(dd - 1.04)) * smoothstep(-0.36, -0.08, q.y);',
+    '    float piloto = 1.0 - smoothstep(0.08, 0.19, length(vec2(q.x, q.y + 0.72)));',
+    '    float cuerdas = smoothstep(0.07, 0.0, abs(abs(q.x)*1.30 + q.y + 0.64))',
+    '                  * step(-0.74, q.y) * step(q.y, 0.04) * 0.42;',
+    '    a = max(max(campana, piloto), cuerdas) * inten;',
+    '    col = mix(vec3(0.26,0.28,0.30), mix(uWarm, vec3(0.97,0.95,0.92), 0.55), max(campana, cuerdas));',
     '  }',
     '  if (a < 0.004) discard;',
     '  gl_FragColor = vec4(col*a, a);',
@@ -643,7 +652,8 @@
   var pasoP = Math.max(1, Math.floor(crestas.length / 3));
   for (var kp = 0; kp < crestas.length && nPara < 3; kp += pasoP) {
     var cp2 = crestas[kp];
-    calco(cp2 % G, (cp2 / G) | 0, hv[cp2] / (LEV - 1), 3, 0.0150, rnd(cp2 * 8.41), 0.90, 0.055);
+    calco(cp2 % G, (cp2 / G) | 0, hv[cp2] / (LEV - 1), 3,
+          0.021 + rnd(cp2 * 3.3) * 0.005, rnd(cp2 * 8.41), 0.92, 0.052);
     nPara++;
   }
 

@@ -150,15 +150,13 @@ difuminado de ventanas encendidas que se calcula una vez al cargar.
 la bruma, la dureza del sol y el oleaje. Lo llena Open-Meteo (ver abajo), pero cualquiera
 puede escribirlo desde la consola para probar.
 
-**Al pie del último recuadro hay una línea chica** —"Explora el mapa"— que despliega el
-marco y le pasa la cámara al usuario: arrastrar gira, la rueda o el pellizco acercan, y una
-barra de horas mueve el sol, el color del sitio y las ventanas. Cerrada no ocupa nada; al
-salir del marco la cámara se suelta sola. La API es `window.VALLE_CAM` (`tomar`, `soltar`,
-`gira`, `zoom`, `reset`, `marco`, `estado`).
-
-Ojo con el desplegable: un `<details>` cerrado **conserva el layout** de sus hijos en Chrome
-(`content-visibility:hidden`, no `display:none`), así que el marco reporta su alto aunque no
-se vea nada. Cualquier cosa que mida ese rect tiene que preguntar antes si está abierto.
+**Dentro del recuadro de las fuentes hay una línea** —"Explora el mapa"— que abre el
+diorama **a pantalla completa**. Y es el mismo diorama: no se monta un segundo mapa, se le
+sube el `z-index` a la escena que ya vive fija detrás de la página y se tapa el sitio con un
+velo del color del fondo. Arrastrar gira, la rueda o el pellizco acercan, y una barra de
+horas mueve el sol, el color del sitio y las ventanas. `Esc` o la ✕ cierran y la cámara se
+devuelve sola. La API es `window.VALLE_CAM` (`tomar`, `soltar`, `gira`, `zoom`, `reset`,
+`marco`, `estado`).
 
 **La fecha se relee sola.** Un latido cada 20 s vuelve a leer el día: si una pestaña abierta
 cruza la medianoche, el tile de "Hoy", el calendario del mes, el renglón de "Ahora / En 20

@@ -118,54 +118,69 @@ a{color:inherit}
 :root[data-t="night"] .grano{mix-blend-mode:screen;opacity:.1}
 /* en el celular el grano se veia como una capa de polvo sobre el diorama */
 @media(max-width:760px){.grano{opacity:.07}:root[data-t="night"] .grano{opacity:.05}}
-/* ═══════════ el mapa, si lo pides ═══════════
-   Una línea chica al pie del último recuadro, no una sección entera.
-   Cerrado no ocupa nada. Abierto, la escena —que vive fija detrás de
-   toda la página— se recorta al marco y el usuario se queda con la
-   cámara: arrastrar gira, la rueda acerca, la barra mueve el sol. Al
-   salir del marco se suelta sola. */
-.mapa{margin-top:18px}
-.mapa summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:7px;
-  font-size:12.5px;color:var(--soft);padding:5px 0;transition:color .2s var(--e)}
-.mapa summary::-webkit-details-marker{display:none}
-.mapa summary:hover{color:var(--acc)}
-.mapa summary:focus-visible{outline:2px solid var(--acc);outline-offset:4px;border-radius:6px}
-.mapa summary b{font-weight:500}
-.mapa summary svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.3;
-  stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--e)}
-.mapa[open] summary svg{transform:rotate(180deg)}
-.mapa summary .ocultar{display:none}
-.mapa[open] summary .ver{display:none}
-.mapa[open] summary .ocultar{display:inline}
-.cerca{padding-top:12px}
-.cerca .pista{margin:0 0 13px;color:var(--mid);font-size:13px;line-height:1.6;max-width:640px}
-.marco{position:relative;height:min(52vh,420px);border-radius:var(--r2);overflow:hidden;
-  border:1px solid var(--line);box-shadow:var(--in)}
-.marco .agarre{position:absolute;inset:0;cursor:grab;touch-action:pan-y;border-radius:var(--r2)}
-.marco .agarre:active{cursor:grabbing}
-.marco .leyenda{position:absolute;left:12px;bottom:10px;right:58px;display:flex;flex-wrap:wrap;gap:6px;
-  pointer-events:none;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;color:var(--mid)}
-.marco .leyenda i{display:inline-flex;align-items:center;gap:6px;font-style:normal;
-  padding:3px 8px;border-radius:99px;background:oklch(from var(--card) l c h / .82);
-  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--hair)}
-.marco .leyenda b{width:7px;height:7px;border-radius:50%;flex:none}
-.marco .leyenda .p1{background:oklch(84% .145 82)}
-.marco .leyenda .p2{background:var(--khaki)}
-.marco .leyenda .p3{background:var(--musgo)}
-.mandos{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px}
-.bx{width:32px;height:32px;border-radius:10px;border:1px solid var(--hair);cursor:pointer;
+/* ═══════════ el mapa a pantalla completa ═══════════
+   Abrir el mapa NO monta un segundo mapa. El diorama ya vive fijo
+   detrás de toda la página; abrirlo sube esa misma escena por encima
+   del sitio (z-index), tapa la página con un velo del color del fondo
+   y deja los mandos flotando. Cerrar lo baja todo otra vez. Por eso no
+   hay recortes ni un segundo lienzo: es una sola escena, siempre. */
+.verMapa{display:inline-flex;align-items:center;gap:8px;margin-top:20px;cursor:pointer;
+  font-family:inherit;font-size:12.5px;color:var(--soft);background:none;border:0;padding:5px 0;
+  transition:color .2s var(--e)}
+.verMapa:hover{color:var(--acc)}
+.verMapa:focus-visible{outline:2px solid var(--acc);outline-offset:4px;border-radius:6px}
+.verMapa svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+
+.velo{position:fixed;inset:0;z-index:49;background:var(--ground);opacity:0;
+  pointer-events:none;transition:opacity .5s var(--e)}
+:root.mapa-abierto .velo{opacity:1;pointer-events:auto}
+:root.mapa-abierto .escena{z-index:50}
+:root.mapa-abierto,:root.mapa-abierto body{overflow:hidden}
+.pantalla{position:fixed;inset:0;z-index:51;opacity:0;pointer-events:none;
+  transition:opacity .45s var(--e)}
+.pantalla[hidden]{display:none}
+:root.mapa-abierto .pantalla{opacity:1}
+.pantalla .agarre{position:absolute;inset:0;cursor:grab;touch-action:none;pointer-events:auto}
+.pantalla .agarre:active{cursor:grabbing}
+.mtop{position:absolute;top:0;left:0;right:0;display:flex;align-items:center;
+  justify-content:space-between;gap:14px;padding:clamp(13px,2.2vw,24px)}
+.mtop>*{pointer-events:auto}
+.mtitu{font-family:Fraunces,Georgia,serif;font-variation-settings:'wght' 560,'SOFT' 40;
+  font-size:clamp(15px,1.9vw,20px);letter-spacing:-.015em;color:var(--ink)}
+.mandos{position:absolute;right:clamp(13px,2.2vw,24px);top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:7px;pointer-events:auto}
+.bx{width:34px;height:34px;border-radius:11px;border:1px solid var(--hair);cursor:pointer;
   background:oklch(from var(--card) l c h / .84);backdrop-filter:blur(8px);
   -webkit-backdrop-filter:blur(8px);color:var(--ink);font-size:14px;line-height:1;padding:0;
   font-family:inherit;box-shadow:var(--sh);transition:transform .18s var(--e),background .18s var(--e)}
 .bx:hover{transform:translateY(-1px)}
-.perillas{display:flex;flex-wrap:wrap;align-items:center;gap:11px;margin-top:12px}
-.perillas .hr{display:flex;align-items:center;gap:11px;flex:1 1 290px;min-width:210px}
-.perillas .hr span{min-width:62px;font-size:12px;color:var(--mid)}
-.perillas input[type=range]{flex:1;accent-color:var(--acc);height:24px;cursor:pointer}
+.pantalla .leyenda{position:absolute;left:clamp(13px,2.2vw,24px);
+  bottom:calc(clamp(13px,2.2vw,24px) + 46px);display:flex;flex-wrap:wrap;gap:6px;
+  max-width:min(430px,64vw);pointer-events:none;
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;color:var(--mid)}
+.pantalla .leyenda i{display:inline-flex;align-items:center;gap:6px;font-style:normal;
+  padding:3px 8px;border-radius:99px;background:oklch(from var(--card) l c h / .82);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--hair)}
+.pantalla .leyenda b{width:7px;height:7px;border-radius:50%;flex:none}
+.pantalla .leyenda .p1{background:oklch(84% .145 82)}
+.pantalla .leyenda .p2{background:var(--khaki)}
+.pantalla .leyenda .p3{background:var(--musgo)}
+.pantalla .perillas{position:absolute;left:0;right:0;bottom:0;display:flex;flex-wrap:wrap;
+  align-items:center;gap:10px;padding:clamp(13px,2.2vw,24px)}
+.pantalla .perillas>*{pointer-events:auto}
+.perillas .hr{display:flex;align-items:center;gap:11px;flex:1 1 300px;min-width:190px;
+  padding:7px 14px;border-radius:99px;background:oklch(from var(--card) l c h / .84);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--hair)}
+.perillas .hr span{min-width:58px;font-size:12px;color:var(--mid)}
+.perillas input[type=range]{flex:1;accent-color:var(--acc);height:22px;cursor:pointer}
 .chip{cursor:pointer;font-family:inherit}
 .chip[aria-pressed="true"]{background:var(--acc);color:var(--acc-ink);border-color:transparent}
-.escena{clip-path:inset(var(--my,0px) var(--mr,0px) var(--mb,0px) var(--mx,0px) round var(--mrad,0px))}
-@media(max-width:760px){.marco{height:min(48vh,340px)}.marco .leyenda{right:54px}}
+@media(max-width:620px){
+  .pantalla .leyenda{display:none}
+  .perillas .hr{flex:1 1 100%}
+  .mandos{top:auto;bottom:calc(clamp(13px,2.2vw,24px) + 96px);transform:none;flex-direction:row}
+}
 body>header,body>main,body>footer,body>section,.barra{position:relative;z-index:2}
 
 /* ═══════════ barra ═══════════ */
@@ -197,11 +212,12 @@ h1 span{display:block;color:var(--olive)}
   box-shadow:var(--sh)}
 /* si la tarea del jueves no corrió, la página se queda mostrando una
    semana que ya pasó como si fuera la de hoy. Esto lo dice en voz alta. */
-.viejo{margin-top:14px;display:inline-flex;align-items:center;gap:9px;
-  padding:9px 15px;border-radius:99px;font-size:12.5px;font-weight:600;
+.viejo{margin-top:14px;display:inline-flex;align-items:flex-start;gap:9px;
+  padding:10px 16px;border-radius:15px;font-size:12.5px;font-weight:600;line-height:1.5;
+  max-width:min(620px,100%);text-wrap:pretty;
   color:var(--ink);background:oklch(from var(--lima) l c h / .34);
   border:1px solid oklch(from var(--olive) l c h / .35)}
-.viejo::before{content:"";width:8px;height:8px;border-radius:50%;flex:none;
+.viejo::before{content:"";width:8px;height:8px;border-radius:50%;flex:none;margin-top:5px;
   background:var(--olive)}
 .viejo.alerta{background:oklch(from var(--acc) l c h / .14);
   border-color:oklch(from var(--acc) l c h / .45);color:var(--acc)}
@@ -533,37 +549,11 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
     Fuentes: <a href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">@elcuencovalle</a> ·
     <a href="https://ra.co/events/mx/mexicocity" target="_blank" rel="noopener">Resident Advisor</a> ·
     <a href="https://ligmincha.org/center-mexico-valledebravo/" target="_blank" rel="noopener">Ligmincha</a>.</p>
+  <button class="verMapa" type="button" id="verMapa">Explora el mapa
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v6h6M20 10V4h-6M20 4l-8 8M4 20l8-8"/></svg>
+  </button>
 </div>
 
-  <!-- el mapa, si lo pides · una línea chica, no una sección entera -->
-  <details class="mapa" id="mapa">
-    <summary><b class="ver">Explora el mapa</b><b class="ocultar">Cerrar el mapa</b>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
-    <div class="cerca">
-      <p class="pista">Es el mismo diorama que est&aacute; detr&aacute;s de toda la p&aacute;gina. Arrastra para girar,
-        la rueda o dos dedos para acercarte, y la barra de horas mueve el sol y las luces del pueblo.</p>
-      <div class="marco" id="marco">
-        <div class="agarre" id="agarre" role="application" tabindex="0"
-             aria-label="Diorama de Valle de Bravo. Arrastra para girar, rueda para acercar."></div>
-        <div class="mandos">
-          <button class="bx" type="button" data-cam="mas" aria-label="Acercar">+</button>
-          <button class="bx" type="button" data-cam="menos" aria-label="Alejar">&minus;</button>
-          <button class="bx" type="button" data-cam="reset" aria-label="Volver al encuadre de siempre">&#8635;</button>
-        </div>
-        <div class="leyenda">
-          <i><b class="p1"></b>ventanas encendidas</i>
-          <i><b class="p2"></b>calles principales</i>
-          <i><b class="p3"></b>bosque</i>
-        </div>
-      </div>
-      <div class="perillas">
-        <label class="hr"><span class="mono" id="horaTxt">ahora</span>
-          <input type="range" id="horaR" min="0" max="1435" step="5" aria-label="Hora del d&iacute;a en Valle"></label>
-        <button class="bt chip" type="button" id="lluviaB" aria-pressed="false">Llover</button>
-        <button class="bt chip" type="button" id="ahoraB">Volver a ahora</button>
-      </div>
-    </div>
-  </details>
 </div></footer>
 <script src="lugares.js"></script>
 <script src="historial.js"></script>
@@ -655,8 +645,16 @@ function vivo(){
 vivo();
 
 /* ── tiles de día ── */
-var dias=$("#dias"),board=$("#board"),sel=HOY;
-if(!D.days.some(function(d){return d.date===HOY})) sel=D.days[0].date;
+var dias=$("#dias"),board=$("#board");
+/* Cuando hoy no cae dentro de la semana publicada hay que elegir algo.
+   Si la semana ya pasó, el domingo es lo último que ocurrió; el lunes
+   es lo más viejo, y quedarse ahí hacía parecer que el sitio creía que
+   hoy era lunes 24. */
+function porDefecto(){
+  if(D.days.some(function(d){return d.date===HOY})) return HOY;
+  return (D.week&&D.week.end&&HOY>D.week.end) ? D.days[D.days.length-1].date : D.days[0].date;
+}
+var sel=porDefecto();
 D.days.forEach(function(d){
   var ev=D.events.filter(function(e){return e.date===d.date});
   var b=document.createElement("button");
@@ -772,9 +770,7 @@ function latido(){
     remarca(); vencida();
     /* si estabas parado en "hoy", te llevo al hoy nuevo; si elegiste
        un día a mano, ahí te quedas */
-    if(eraHoy && !elegido){
-      pick(D.days.some(function(d){return d.date===HOY}) ? HOY : D.days[0].date);
-    }
+    if(eraHoy && !elegido) pick(porDefecto());
   }
   vivo();
 }
@@ -788,17 +784,24 @@ function latido(){
 addEventListener("visibilitychange",function(){ if(!document.hidden) latido(); });
 
 /* ── ¿la semana que se muestra ya pasó? ── */
+var DOWL=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
+var MESL=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+function hoyLargo(){
+  var n=new Date(HOY+"T12:00:00");
+  return DOWL[n.getDay()]+" "+n.getDate()+" "+MESL[n.getMonth()];
+}
 function vencida(){
   var el=$("#viejo"); if(!el||!D.week||!D.week.end) return;
   el.className="viejo"; el.hidden=true;
   if(HOY<=D.week.end) return;
   var cuantos=Math.round((new Date(HOY+"T12:00:00")-new Date(D.week.end+"T12:00:00"))/864e5);
-  el.hidden=false;
+  el.hidden=false; el.className="viejo alerta";
   if(cuantos<=7){
-    el.textContent="Esta semana ya terminó · la nueva edición sale el jueves";
+    el.textContent="Hoy es "+hoyLargo()+". Lo que ves es la semana del "+D.week.label+
+      ", que ya terminó"+(D.week.next?" · la nueva edición sale el "+D.week.next:"")+".";
   }else{
-    el.className="viejo alerta";
-    el.textContent="Esta página lleva "+cuantos+" días sin actualizarse · puede que ya nada de esto aplique";
+    el.textContent="Hoy es "+hoyLargo()+" y esta página lleva "+cuantos+
+      " días sin actualizarse · puede que ya nada de esto aplique.";
   }
 }
 vencida();
@@ -1246,7 +1249,7 @@ if("IntersectionObserver" in window){
     /* cada tipo se levanta lo suyo sobre el terreno; uY es la misma
        exageracion vertical que usan los bloques, asi que mover
        VALLE_TUNE.exag no descuadra las calcomanias */
-    '  float off = tipo < 0.5 ? 0.012 : (tipo < 1.5 ? 0.004 : (tipo < 2.5 ? 0.006 : 0.085));',
+    '  float off = tipo < 0.5 ? 0.012 : (tipo < 1.5 ? 0.004 : (tipo < 2.5 ? 0.006 : 0.048));',
     '  vec3 c = vec3(aS.x, aS.y*uY + off, aS.z);',
     '  float esc = 1.0;',
     '  if (tipo < 0.5) {',                                  /* resplandor de ventanas */
@@ -1301,8 +1304,17 @@ if("IntersectionObserver" in window){
     '    a = max(max(vela, casco*0.94), estela) * inten;',
     '    col = mix(cVela*0.50, cVela, max(vela, estela));',
     '  } else {',
-    '    a = smoothstep(0.98, 0.42, r) * (0.5 + 0.5*smoothstep(0.34, 0.0, abs(vQ.y + 0.18))) * inten;',
-    '    col = mix(uWarm, vec3(0.95,0.95,0.95), 0.4);',
+    /* parapente: la campana es un arco de circulo con el centro por
+       DEBAJO del sprite, para que las puntas caigan y el centro suba
+       — al reves se ve como sonrisa y no como ala. */
+    '    vec2 q = vQ;',
+    '    float dd = length(vec2(q.x*0.76, q.y + 0.66));',
+    '    float campana = smoothstep(0.19, 0.05, abs(dd - 1.04)) * smoothstep(-0.36, -0.08, q.y);',
+    '    float piloto = 1.0 - smoothstep(0.08, 0.19, length(vec2(q.x, q.y + 0.72)));',
+    '    float cuerdas = smoothstep(0.07, 0.0, abs(abs(q.x)*1.30 + q.y + 0.64))',
+    '                  * step(-0.74, q.y) * step(q.y, 0.04) * 0.42;',
+    '    a = max(max(campana, piloto), cuerdas) * inten;',
+    '    col = mix(vec3(0.26,0.28,0.30), mix(uWarm, vec3(0.97,0.95,0.92), 0.55), max(campana, cuerdas));',
     '  }',
     '  if (a < 0.004) discard;',
     '  gl_FragColor = vec4(col*a, a);',
@@ -1562,7 +1574,8 @@ if("IntersectionObserver" in window){
   var pasoP = Math.max(1, Math.floor(crestas.length / 3));
   for (var kp = 0; kp < crestas.length && nPara < 3; kp += pasoP) {
     var cp2 = crestas[kp];
-    calco(cp2 % G, (cp2 / G) | 0, hv[cp2] / (LEV - 1), 3, 0.0150, rnd(cp2 * 8.41), 0.90, 0.055);
+    calco(cp2 % G, (cp2 / G) | 0, hv[cp2] / (LEV - 1), 3,
+          0.021 + rnd(cp2 * 3.3) * 0.005, rnd(cp2 * 8.41), 0.92, 0.052);
     nPara++;
   }
 
@@ -2093,9 +2106,38 @@ if("IntersectionObserver" in window){
 })();
 
 </script>
+<!-- El mapa a pantalla completa. NO es un segundo mapa: es el mismo
+     diorama que vive fijo detrás de la página, subido por encima de
+     todo, con el sitio tapado por un velo del color del fondo. -->
+<div class="velo" id="velo" aria-hidden="true"></div>
+<div class="pantalla" id="pantalla" role="dialog" aria-modal="true" aria-label="El valle, de cerca" hidden>
+  <div class="agarre" id="agarre" tabindex="0"
+       aria-label="Diorama de Valle de Bravo. Arrastra para girar, rueda para acercar."></div>
+  <div class="mtop">
+    <span class="mtitu fr">El valle, de cerca</span>
+    <button class="bx" type="button" id="cerrarMapa" aria-label="Cerrar el mapa">&#10005;</button>
+  </div>
+  <div class="mandos">
+    <button class="bx" type="button" data-cam="mas" aria-label="Acercar">+</button>
+    <button class="bx" type="button" data-cam="menos" aria-label="Alejar">&minus;</button>
+    <button class="bx" type="button" data-cam="reset" aria-label="Volver al encuadre de siempre">&#8635;</button>
+  </div>
+  <div class="leyenda">
+    <i><b class="p1"></b>ventanas encendidas</i>
+    <i><b class="p2"></b>calles principales</i>
+    <i><b class="p3"></b>bosque</i>
+  </div>
+  <div class="perillas">
+    <label class="hr"><span class="mono" id="horaTxt">ahora</span>
+      <input type="range" id="horaR" min="0" max="1435" step="5" aria-label="Hora del d&iacute;a en Valle"></label>
+    <button class="bt chip" type="button" id="lluviaB" aria-pressed="false">Llover</button>
+    <button class="bt chip" type="button" id="ahoraB">Volver a ahora</button>
+  </div>
+</div>
+
 <script>
 /* ══════════════════════════════════════════════════════════════════
-   El clima de Valle, en vivo · y el panel del pie
+   El clima de Valle, en vivo · y el mapa a pantalla completa
    ══════════════════════════════════════════════════════════════════ */
 (function(){
 "use strict";
@@ -2167,74 +2209,50 @@ function pide(){
 setTimeout(pide,1200);
 setInterval(pide,VIDA);
 
-/* ── 2 · el panel ────────────────────────────────────────────── */
-var marco=$("#marco"), agarre=$("#agarre"), horaR=$("#horaR"), horaTxt=$("#horaTxt");
-/* sin WebGL no hay nada que manejar: el panel se quita entero */
-if(!marco||!window.VALLE_CAM){ var sec=$("#mapa"); if(sec) sec.hidden=true; return; }
+/* ── 2 · el mapa a pantalla completa ─────────────────────────
+   Una sola escena en toda la página: la que ya vive fija detrás del
+   sitio. Abrir el mapa le sube el z-index por encima de todo y baja
+   un velo del color del fondo; cerrar lo devuelve a su lugar. Por eso
+   no hay recorte, ni un segundo lienzo, ni dos mapas.               */
+var pantalla=$("#pantalla"), agarre=$("#agarre"), horaR=$("#horaR"), horaTxt=$("#horaTxt");
+var verMapa=$("#verMapa"), RAIZ=document.documentElement;
+/* sin WebGL no hay nada que abrir */
+if(!pantalla||!agarre||!verMapa||!window.VALLE_CAM){ if(verMapa) verMapa.hidden=true; return; }
 
-/* la escena se recorta al marco cuando el panel toma el control.
-   mAmt va de 0 (pantalla completa) a 1 (dentro del marco) y se
-   interpola a mano para que el recorte siga al marco mientras la
-   página se mueve. */
-var esc=$("#escena3d"), mAmt=0, mTgt=0, corriendo=0;
-function tick(){
-  corriendo=1;
-  mAmt+=(mTgt-mAmt)*.075;
-  if(Math.abs(mTgt-mAmt)<.0015) mAmt=mTgt;
-  var b=marco.getBoundingClientRect(), vw=innerWidth, vh=innerHeight;
-  esc.style.setProperty("--mx",(b.left*mAmt).toFixed(1)+"px");
-  esc.style.setProperty("--my",(b.top*mAmt).toFixed(1)+"px");
-  esc.style.setProperty("--mr",((vw-b.right)*mAmt).toFixed(1)+"px");
-  esc.style.setProperty("--mb",((vh-b.bottom)*mAmt).toFixed(1)+"px");
-  esc.style.setProperty("--mrad",(18*mAmt).toFixed(1)+"px");
-  window.VALLE_CAM.marco(((b.left+b.width/2)/vw)*2-1, 1-((b.top+b.height/2)/vh)*2, mTgt>.5);
-  if(mAmt!==mTgt||mTgt) requestAnimationFrame(tick); else corriendo=0;
+var abierto=0, volverA=null;
+function abre(){
+  if(abierto) return;
+  abierto=1; volverA=document.activeElement;
+  pantalla.hidden=false;
+  /* un respiro antes de la clase: si no, no hay de dónde animar la opacidad */
+  setTimeout(function(){ if(abierto) RAIZ.classList.add("mapa-abierto") },20);
+  window.VALLE_CAM.tomar();
+  window.VALLE_CAM.marco(0,0,true);      /* centrado, sin el corrimiento del sitio */
+  var c=$("#cerrarMapa"); if(c) c.focus();
 }
-function arranca(){ if(!corriendo) requestAnimationFrame(tick); }
-function toma(si){
-  if(si===(mTgt>.5)) return;
-  mTgt=si?1:0;
-  si?window.VALLE_CAM.tomar():window.VALLE_CAM.soltar();
-  arranca();
+function cierra(){
+  if(!abierto) return;
+  abierto=0;
+  RAIZ.classList.remove("mapa-abierto");
+  window.VALLE_CAM.soltar();
+  window.VALLE_CAM.marco(0,0,false);
+  setTimeout(function(){ if(!abierto) pantalla.hidden=true },520);
+  /* el foco vuelve a donde estaba; si no había nada enfocable, al
+     botón que abrió — nunca al body, que se lo traga */
+  var destino=(volverA&&volverA.focus&&volverA!==document.body)?volverA:verMapa;
+  try{ destino.focus() }catch(e){}
 }
-/* Una sola vía, y la más aburrida: el rect del marco, leído una vez
-   por cuadro y sólo cuando hubo scroll. Antes esto era un
-   IntersectionObserver y hay entornos donde no dispara nunca — el
-   panel se quedaba sin cámara sin decir nada. */
-var det=document.getElementById("mapa");
-function revisa(){
-  /* Ojo: un <details> cerrado ya no esconde a sus hijos con display:none
-     — Chrome les pone content-visibility:hidden, que conserva el layout.
-     getBoundingClientRect devuelve los 420 px del marco aunque no se vea
-     nada. Sin esta guarda, bajar al pie con el mapa cerrado recortaba la
-     escena a una caja invisible y el diorama desaparecía. */
-  if(det && !det.open){ toma(false); return; }
-  var b=marco.getBoundingClientRect();
-  var visible=Math.min(b.bottom,innerHeight)-Math.max(b.top,0);
-  toma(visible > b.height*.55);
-}
-/* Va directo en el listener, sin envolverlo en requestAnimationFrame:
-   el navegador ya junta los eventos de scroll a uno por cuadro, y un
-   rAF aquí ataba la decisión al bucle de dibujo — que se congela en
-   una pestaña de fondo. Es el mismo tropiezo que ya nos había pasado
-   con el primer cuadro de la escena. Leer un rect es barato. */
-addEventListener("scroll",revisa,{passive:true});
-addEventListener("resize",revisa,{passive:true});
-addEventListener("visibilitychange",function(){ if(!document.hidden) revisa(); });
-/* abrir o cerrar la línea cuenta: cerrada, el marco mide cero y la
-   cámara ni se entera */
-if(det) det.addEventListener("toggle",function(){
-  revisa();
-  if(det.open) setTimeout(function(){ marco.scrollIntoView({block:"center",behavior:"smooth"}) },80);
+verMapa.addEventListener("click",abre);
+$("#cerrarMapa").addEventListener("click",cierra);
+addEventListener("keydown",function(e){
+  if(e.key==="Escape"&&abierto){ e.preventDefault(); cierra(); }
 });
-revisa();
 
 /* arrastrar gira · pellizcar y la rueda acercan */
-var dedos={}, ultDist=0, tocado=0;
+var dedos={}, ultDist=0;
 agarre.addEventListener("pointerdown",function(e){
   agarre.setPointerCapture(e.pointerId);
   dedos[e.pointerId]={x:e.clientX,y:e.clientY};
-  tocado=1; toma(true);
 });
 agarre.addEventListener("pointermove",function(e){
   var d=dedos[e.pointerId]; if(!d) return;
@@ -2253,20 +2271,19 @@ agarre.addEventListener("pointermove",function(e){
 function suelta(e){ delete dedos[e.pointerId]; if(!Object.keys(dedos).length) ultDist=0; }
 agarre.addEventListener("pointerup",suelta);
 agarre.addEventListener("pointercancel",suelta);
+/* aquí la rueda sí puede quedarse el gesto: la página está trabada */
 agarre.addEventListener("wheel",function(e){
-  if(!tocado) return;                 /* todavia no lo toca: que la pagina siga bajando */
   e.preventDefault();
   window.VALLE_CAM.zoom(e.deltaY>0?1.085:.922);
 },{passive:false});
 agarre.addEventListener("keydown",function(e){
-  var k=e.key, p={ArrowLeft:[-.12,0],ArrowRight:[.12,0],ArrowUp:[0,-.08],ArrowDown:[0,.08]}[k];
-  if(p){ e.preventDefault(); tocado=1; toma(true); window.VALLE_CAM.gira(p[0],p[1]); }
-  else if(k==="+"||k==="="){ e.preventDefault(); window.VALLE_CAM.zoom(.9); }
-  else if(k==="-"){ e.preventDefault(); window.VALLE_CAM.zoom(1.11); }
+  var p={ArrowLeft:[-.12,0],ArrowRight:[.12,0],ArrowUp:[0,-.08],ArrowDown:[0,.08]}[e.key];
+  if(p){ e.preventDefault(); window.VALLE_CAM.gira(p[0],p[1]); }
+  else if(e.key==="+"||e.key==="="){ e.preventDefault(); window.VALLE_CAM.zoom(.9); }
+  else if(e.key==="-"){ e.preventDefault(); window.VALLE_CAM.zoom(1.11); }
 });
 Array.prototype.forEach.call(document.querySelectorAll("[data-cam]"),function(b){
   b.addEventListener("click",function(){
-    tocado=1; toma(true);
     var q=b.getAttribute("data-cam");
     if(q==="mas") window.VALLE_CAM.zoom(.86);
     else if(q==="menos") window.VALLE_CAM.zoom(1.16);

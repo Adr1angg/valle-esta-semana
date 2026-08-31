@@ -105,9 +105,109 @@ y el filtro completo), `README.md` (una línea en la tabla de archivos) y
 `investigacion-facebook.md`, nuevo, con toda la investigación y lo
 descartado. **No se tocó `data.js`, `index.html` ni `cdmx.html`.**
 
-**Pendiente para Adrian:** la tarea programada del jueves vive en la app de
-Claude, no en la nube, así que hay que **pegarle a mano el texto nuevo de
-`tarea-semanal.md`** para que el cambio surta efecto.
+**Sobre la tarea programada.** Vive en la app de escritorio, no en la nube, y
+no hay API que lea ni escriba las tareas locales — solo las de la nube, y la
+lista de esa cuenta está vacía. Una sesión anterior ya lo había anotado en
+`tarea-semanal.md` ("la tarea en sí se edita desde la app de Claude"). Adrian
+pegó el texto nuevo a mano el 31 ago 2026 y se verificó: mismo orden de
+secciones, misma primera y última línea, y los diez marcadores nuevos
+presentes. **Ya está en vivo**; la primera corrida con el paso de Facebook y
+el filtro es el jueves 3 sep.
+
+---
+
+## 2026-08-31 (tarde y noche) · El mapa encuentra su lugar
+
+Tres rondas de comentarios de Adrián sobre lo publicado a mediodía.
+Cada una destapó algo real.
+
+### El mapa: de sección, a línea, a pantalla completa
+
+Primero le puse una **sección de ancho completo** con encabezado y
+520 px de alto debajo de las notas. Él había pedido lo contrario: *"una
+letra chiquita que se pique, hasta abajo"*. Lo volví un desplegable de
+12.5 px — y ahí salió un bicho de verdad: **un `<details>` cerrado ya no
+esconde a sus hijos con `display:none`**; Chrome les pone
+`content-visibility:hidden`, que conserva el layout. `getBoundingClientRect()`
+seguía devolviendo los 420 px del marco con el mapa cerrado, así que
+bajar al pie le daba la cámara al panel y recortaba la escena a una caja
+invisible: el diorama desaparecía.
+
+Pero seguía mal, y él lo dijo mejor que yo: *"ahora hay dos mapas"*. El
+desplegable metía un marco chiquito **debajo** del diorama que ya estaba
+de fondo.
+
+La solución no era agrandar el marco. Era darse cuenta de que **ya hay
+un solo mapa**: el diorama vive fijo detrás de todo el sitio desde el
+principio. Abrirlo ahora nada más le sube el `z-index` por encima de la
+página, baja un velo del color del fondo, y deja los mandos flotando.
+Cerrar lo baja otra vez. Se borró todo el andamio de `clip-path`
+siguiendo un rect cada cuadro, y de paso el bicho del `<details>`: ya no
+hay desplegable que medir. El disparador es una línea dentro del **mismo
+recuadro de las fuentes**. `Esc` o la ✕ cierran y la cámara se devuelve.
+
+### Veleros y parapentes: la forma importa más que el tamaño
+
+*"Se ven como puntitos."* Cierto: ambos eran círculos con caída suave, y
+un círculo chico es un punto.
+
+Los veleros son ahora **vela triangular, casco y estela**, con
+inclinación distinta por barco. Los parapentes, **campana, cuerdas y
+piloto** — y el detalle que costó: la campana es un arco de círculo cuyo
+centro tiene que quedar **por debajo** del sprite, para que las puntas
+caigan y el centro suba. Con el centro arriba se ve como sonrisa, no
+como ala. Además bajaron de 0.085 a 0.048 sobre el terreno: flotaban tan
+alto que se veían despegados del cerro.
+
+A 142 m por celda un velero real mediría medio pixel, así que esto son
+símbolos, no modelos. Pero un símbolo *con forma de barco* se lee como
+barco y un círculo no.
+
+### "Ya es 31 y sigue en lunes 24"
+
+Dos cosas distintas, y solo una era mía.
+
+**La primera sí era un bug.** Todo lo de la fecha se calculaba una vez
+al cargar: `HOY` se leía al arrancar y las clases `hoy` / `pas` se
+horneaban en el HTML de cada tile. Una pestaña abierta desde ayer seguía
+diciendo que hoy era ayer. Ahora hay un **latido cada 20 s** —colgado
+del reloj que ya estaba en la barra, sin timer nuevo— que relee la
+fecha; si cambió el día, remarca los tiles y el calendario del mes,
+recalcula el renglón de "Ahora / En 20 min" y revisa el aviso. Si
+elegiste un día a mano, ahí te quedas. Y vuelve a latir al regresar a la
+pestaña, porque el navegador estrangula los timers en segundo plano.
+Probado con reloj falso: 23:59:40 del viernes 28 → 160 s después, sin
+recargar, el "Hoy" está en el 29.
+
+**La segunda no era un bug, y es peor.** `data.js` trae la semana 24–30,
+que terminó el domingo 30. Hoy es lunes 31, o sea que hoy no cae dentro
+de la semana publicada, y el código elegía `D.days[0]`: el lunes 24. De
+ahí el tile acentuado que parecía decir "hoy es 24".
+
+Lo de fondo es la cadencia: **la semana corre lunes→domingo y la edición
+sale los jueves.** Eso deja un hueco de lunes a miércoles, *todas las
+semanas*, con el sitio enseñando una semana ya terminada. No fue mala
+suerte; pasa cada siete días.
+
+Parches de presentación, no de la causa:
+
+- Si la semana ya pasó, se elige el **último** día, no el primero. El
+  domingo es lo último que ocurrió; el lunes es lo más viejo.
+- El aviso pasó de un susurro verde a **coral desde el primer día**, con
+  fecha: *"Hoy es lunes 31 ago. Lo que ves es la semana del 24 – 30
+  agosto 2026, que ya terminó · la nueva edición sale el jueves 3 sep."*
+
+**La causa sigue viva:** mover la tarea semanal del jueves a la
+madrugada del lunes. Es tarea local del escritorio, así que la mueve
+Adrián desde la app.
+
+### De paso
+
+- El bloque de la escena quedó en **27.0 KB** comprimido.
+- Un pendiente de higiene: una entrada de esta misma bitácora se perdió
+  dos veces porque el script de parcheo buscaba un encabezado que no
+  existía y el `assert` abortaba **después** de otras escrituras. Ahora
+  se verifica el ancla antes de tocar nada.
 
 ---
 
