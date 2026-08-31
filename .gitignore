@@ -5,5 +5,9 @@ preview.html
 .gh_token*
 TOKEN.txt
 *.token
-_escena/*
-!_escena/COMO-INTEGRAR.md
+
+# el taller del diorama SÍ se guarda: los datos geográficos y el
+# renderizador viven en _escena/datos/ y son la fuente de la escena.
+# Sólo se dejan fuera los pesos muertos.
+_escena/node_modules/
+_escena/demo.html

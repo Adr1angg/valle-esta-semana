@@ -131,9 +131,17 @@ No rediseñar en la actualización semanal.
 
 ### La escena del fondo
 
-`<div class="escena" id="escena3d">` es un **placeholder**: anillos topográficos, bandas
-de agua y un sol que se mueve con la hora. Cuando exista el render 3D del lago se
-reemplaza **ese bloque completo** y nada más. No hay dependencias externas.
+`<div class="escena" id="escena3d">` es el **diorama de vóxeles** del vaso de la presa:
+terreno real, casas reales de OpenStreetMap, calles, árboles y ventanas encendidas de
+noche. Gira con el scroll y la luz sigue la hora. WebGL 1 escrito a mano, **sin
+dependencias**, 17.9 KB comprimido, una sola llamada de dibujo de día.
+
+Los anillos topográficos siguen ahí como plan B: si el navegador no da WebGL, la clase
+`sin-webgl` los saca y la página se ve bien igual.
+
+El bloque va incrustado en `index.html`. **Los datos y el renderizador viven en
+`_escena/datos/`** y se rearman con `node build.js`. De dónde salió cada dato, cómo está
+codificado y qué cuidar si se rehace: **`_escena/DATOS-GEOGRAFICOS.md`**.
 
 ---
 
@@ -151,8 +159,22 @@ reemplaza **ese bloque completo** y nada más. No hay dependencias externas.
 | `archivar.js` | guarda la semana en `historial.js` · se corre antes de tocar `data.js` |
 | `verify.js` | Playwright: desbordes, errores, y que la escena y el tablero existan |
 | `sources.md` | lista verificada de fuentes, con los callejones sin salida |
+| `BITACORA.md` | **qué cambió y por qué, con fecha** · se le agrega una entrada en cada cambio |
 | `_archivo/` | versiones anteriores del sitio, por si acaso |
-| `_escena/` | el bloque de la escena suelto y sus notas (ya va incrustado en `index.html`) |
+| `_escena/DATOS-GEOGRAFICOS.md` | de dónde salió el mapa y cómo está codificado |
+| `_escena/datos/` | terreno, casas, calles y el renderizador · aquí se rearma la escena |
+| `_escena/COMO-INTEGRAR.md` | cómo meter una escena nueva a `index.html`, y los tropiezos |
+| `_escena/escena.js` | el bloque ya armado (ya va incrustado en `index.html`) |
+
+## Anotar el cambio
+
+Antes de cada push que toque cómo funciona o cómo se ve el sitio, va una entrada
+nueva hasta arriba de **`BITACORA.md`**: qué cambió, por qué, y qué se rompió en el
+camino. El `git log` guarda las líneas; la bitácora guarda el motivo, que es lo que
+se olvida.
+
+La carga semanal del jueves **no** se anota — corre sola y no cambia el sitio. Sí se
+anota si cambia la tarea del jueves misma.
 
 ## Verificar antes de publicar
 

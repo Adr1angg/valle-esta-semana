@@ -1,0 +1,661 @@
+<title>El Lago en Bloques</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ═══ tokens · Verde Lago · copiados tal cual de index.html ═══ */
+:root{
+  --ground:oklch(93.5% .036 132); --sunk:oklch(89.5% .048 133);
+  --card:oklch(97.6% .022 116);   --lift:oklch(99% .014 110);
+  --ink:oklch(30% .056 138);      --mid:oklch(46% .046 137);
+  --soft:oklch(60% .036 136);     --line:oklch(84% .045 133);
+  --hair:oklch(88% .036 133);
+  --olive:oklch(52% .088 128);    --lima:oklch(86% .155 122);
+  --agua:oklch(74% .078 178);     --musgo:oklch(63% .085 152);
+  --khaki:oklch(80% .08 104);     --acc:oklch(63% .175 44);
+  --acc-ink:oklch(99% .01 60);
+  --r:26px; --r2:18px; --r3:12px;
+  --e:cubic-bezier(.2,.9,.24,1);
+  --sh:0 1px 0 oklch(100% 0 0/.7) inset, 0 22px 34px -26px oklch(30% .06 138/.55);
+  --in:inset 0 2px 5px oklch(30% .06 138/.14), inset 0 -1px 0 oklch(100% 0 0/.5);
+}
+:root[data-t="dawn"] {--ground:oklch(93% .04 108);--sunk:oklch(89% .05 106);--acc:oklch(66% .17 34);--lima:oklch(88% .14 100)}
+:root[data-t="day"]  {--ground:oklch(93.5% .036 132);--sunk:oklch(89.5% .048 133);--acc:oklch(63% .175 44)}
+:root[data-t="dusk"] {--ground:oklch(91% .045 92);--sunk:oklch(87% .058 88);--acc:oklch(60% .17 28);--lima:oklch(84% .15 96)}
+:root[data-t="night"]{
+  --ground:oklch(22% .038 168);--sunk:oklch(18.5% .036 170);--card:oklch(26% .04 165);--lift:oklch(29% .042 163);
+  --ink:oklch(94% .03 130);--mid:oklch(76% .036 140);--soft:oklch(60% .034 145);
+  --line:oklch(34% .04 165);--hair:oklch(30% .036 166);
+  --olive:oklch(72% .09 130);--lima:oklch(84% .15 122);--agua:oklch(76% .08 180);
+  --musgo:oklch(72% .09 152);--khaki:oklch(78% .085 104);
+  --acc:oklch(70% .16 48);--acc-ink:oklch(18% .03 60);
+  --sh:0 1px 0 oklch(100% 0 0/.07) inset, 0 24px 40px -26px oklch(0% 0 0/.7);
+  --in:inset 0 2px 6px oklch(0% 0 0/.4), inset 0 -1px 0 oklch(100% 0 0/.06);
+}
+:root[data-theme="dark"]:not([data-t]){
+  --ground:oklch(22% .038 168);--sunk:oklch(18.5% .036 170);--card:oklch(26% .04 165);
+  --ink:oklch(94% .03 130);--mid:oklch(76% .036 140);--soft:oklch(60% .034 145);
+  --line:oklch(34% .04 165);--hair:oklch(30% .036 166);--olive:oklch(72% .09 130);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:Manrope,system-ui,sans-serif;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  overflow-x:clip;transition:background 1.4s var(--e),color 1.4s var(--e)}
+.w{max-width:1180px;margin:0 auto;padding:0 clamp(14px,3.4vw,34px)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* ═══ la escena ═══ */
+.escena{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.escena .lienzo{position:absolute;inset:0;display:block;width:100%;height:100%}
+/* sombra de contacto · sigue al diorama */
+.escena::after{content:"";position:absolute;left:var(--dx,50%);top:var(--dy,60%);
+  width:var(--dw,30vmin);height:calc(var(--dw,30vmin) * .30);
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(ellipse at center, oklch(30% .06 138/.26), transparent 72%);
+  filter:blur(18px);opacity:var(--dop,.7);pointer-events:none}
+:root[data-t="night"] .escena::after{background:radial-gradient(ellipse at center, oklch(0% 0 0/.55), transparent 72%)}
+/* modo escenario: el hero deja sitio abajo para el diorama */
+body.escenario header{padding-bottom:min(54vh,540px)}
+/* respaldo si no hay WebGL: los anillos originales */
+.escena .anillos{position:absolute;left:50%;top:50%;width:min(158vw,1700px);height:min(158vw,1700px);
+  transform:translate(-50%,-46%);opacity:.5;display:none}
+.escena.sin-webgl .anillos{display:block}
+.escena .ring{fill:none;stroke:var(--olive);stroke-width:1.4;opacity:.34;transform-origin:center;
+  animation:breathe 14s var(--e) infinite alternate}
+.escena .ring:nth-child(2n){stroke:var(--agua);opacity:.26;animation-duration:18s}
+@keyframes breathe{0%{transform:scale(.965)}100%{transform:scale(1.045)}}
+.grano{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.16;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+:root[data-t="night"] .grano{mix-blend-mode:screen;opacity:.1}
+header,main,.barra{position:relative;z-index:2}
+
+/* ═══ barra ═══ */
+.barra{position:sticky;top:0;z-index:70;backdrop-filter:blur(16px) saturate(1.4);
+  background:oklch(from var(--ground) l c h / .74);border-bottom:1px solid var(--hair)}
+.barra .in{display:flex;align-items:center;gap:12px;height:56px;font-size:12.5px}
+.marca{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:13.5px;letter-spacing:-.01em}
+.marca svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.vivo{display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:99px;
+  background:var(--card);border:1px solid var(--hair);color:var(--mid);box-shadow:var(--sh)}
+.vivo i{width:7px;height:7px;border-radius:50%;background:var(--acc);flex:none}
+
+/* ═══ hero ═══ */
+header{padding:clamp(40px,9vw,110px) 0 clamp(20px,3vw,30px)}
+h1{margin:0;font-family:Fraunces,Georgia,serif;
+  font-variation-settings:'opsz' 144,'wght' 560,'SOFT' 90,'WONK' 1;
+  font-size:clamp(46px,10.5vw,124px);line-height:.86;letter-spacing:-.038em;text-wrap:balance;
+  max-width:14ch}
+h1 span{display:block;color:var(--olive)}
+.baja{max-width:46ch;color:var(--mid);font-size:clamp(15px,1.6vw,18px);margin:22px 0 0}
+.sello{display:inline-block;margin-top:22px;padding:9px 16px;border-radius:99px;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);
+  font-size:13px;font-weight:600}
+.act{color:var(--soft);font-size:12.5px;margin-top:12px}
+
+/* ═══ contenido de relleno para poder hacer scroll ═══ */
+main{padding-bottom:22vh}
+.dias{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:clamp(40px,7vw,80px) 0 26px}
+.dia{padding:14px 6px;border-radius:var(--r3);border:1px solid var(--hair);background:var(--card);
+  text-align:center;box-shadow:var(--sh);font-size:12px;color:var(--mid)}
+.dia b{display:block;font-family:"IBM Plex Mono",monospace;font-size:19px;color:var(--ink);font-weight:500}
+.dia.hoy{border-color:var(--acc);color:var(--acc)}
+.dia.hoy b{color:var(--acc)}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.tarjeta{background:var(--card);border:1px solid var(--hair);border-radius:var(--r2);
+  padding:20px;box-shadow:var(--sh)}
+.tarjeta .h{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--soft);
+  letter-spacing:.06em;text-transform:uppercase}
+.tarjeta h3{margin:8px 0 4px;font-family:Fraunces,Georgia,serif;font-size:22px;
+  font-variation-settings:'opsz' 40,'wght' 500,'SOFT' 60;letter-spacing:-.02em}
+.tarjeta p{margin:6px 0 0;color:var(--mid);font-size:14.5px}
+.tarjeta.lead{background:var(--ink);color:var(--ground);grid-column:span 2;border-color:transparent}
+.tarjeta.lead h3,.tarjeta.lead p{color:inherit}
+.tarjeta.lead .h{color:var(--acc)}
+@media(max-width:640px){.tarjeta.lead{grid-column:span 1}}
+
+/* ═══ panel de ajuste · SOLO para esta demo, no va al sitio ═══ */
+.tuner{position:fixed;right:14px;bottom:14px;z-index:90;width:280px;max-width:calc(100vw - 28px);
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r2);
+  box-shadow:0 30px 60px -30px oklch(30% .06 138/.55);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;color:var(--mid)}
+.tuner summary{cursor:pointer;padding:11px 14px;font-weight:500;color:var(--ink);
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tuner summary::-webkit-details-marker{display:none}
+.tuner summary::after{content:"▾";transition:transform .3s var(--e)}
+.tuner[open] summary::after{transform:rotate(180deg)}
+.tuner .cuerpo{padding:0 14px 14px;max-height:62vh;overflow-y:auto;display:flex;flex-direction:column;gap:9px}
+.tuner label{display:grid;grid-template-columns:1fr auto;gap:4px;align-items:center}
+.tuner input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--acc);height:18px}
+.tuner .val{color:var(--ink)}
+.tuner .horas{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
+.tuner .horas button{flex:1;min-width:56px;padding:6px 4px;border-radius:8px;cursor:pointer;
+  border:1px solid var(--line);background:var(--ground);color:var(--mid);
+  font-family:inherit;font-size:11px;transition:.2s var(--e)}
+.tuner .horas button[aria-pressed=true]{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.tuner .horas button:focus-visible,.tuner summary:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.tuner .nota{border-top:1px solid var(--hair);padding-top:9px;line-height:1.5;color:var(--soft)}
+.tuner .nota b{color:var(--ink);font-weight:500}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+</style>
+
+<!-- ═══ la escena · este bloque completo reemplaza a #escena3d ═══ -->
+<div class="escena" id="escena3d" aria-hidden="true">
+  <svg class="anillos" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+    <circle class="ring" cx="500" cy="520" r="132"/><circle class="ring" cx="500" cy="520" r="248"/>
+    <circle class="ring" cx="500" cy="520" r="380"/><circle class="ring" cx="500" cy="520" r="528"/>
+  </svg>
+</div>
+<div class="grano" aria-hidden="true"></div>
+
+<div class="barra"><div class="w in">
+  <span class="marca"><svg viewBox="0 0 24 24"><path d="M3 16l5-6 4 4 3-5 6 7"/><circle cx="17" cy="6" r="2.2"/></svg> Valle Esta Semana</span>
+  <span class="vivo"><i></i><span>Maqueta de la escena</span></span>
+</div></div>
+
+<header><div class="w">
+  <h1>Todo lo que pasa<span>junto al lago</span></h1>
+  <p class="baja">Una página por semana, con lo que de verdad está pasando en Valle de Bravo.</p>
+  <div><span class="sello">24 – 30 agosto 2026</span></div>
+  <p class="act mono">El diorama es el terreno real: 16 km de lado, 112 × 112 columnas, presa incluida.</p>
+</div></header>
+
+<main><div class="w">
+  <div class="dias">
+    <div class="dia"><b>24</b>Lun</div><div class="dia"><b>25</b>Mar</div>
+    <div class="dia"><b>26</b>Mié</div><div class="dia"><b>27</b>Jue</div>
+    <div class="dia hoy"><b>28</b>Vie</div><div class="dia"><b>29</b>Sáb</div>
+    <div class="dia"><b>30</b>Dom</div>
+  </div>
+  <div class="board">
+    <article class="tarjeta lead">
+      <div class="h">19:00 · noche</div>
+      <h3>Baja y mira cómo se mueve</h3>
+      <p>Al hacer scroll la cámara gira alrededor del vaso de la presa y el diorama se hunde
+         detrás del contenido. Este bloque es relleno: sirve para tener algo por donde bajar.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">datos</div>
+      <h3>Elevación real</h3>
+      <p>Mosaicos terrarium de AWS sobre Copernicus/SRTM, 30 m, remuestreados a 142 m por columna.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">peso</div>
+      <h3>Sin dependencias</h3>
+      <p>WebGL escrito a mano. Ni three.js ni ninguna librería. Una sola llamada de dibujo.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">el lago</div>
+      <h3>1783 metros</h3>
+      <p>La superficie del agua sale plana en el modelo de elevación, así que la máscara del vaso
+         es exacta: 840 celdas, 16.9 km².</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">paleta</div>
+      <h3>La toma del sitio</h3>
+      <p>Los colores se leen de tus variables CSS en vivo. Cambia <span class="mono">data-t</span>
+         y el terreno cambia contigo, noche incluida.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">luz</div>
+      <h3>El sol de verdad</h3>
+      <p>La dirección de la luz sigue la hora: al amanecer prende las laderas del oriente,
+         al atardecer las del poniente.</p>
+    </article>
+  </div>
+</div></main>
+
+<details class="tuner" open>
+  <summary>Ajustes de la maqueta</summary>
+  <div class="cuerpo">
+    <label>presencia <span class="val" id="v-dim">—</span>
+      <input type="range" id="s-dim" min="0.1" max="1" step="0.01"></label>
+    <label>relieve <span class="val" id="v-exag">—</span>
+      <input type="range" id="s-exag" min="0.12" max="0.75" step="0.01"></label>
+    <label>grosor del zócalo <span class="val" id="v-base">—</span>
+      <input type="range" id="s-base" min="0" max="0.45" step="0.01"></label>
+    <label>altura de cámara <span class="val" id="v-el">—</span>
+      <input type="range" id="s-el" min="0.15" max="1.35" step="0.01"></label>
+    <label>acercamiento <span class="val" id="v-dist">—</span>
+      <input type="range" id="s-dist" min="3.4" max="11" step="0.05"></label>
+    <label>posición ↔ <span class="val" id="v-offx">—</span>
+      <input type="range" id="s-offx" min="-0.7" max="0.7" step="0.01"></label>
+    <label>posición ↕ <span class="val" id="v-offy">—</span>
+      <input type="range" id="s-offy" min="-0.8" max="0.5" step="0.01"></label>
+    <label>giro al hacer scroll <span class="val" id="v-azs">—</span>
+      <input type="range" id="s-azs" min="0" max="2.6" step="0.02"></label>
+    <label>estratos <span class="val" id="v-bands">—</span>
+      <input type="range" id="s-bands" min="6" max="70" step="1"></label>
+    <div class="horas" role="group" aria-label="Composición">
+      <button type="button" data-p="fondo">fondo</button>
+      <button type="button" data-p="lado">a un lado</button>
+      <button type="button" data-p="escenario">escenario</button>
+    </div>
+    <div class="horas" role="group" aria-label="Hora del día">
+      <button type="button" data-t="dawn">amanecer</button>
+      <button type="button" data-t="day">día</button>
+      <button type="button" data-t="dusk">tarde</button>
+      <button type="button" data-t="night">noche</button>
+    </div>
+    <p class="nota" id="stats">—</p>
+  </div>
+</details>
+
+<script>
+/* ══════════════════════════════════════════════════════════════════
+   Valle Esta Semana · escena 3D — diorama de vóxeles del lago
+   WebGL a mano. Sin dependencias. Una sola llamada de dibujo.
+   Datos: Copernicus/SRTM (mosaicos terrarium AWS, z12)
+   112 × 112 celdas · 142 m/celda · 1585–2686 m · lago a 1783 m
+   ══════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var ALPHA = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklm';
+  var G = 112, LEV = 48;
+  var H = 'MMMLNPRRQQPNMKKLJJIHHFFFFEEEFFEEDCDEFFGGHILPRRPOOONNOOPQRSTTRRRSSSSSRRRQQQQQQQQRRRRSUUTTTTTTTTSRRTTTTUUUTTTUUUUVLLKLMORSQPPPONMMLKIIIGFFFFEDDDCCCCEFFFFGHJMQSTQONMMNPPQRSRRRSRRRRRRQQQQPPPQQQQQQQRRSSSSSTTTSSSRPRSTTUTTTSSSTTUUUJJJLMPRRPOOPPPNKJJIHHGFFFFEDDCBBBDEEEFFGILOQSRONLKMNOOOPPPPPRRQRQQPOOOPOOOPPPPPQQQRRRSSRSSSSSQOORSTTTTSSRRSTTTUUIHJMOPRRQPNNOOOLJIHHGFFEEEEDDBABDEEEEFGIKLNPPOMKIJLLMMMNNNNOPQPPPONNNNNNOOOPPPPPQQQRRRRRRRSSROMNPRSTTSSRQQRSTTTTHIKNOOQQPONMMONLJIIHGGFFFEEDCBBCDEEEEFHJKLLMMLJHHIJJKKKLKLLMOPONNNMNMMMNOOOPPPPPQQQQQRSSRRRRPMLMPQRSSSSRPPQRSSSTHJMONOPQPNMLMNNLJIHHGGFFEEDDCBACDDDEEGIJKLLLJIHGFGIIKKJIIJJKOONNMMMMMMMNNOOPPPPPQQPPPQQRRQQOOLLNQQRRRRSRPOOPQRTVGJMMNNOQPOMLLNMKJIHHHGGFEEDCBAACDDDDEGIJKLKJHGFFEFGHJIIHHHILOONMMMMLLLMMMNOOOOOOPPOOPPPQPPOMMKLOQQQQRRRQONNOPTXaGKLLMNPQONNLLNLKIIIHHGGFEEDBBABCCDDDDFHJJJHGFFEEEFFGHGGGGHKNPONMMMMMLLLMMNNNNONOOONNOOPPOONLLKLOPQQQQRQQOMNORVadFIJKLMOOPNMLKMMKIHHHHHGFECBAA9BCCCDDDDFHHFFEEDDDEEFGFFFFGHLOONMLLLMLKLLLLMMMMNNMNMLMNNNONNMKKKKNPQQQQQPPNMMORWacFHIJJLMNONLLKKMMJHHHGGFDCA99A9BCCCCCCDEFEDCDCCCDEEEEEEEFGIMOOMLLLKLKJKKKKLLLMNNMLLLLMNNNNNMKKKKLMPQQPPONMMMOSXbdFFGHHIKMMLLKJILLJHGFEDDCB98888ACBBBBBCDDCCBBBBDEFEDDDEFGIKMNNMLKKKKKJJJJKKKLMNNLKJKKMNNNNMLKKKKKLMPPONMMLMMORWacEEFFGJLMKIJHGHKMLJGEEDCBA98889BBBBBABBCCBBBBBCDEEDDDEEFHJKLNNLKKKKJJJJJJJKKKLLLKJJJKLMNMMLKKKKKKKLMNNLLLMMMNQUYcCDDFHJJJIGGEDFIJLKIGGFECCA8889ABBAAAABBBAAAAABDEDCCDDEFHILNNMLKKLLKIIIIIJJKKKKKJJIJKKLLKKKKKKJKKKKLKLLLMOOONPSWaCCDFFFGHHFEDDDFFIJHGGFEDCA8889ABBAAAAA999AAAAACCBCDEEGHIKLMKKLLLMMKJIHHIJJJJJJJIIHIIIIIHHIJJKKKKKKKLMMMNPPPOORUYBCCDDDEGFDDCCCDEFHFFFEDBBA8778ABBA999999999AAAABCEFFHKKLMMKIIKLMMMKJJIHIJJJJJIJIHHHHGGGGGGHIJKKKKLLLLLMNOPPPOPSVBBBBCCEGEDCCBBBCCEEECCCAA987789AAA9999999999AABDFIJJKNMNNJIHHJMMMMKIIIHHIJJIIIIHGGGFFFFFFGHIKKKKKKKKLLMMOOPOOOQSABBBBCDFFDCBBBBBBCCDBAAAA98777899A9888889999AABDGJKMNOMMLIGGGIKKKKJIIHHFHIIIIHHGGFFFFFFFGHJKKKKKKKKKLMMNMNOOPPPPBAAAABDEFDBBAAAAAABCBA9999877778899888888999AABEGHJMMLKJJIGFFHJHIHHHHHGFFHIIIHGGFFFFFFGHJKKKKKKKKKKKLMMMNNNOOPPQAAAAABBCDECBAAAA9AABA98899987777888888889AAAACDEGIKMMKIHIHGEDGIGFGGGHGFEEFHHHGFFFEFFFFHHKKKKKKKKKKLKLMMLMNNOOPPQAAAAAAAACDDBAA99999998889999877778888888ABCDBCDEFIKLLKIGGGFDCFGFDFFGGFEEDDEFFFFFEFFGGGIIJKKKKKKKKKLLLKLLMMNNOOPQAA999999ACDCBA99999888888999777777778889BFGFECEHHIKKIJIGEDDBBCEDCDEFFEEDDDCDDEEEEFGHHHIIJJKKKKKKKKLKJJKLMMMMMNOQAA9999999ABBAA9998888888888877777777889ACGIIGEEIKKKJGHIHFDBBABCBBBDEEEEDCDCCDEEEFGGHHHIIJJJJKKKKJIJJJJKLLLLMMMNPBA99998889999A99888888877787767777789BCDFHJJJHGIKKIGFGHHECBAAABAABCCDDDCCCCBCDEEFGGGHHHIJJJJJJKJIIIIJJKLLLMMMNOOBAA998888888899988888878777766677778ABDFGGGIJJIJJJHFEEEGEBAAAAAAAABCBCBBCCBBCCDEFGGGHHHIIJJJHIIIIIIIJJLMMNPPOOPPBBAA998888888889888887777776666777789ACCDEFHKLKJHGHGDDCEEB9999999AABBBBBBCBABCCDEFFGHHHIIIIHHHIIIIIIIKLMNPQQQQRRCBAA9988888888888888777777666677778889AACFHIKLJIGEEFECBCCB9999999AAAAAABBBAABBBCDFGGHHHHIIHHHHIIIIIIJKMMOPQQQRSSEDCAA988887887888888888876666677788889ADFHJKKKHGFDCDEECAAB99898899AAAAAAAAAAAABBDFGGHHHHIIHHHIIIIIIJKKMNNOQRRSTTGDCBA9988877777888889A9987666667789A99BEGIKJKKIEEDBCDDCA9A98888899A99AA99AAAABCCCDEFGGGGIIHHHIIIIIJJKKMOOPQSSTTTIEDCBA98887777788889BBBA98766667789ABAACFHIIJKIFDCBBCAA9988888888899999ABCCDDCEEEFFFFGGGGHHHHIIJJJKKKLNPPQRSSTTTKIFDCCB9887777788889BCDBA86666679ABCEEEEEFHIIJIFDCAAB988888888888899999CFFGFGFFGGHIIJJIIIIHHIIJLLLMNMNPPPQQRSTTUJJIGFECA987777888999ACDCA8666679BDEFHHHHHGHHGGHGEDBAB98888888888888889CFHIJIIIHIIKLMNNMLKJIIJKLMNNNOOPPPPQQRSSTUHHJJHFDB987777889AA99CDB8766667ACEFHGGGGGFFFEFHGDCA9A9888888888888889BDFHIJKLLKKKLLLNOOMKJIJJLNNNNOOOOPPQQQRRSTTFGIKIFDB987777888998899876666669DFGHEEEEEDEDDFGECBA99988888888888889ACDFFHIJKKLLMKJKMNOOLKJJLMNNNNOOOOPPQQRRRSTTFFHJHGFDB9876678887766666666667ACEGFCBCCDCCBDEEDBA9898888888888899AABDEFGGGIIIKJJJIKMLLNONMLLNNNNNOOOOPPQQQRRSTTFEGHGFGFCA987677776566766666667ADFFDA99ABA9BBBDB9988988888888889BDEDDFHGGFFHFGJIIIIKJJKMMNOMMNNNNNNOOPPQPQQRRRSTFEEFEFHGFCB97667775788866666667ADEB9988999999ABA988888888888888BEGFGGGGEEEEFEGHHGGIKIILLKMNMLMMMMNOOPPPPPPQRRRSTEDDEEFGGGFDA8765667AAB9666666679BDA9888888888999888888888888889BCDDEFEEDDEDDEEGFFGIJHHJIJLLLLLLMMNOOPPPPQQQQQRSTDDDDEEFGFEDB8765568ABBA88766789BCCA9888888888888888888888888889AABBDEDECCCCDDEEEEGIJHHIHKLJKKKKMNOOOOPPPQQQQQRSTCDDDEFFFFDDA9776579ABCB9A9767BDCCA9888888888888888888888888888889ABDCCDBBBCCDDDDFHHHGGHIKKIJJJKMNNOOOOOOOPPPPPRRCFGFEFEEECCA9896589AABCAA98768989988888888888888888888888888888899ABBBBBBCCCCCDEFFGGGGIIIJIIIIJLMNNMMMNNNNNNOOPQFIJIFFFEDCCCAA965689AABBA988778888888888888888888888888888998888899AAAAABCDCCDDDEFGGHHHHHIHHHJJKKLLLLMMMMMNNOOOPHJKJGEEEDCCCB9875578999AA9889ABBAA998888888888888888888889BA988889999AABBBCBCCDDEEFHIHIHGHHHIJJJKKKKLLLMMNNOOPQRGHIIFDDDDBBCB8766567889AAAAAABCCCBAA8888888888888888888889BDA99989999AABBBBBCCDDFGHJKKJJJHGHIIJIJJJJKLMMNOOOPQRSDEFGDCDDCBBBB97665677899ABBCCDEEDDBA988888888888888888889ABDDCA99999AABBBABCDDDEGHIKKKKKJIIIHIIIIJJKLLMMNOPPPRRRCEEFCBBBA9ACB8765467889AACDDEFFFFEDCB9888888888888888889AA9BCDCB9999ABBAAABCDEEFGHIKKKKKKJJJIIIIJJKLLLLMMNPPPRSSCDDDCAAA989AA7655567889ABCDFGHHHHFEDCA9888888888888888889999ABCBA9999AAAABCDDEFHHHIJKKLLMLKJIIIIJKKLLLLLMNOPPQRSBBBCBAA9887787554567789ABCEGIJKLJGFFDCA888888888888888888889999AAAAA99AABBCCDDFHIIIIKLMMMMMKIIIJJKKKKKKLLMOPQQRSAAAB9889998876545567899ABCEFHKMNKIGEDC998888888888888888888888899ABBAAABBCDCDDFHIJKJKLMMMMMKJIIJJKKKKKKKLNOPPQRRA99A878999877545667899ABBCEFHJNMKIGFDBA88888888888888888888888889BBBAAABCDEEEEEGJLMMMMNNMMMJIIJJJJJJKKKLLNOPPQRR99998668998754566778899BCDEFHKMMJHGECB988888888888888888888888889BBBAABCDEFGHHHIKMOOOMMNNNLJIIJJJJJJJKKLNNOOPPQR98998657877543566778889BCEFHIKMKJHFEDBA9888888888888888888888888ABBBBABCDFGIKLLLLNPPOMMNNMKJIJJJJJJJJKLMNNNOOPQR88898546666434666677889BCDEGHJKIIGFEDCB98888888888888888888888889AAABBABDFHILNONMMOONMLMMKJIIJJJJJJJJKLMMMOPPPQQ88887434445435566677889ACDEFHHHHGGFEEDDA988888888888888888888888899ABAAACEFGJLNONMNONNMKKJIIIIJIIIJJJJKLMNOPPPQQ77876321222235556668889ABCDFFFFFFEEEEEDCA988888888888888888888888889999ABCCEGJLMMNOPPPNLJJIIIIIIIIIIJJKLMNOPPQQQ777642113343455566788899ABDEEEDDDDDDDDDDB9888888888888888888888888888899ABCDEHJKMNOPPPNLJJIIIHIIIIIIJJKKLMNOPPQQ666531123445556666677889ABCCCCCCCCCCCEFECA888888888888888888888888888899ABCCDFIIKNOPPONKKJIIIHIIIIIIIJJLLMNPQPPP6665212234555666666777889ABBCBBBCCCCCEGECA888888888888888888888888888889AABCCEFGIMOQQPOMLKIIHHIIIIIIIIJLMMOPQPPP66531122344556666667877889ABBBCCCCCCCEFECA9888888888888888888888888888899AAABCEGJMQRRQPOMKJIIHHHHHHHIJJKLNOPQPPP655211234455666666778887899ABCCCCCCCCEECBB988888888888888888888888888888999ABCEGJMPRRQPONLJIHHHHHHHIJJKKLMNOPOPP554111345667777777788888889ABCCCCCCCCDECAA98888888888888888888888888888889ABCDFHJMOQQQPONLJIIHHHHHHIJJKKLLMNNNOP221011345667889998888888889ABCCCCCCCCCDCA99A888888888889888888888888888889BCDEGHILNPPPPOMKJIHHHHHHIIIJJKKLMMNNOP0000122344566789AAA98888889AABCCCBCCBBDDB9888888888888AA9988888888888888889BCDFGIKMNOOONLKJIHHHHIIIJJJKKKLLLMMNO12111222233455679BBCB999999AABBBBABBBACCA9888888888889BCA8888888888888888899ABDFHJLNNNMMKJJIHHHHIIIJJJKKLLMMMMNO22221222223333568BBCCCA9AAAAABBBBBAAABCDB988888888899ACCA988999A9888888888899BDFGIKLMMLLJJIHHHHHHIIIJJKKLLMMMNNN32222222333333578BCCCCA9AAAAABBCBBAAABCCB9999888889ACDECA9999AABA99988888889ABDFHHIJJJJJIIHHHHHHHIIIIJJKKLLMMNNN42222223355665578BCCCAAAAABBBBBCCBBBAABCBA9AA998889BEGFDCB99ABBBBA999988889ABBDFGHIIIHHHHHHHHHHIIIJJJIJJKKKLMMNN4222222468AAA9668ABCCAAAAABBBBBCCCCCBABCCAAABA9889ACFIGFFDA9ABCCCBA9A999889ABCDEGGHHHHHHHGGHHHIIIIJKKKKKLLKKLMNN322232359CCDDC8679AAAAAAAABBBBBBCCCDCBCEDBCDDA988ACFHIHHHFCAAACDDCBABBAA999ABDDEFGGHIIIIHHHHHIJJJJKLMLLKLLLLLLMM32222348CEFEEDA8889999AAAABBCCBCCCCCBBCFFDEFEB988BDEGHHHHGECBBBCDDCBCCCBABBBCDEFFGGHIJIIHHHHHIJKKKLMNNMMLLMMMMMM43222248BEEEECA9889889AAAABCCCBCCDDCBBDEGGHGFCA99ABCDFGFFFFEDCBCDDDDDDDCDDDDDDEFFFGHIJIIIHHHIJJKLLMNPPOMLLMMNNMM532222479BDDECA9888889BAAABCCCCCCDDCBBCFHIHFDCB9999ABEFFFEEDCCDEEEEEFEEDEEEEEEEFFFGGHJJIIIIHIJJKLMNNOPONMMMMMNML53333334679ABCCBA8889ABAAAABCCCCBBCCCCDEGFFFDBBA999ACEGFFEEDCCDEFFFFFFFEEEFFFFFEFGGHHJJJJJIJIIJKKLMMNNNMMMMMNNNM433433334568ABEEB9899ABBABCDDCBBBBCEDDEFFDDDCAA9ABAACEEFFGGFEEEEFFGGGFFFFFGGGGFFFGGGHIIJJJJJJIJJKLLMMMMMMMMMNNON444433333469CCDFECA999ACCDFFECBBBBCFFEFFDCCCBBBABDBBABCEGGGGFEEFFFGGGFFFFFGGGGGGFGGHHIIJJJJKJJJJKKLLKLLLLLLMMNOO67654444446ADFFHGDBCAAACDFHHFCBBBCCFHHGEEEDCDEECDEDDCCCEFGHHGFEFFFFFFFFFFFGGGGGGFGHHIIJJJJKKKKKKJJKKKKKKLLMMNNOO698766544458CFHJHEEEBABBEGHIGCBBCCCEGJHFHGFDEFGFGGFFFEDEFGHHGFEEEEEEEEEEFFGGGGGGGFGHIIJJJKKKKKLLLKKJKKLLLLMNNNOO5799996555569EHJJHGEBBDDFHHIHDCCCCCEHJIIIGEDEHIIHHGHGEEFGHHHGFEEEEEEEEEFFFGGGGHHGFFGHIJJJKKKKLLLMLLKKKLLMMNOOOOO467ACB8788778CFIKIGEDEEEGHIIHECCCCCEGJKKJHEEFIIIIJIIGEFGHIIHGFEFFFEEEEFFFFFGGHHHGFGGGHIIIIKKKLLLMMMLLLLMMNOOOOOO4578BDCBCCBA8AFILJHHFFEEFHJJHFCCCDDFILMMJIFFHIJKKKJIGGFGIIIHFFFFFFFFFGFFFFFGHHHHHHIHGHIIJJJJKKLLMMMMMMMMMNOOPPOO55689CGFFEEDABFIKKKIHGFEFHJKIEDCCDFHJMNLJHFGHJKLLKJIHHHHIJJIGGGGGFGGGGGFFFFGHHHHHJKJIIIJKKKJJKLLMMMNNNNNNNPQPPPO6668ADHJHHHECDGHJMMKJGFFFHIJHEDDDDFHJMMKIHHHILLMLKJIIIIHJKKJIHHGGGGHHHHHGGFFHHIIIKLKJIJKKKKKKJKLLMMNNNNNOOPQQPPO67789DHMJIIGFFHHJLONKHGGGGGHGFFEEFFGILMKJKKKLMNMMLKJJKKJJKKKJIHHGHHIIIIIIHGFGHHHIKKJJJJKKKKKKKJLLMMMNMNNOPPQPPPO77889CHMLKKIGHIKKNPNKIHIHHHHIIHFFIJKKMONLMNOOQPOONMLLLLKKKKKJIHHIIIIIJJJJIHGGGGHIJJIIJJKKKKLLLKKKLLMNNNNOPPPPPOO899AADHMNNMKIIJLMPROKJJJIIJJKLKHHKNOPPQQOPQQQPPPOONLLLLKKLLLKKJIIIJJJKKJJIHHHGGHHIIIIJKKKKKLLLLLLLLMNOOOOPPPPPPPABBBBDHKNOOMKLMMPQROLKLKKKKMNONLLMPRRSSSRRQPONNNNMMLKLKLLMMMLKKJJJKKJJJJJIHHHHGHGGHIJKKKKKLLLLLLLKLMNOOOPPQQPPPQDDDCCDGJNQQOMMOOQTSPONNMNNLOQQQPPQSSTTTTSSRPOMMMMLLLLLMMMNMMLLKKKKKKJJJJJIHIIIHIHGHJKKKKKKKLLLLLLKLMNOOOPPPPQQQQGGGFEFGKNQSQOOQQTWVTSRRQQPOPSUUUUUUTUTRRSSQONNNMMLLMNNMMMNNNMLJKKKKKJJJIIHIJIIHIIHIJJKKKKKLMMLMMMMMMMNOPPPQQQQQQMONJIJKKORSQQRTTVZYWWWVTUSRSUWYYYWVVUTQPQRPNMNNNNMMMNMMMNOOOMLKKKKKKKJJJIIJJIHHIIHHIJJJJJKLMMMNNNNNNNOOOPPQQQQQQUSOLMPONOSTTTTVWYbaZbbZXWWVVWYaZYXWVUTRPOOOMMOOONMMMMMMNNOOONLKKKLLLKKKJJJJJIIHHIIIIJJJJJKMNNNNNNOOOOPPOOPPQQQQQVTQPTVTRSUUVWWXZbbbbbcbaZZYXYZaZYXWVTSRPONNMNOPPNMMMMMNNNOOONMLKKMMLLKKKJKLKKJIIJJJIJJJJKLMNNNOOOOPPPQPPPPPPQQQQXVTWZXYVUXXWYZZbcbabbccbbaaaabaaYWWVUUSRQONMNPRROMMMMMNONNNNNMMLLMMMMLLKKLLLKIIJJJJIJJKJKMNOOOOOOOPPQQQQQQQPQQQQaYYbbbbZYYZXYabbbbZaabbbbbbbbbaZYWVVWXVUSQONNPRROMLMMMNNNNNNNMMLLMNNMMLLLMMLJIJJKKJJJJJKKNQQOOOOOOOPQQQRQQQQRRQQaabcccbbbaZZZaaaaZZZabbaaababbZYYWVWZZXVRPONNOPPNNNNNMNONOOONNNMMMNNNNMMMMMKKKLLMLLLKKKKLNOPOOOOPPPPQQRRQQRSSSRRabbbbaaaaZZZZZaaZYYZabbaZaaabbaYXWWWZaYURPPOOOPOOOPOONOONOOONNONNMNNNNNNMMLKLMNMOOONMKKKLMNOOOPPPPPQQRRRRRSSSSSRbcbbaZZZZZYYYZaaZYYZaaaaZZZbbbaYWWVVYZWTRRSQQQPPPPRQPNNOOOOONNONNMMNNNNNNMLLNOPPQQPPOMLKLMNOOOPPPQQQQRRRRRRSSSSSabbaZZYYYYYYYZZZZZYZaaZZZZZaaaZZYWVVVVTTUUTTSRQQQQQPPOOOOOOOOOONNNNNNNNMMLLMNORSSRQQPONLMOPPPPPQQRQRRSRSRSSSSSSTZZaZYYYYYZYYYZZZZZYYZZZZYYZaaZZYYXXWVWWWVVUTSQQQPPPPOOQPOOOOOOONNNONNNNNMLMOPQRUUSRQPONMNOQQRSSSSRRRSSSSSSSSTSSSYYYYYYZaaaZZYYZZZZYYYYYYYZaaaaaZYYYWWXXWWVVUTSQQPPOOPPQPPOOOOOONOONONNNNNMMPSTUWVUTRQPONNPQSSTTTTTTTSSSSTSSSSTTSYYXXZabbcccbZYYYZYYZaZYYZZaabbbaaaZYYYYYYXWWVUSRQPPOQQPPPPPPPPPPOOOOOQPOONOPTWYYXVUTRRPNOPRSUUTUUUUUTTSTSSSTTTTTXXXYabbbbccbaYXYYXYabbbbbaaaaabbaaZZZZaaZZYXXWVTRQPPPQPPPPPPPPQQPQPPQRQQPPRSTVXZYWVUTSQPRRRTVVVVVVVUUTTTTTTUUTTTXXXYabbbbbbbaZYXXXZbbccccbaaZZZZaaYYZZZZZZZYXXWUTSRPPPQQQQQQQRSRRQQRSTSSRRTUVVXZaYWVUSRRTUTUWWVWWWWVVUTUUUUVUTTTXXXYabbbbbbbaaYXXYabbbbccbbbaZYZZZYYZZZYYYYYYXWVUTSQPPQQRRRRRSSRQQSUTTTTSRRTVVWYaYXWVUTTVXYXXXXXXXXWWVUUUUVVUTTTXXZaaaaaaaabaZXYYZabbbbbbbbbaZYZZXXYZZZZYXXXXXWVVUTTSQRSTTTTTTTSSSUVVVUTSRQRTVWXZaaYXWVWXZZYYXXYXYYYXWVVUUVVVVUUYXYaaaaaaaabaYXYYZabbbbbbbbbaYXYYXWXYYYZYXWWWWWXXVUTRRSUWYWVVUUUUUVWWVUUUUTTSUVXZccaZYXXYaaZYXYYYZZZYXWVVVVVWXWVaYXZaaZaaaaaZXXYYYZbbbbbbbaaZYXXXXWWWXXXXWVVVWXZYVTSRSTVYbbZZXVUVVXXWWWWWWWWWWWXZcedaYYYYaaZYYYZZZaZZYXWVVVVXYXXaYXYZZYZaaaZXWXXYYYaaaabaZZZZYWWXYXWVWXXWVVUVXZZXVTRSTVXaefedZWVVWXXXXXXXYYZYYYYadfdaaaZZZZYZZZZaaaaZZYXXXWWXYYYZYXWXXWXYZYXWWVWXYXYZZZaaYYYXWWWXXXXWVWWWUUUVWXYWUTRSUWaehiifaXVWXXXXYZYYZZZZaaabegecccbaZYZZaaabbbaaaZYYXXXYXYXYXWWXXWWXYXWVVVWXXWXXXYZZYXXXWWWWXXXWVWWWVUUVVVWUTSRSUXcfhhhfaXVWXXYYZaaaZYYYZbcdegffedbaZZZabbbcdcbaaZZYXYYYYYYYXXXXXWVVWWVVUVVWWVWWXYYZZZYYXWVWWWWWVVWWVUTUUUUTSRRSUWZdghgebXVVWXZZabbaaZYYabbccddefdaaaaabccdeedcbaZZYYYXXZZZYYYXXWVUUVVVVWWWVVVWXWXXYZaZZYXXWVVVVVVVWWVUTUTSSSRSTUVXadggfcYVUWWYZbbbaaZYZaaZZabbcccbaaacddefggfdbaZZYYYYXZaaaYXXWVVUUVWWXYZZXWVWXXXYZZaaZYXXXWWWVVUUVWWVUTTUUSRSTVVWYadffcYVUWWXYZaaaaaZZZYYZZZZaabbbbbdefhiiigedbZZZYYYZaaZaYWWWVUTTUWXXZaaaYWWWWXYZaaZZYXXXXXXXWUUUVWWWUVVVTSSTUUVWXaccaXVUUWXXYZabbbaZYYYYYYZZacdddcdfhjlkjhfdcaZZZZaaaZZ';
+  var WRLE = '2972,1,1,2,107,5,105,9,100,12,100,15,97,14,98,13,96,1,1,11,98,2,1,10,86,2,10,14,85,9,3,14,86,26,85,29,82,30,81,25,2,5,83,21,4,4,83,21,7,1,84,19,94,17,96,17,95,20,93,23,89,24,88,24,88,24,88,24,89,24,89,25,87,28,84,28,84,29,84,28,84,29,83,30,83,11,1,17,81,12,4,16,80,11,4,17,80,9,7,2,5,10,82,5,18,7,84,3,20,4,85,2,23,2,86,1,110,2,4879';
+  var TOWN = [70, 50];                 // Valle de Bravo · 19.195 N, 100.131 W
+  var host = document.getElementById('escena3d');
+  if (!host) return;
+
+  /* ── decodificar ─────────────────────────────────────────────── */
+  var hv = new Uint8Array(G * G), wv = new Uint8Array(G * G);
+  for (var k = 0; k < G * G; k++) hv[k] = ALPHA.indexOf(H.charAt(k));
+  (function () {
+    var runs = WRLE.split(','), p = 0, on = 0;
+    for (var i = 0; i < runs.length; i++) {
+      var r = +runs[i];
+      if (on) for (var q = p; q < p + r; q++) wv[q] = 1;
+      p += r; on ^= 1;
+    }
+  })();
+
+  /* ── oclusión ambiental barata ───────────────────────────────── */
+  var ao = new Float32Array(G * G);
+  for (var j = 0; j < G; j++) for (var i = 0; i < G; i++) {
+    var h = hv[j * G + i], s = 0, n = 0;
+    for (var b = -2; b <= 2; b++) for (var a = -2; a <= 2; a++) {
+      var x = i + a, y = j + b;
+      if (x < 0 || y < 0 || x >= G || y >= G) continue;
+      s += Math.max(0, hv[y * G + x] - h); n++;
+    }
+    ao[j * G + i] = Math.max(0, 1 - (s / n) / 5.5);
+  }
+
+  /* ── contexto ────────────────────────────────────────────────── */
+  var cv = document.createElement('canvas');
+  cv.className = 'lienzo';
+  host.appendChild(cv);
+  var opt = { antialias: true, alpha: true, premultipliedAlpha: false, depth: true };
+  var gl = cv.getContext('webgl', opt) || cv.getContext('experimental-webgl', opt);
+  var ext = gl && gl.getExtension('ANGLE_instanced_arrays');
+  if (!gl || !ext) { host.classList.add('sin-webgl'); return; }
+  host.classList.add('con-webgl');
+
+  /* ── paleta viva: lee las variables del sitio (oklch → sRGB) ─── */
+  var probe = document.createElement('canvas'); probe.width = probe.height = 1;
+  var p2 = probe.getContext('2d', { willReadFrequently: true });
+  var swatch = document.createElement('span');
+  swatch.style.cssText = 'position:absolute;width:0;height:0;opacity:0;pointer-events:none';
+  document.body.appendChild(swatch);
+  function css(v, fb) {
+    try {
+      swatch.style.color = 'var(' + v + ')';
+      var c = getComputedStyle(swatch).color;
+      p2.fillStyle = '#000'; p2.fillRect(0, 0, 1, 1);
+      p2.fillStyle = c; p2.fillRect(0, 0, 1, 1);
+      var d = p2.getImageData(0, 0, 1, 1).data;
+      if (!d[0] && !d[1] && !d[2] && c.indexOf('0, 0, 0') < 0) throw 0;
+      return [d[0] / 255, d[1] / 255, d[2] / 255];
+    } catch (e) { return fb; }
+  }
+  function mix(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+  function scale(a, s) { return [a[0]*s, a[1]*s, a[2]*s]; }
+
+  /* ── shaders ─────────────────────────────────────────────────── */
+  var VS = [
+    'attribute vec3 aPos; attribute vec3 aNrm; attribute vec4 aInst;',
+    'uniform mat4 uVP; uniform vec2 uOff; uniform float uG, uY, uBase;',
+    'varying vec3 vN, vW; varying float vH, vKind, vAO;',
+    'void main(){',
+    '  float kind = floor(aInst.w * 0.5);',
+    '  float cell = 2.0/uG;',
+    '  float x = -1.0 + (aInst.x + aPos.x)*cell;',
+    '  float z = -1.0 + (aInst.y + aPos.z)*cell;',
+    '  float top = aInst.z*uY + (kind > 1.5 ? 0.030 : 0.0);',
+    '  float y = mix(-uBase, top, aPos.y);',
+    '  vN = aNrm; vW = vec3(x,y,z); vH = aInst.z;',
+    '  vKind = kind; vAO = aInst.w - kind*2.0;',
+    '  vec4 cp = uVP * vec4(x,y,z,1.0);',
+    '  cp.xy += uOff * cp.w;',
+    '  gl_Position = cp;',
+    '}'
+  ].join('\n');
+
+  var FS = [
+    'precision mediump float;',
+    'varying vec3 vN, vW; varying float vH, vKind, vAO;',
+    'uniform vec3 uSun, uWarm, uSky, uBounce, uGround;',
+    'uniform vec3 cLow, cMid, cHigh, cWater, cSoil, cAcc;',
+    'uniform float uT, uFog, uBands, uNight, uDim, uAmb;',
+    'void main(){',
+    '  vec3 n = normalize(vN);',
+    '  float lam = max(dot(n, uSun), 0.0);',
+    '  bool topFace = n.y > 0.5;',
+    '  vec3 base; float gloss = 0.0;',
+    '  if (vW.y < -0.004) {',                        /* zócalo · tierra cortada */
+    '    float d = clamp(-vW.y*2.6, 0.0, 1.0);',
+    '    base = mix(cSoil, cSoil*0.52, d);',
+    '    float st = fract(vW.y*9.0);',
+    '    base *= 1.0 - 0.16*smoothstep(0.0,0.09,st)*smoothstep(0.24,0.11,st);',
+    '  } else if (vKind > 1.5 && topFace) {',        /* el pueblo · único coral */
+    '    base = cAcc;',
+    '  } else if (vKind > 0.5 && vKind < 1.5 && topFace) {',  /* agua */
+    '    float w = sin(vW.x*52.0 + uT*0.8) * sin(vW.z*41.0 - uT*0.55);',
+    '    base = cWater * (1.0 + 0.13*w);',
+    '    gloss = pow(max(0.0, w), 5.0) * 0.30;',
+    '  } else {',                                     /* tierra */
+    '    float t = clamp(vH*1.10, 0.0, 1.0);',
+    '    base = t < 0.46 ? mix(cLow, cMid, t/0.46) : mix(cMid, cHigh, (t-0.46)/0.54);',
+    '    if (!topFace) {',                            /* estratos tipo bloque */
+    '      float s = fract(vW.y*uBands);',
+    '      base *= 1.0 - 0.18*smoothstep(0.0,0.07,s)*smoothstep(0.20,0.09,s);',
+    '      base *= 0.80;',
+    '    }',
+    '  }',
+    '  float hemi = n.y*0.5 + 0.5;',
+    '  vec3 amb = mix(uBounce, uSky, hemi) * uAmb;',
+    '  float occ = mix(0.58, 1.0, vAO);',
+    '  vec3 col = base * (amb*occ + uWarm*lam*1.38);',
+    '  col += uWarm * gloss * (1.0 - uNight*0.55);',
+    '  col += uWarm * pow(lam, 26.0) * 0.09 * (1.0 - uNight);',
+    '  float fog = clamp((vW.z*0.5 + 0.5) * uFog, 0.0, 0.7);',
+    '  col = mix(col, uGround, fog);',
+    '  col = mix(uGround, col, uDim);',
+    '  gl_FragColor = vec4(col, 1.0);',
+    '}'
+  ].join('\n');
+
+  function sh(t, src) {
+    var s = gl.createShader(t); gl.shaderSource(s, src); gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s));
+    return s;
+  }
+  var prog = gl.createProgram();
+  try {
+    gl.attachShader(prog, sh(gl.VERTEX_SHADER, VS));
+    gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, FS));
+  } catch (e) { host.classList.remove('con-webgl'); host.classList.add('sin-webgl'); return; }
+  gl.linkProgram(prog);
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) {
+    host.classList.remove('con-webgl'); host.classList.add('sin-webgl'); return;
+  }
+
+  /* ── geometría: cubo sin tapa inferior ───────────────────────── */
+  var V = [], I = [];
+  function face(a, b, c, d, n) {
+    var o = V.length / 6;
+    [a, b, c, d].forEach(function (p) { V.push(p[0], p[1], p[2], n[0], n[1], n[2]); });
+    I.push(o, o + 1, o + 2, o, o + 2, o + 3);
+  }
+  face([1,0,0],[1,1,0],[1,1,1],[1,0,1],[ 1,0, 0]);
+  face([0,0,1],[0,1,1],[0,1,0],[0,0,0],[-1,0, 0]);
+  face([1,0,1],[1,1,1],[0,1,1],[0,0,1],[ 0,0, 1]);
+  face([0,0,0],[0,1,0],[1,1,0],[1,0,0],[ 0,0,-1]);
+  face([0,1,0],[0,1,1],[1,1,1],[1,1,0],[ 0,1, 0]);
+
+  var vbo = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(V), gl.STATIC_DRAW);
+  var ibo = gl.createBuffer();
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(I), gl.STATIC_DRAW);
+
+  /* ── instancias · una por columna ────────────────────────────── */
+  var N = G * G, ins = new Float32Array(N * 4);
+  for (var jj = 0; jj < G; jj++) for (var ii = 0; ii < G; ii++) {
+    var kk = jj * G + ii, o = kk * 4;
+    var marca = (ii >= TOWN[0] && ii <= TOWN[0] + 1 && jj >= TOWN[1] && jj <= TOWN[1] + 1) ? 2 : (wv[kk] ? 1 : 0);
+    ins[o] = ii; ins[o + 1] = jj;
+    ins[o + 2] = hv[kk] / (LEV - 1);
+    ins[o + 3] = marca * 2 + Math.min(0.999, ao[kk]);
+  }
+  var ibuf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, ibuf);
+  gl.bufferData(gl.ARRAY_BUFFER, ins, gl.STATIC_DRAW);
+
+  var aPos = gl.getAttribLocation(prog, 'aPos'),
+      aNrm = gl.getAttribLocation(prog, 'aNrm'),
+      aIns = gl.getAttribLocation(prog, 'aInst');
+  var U = {};
+  ['uVP','uOff','uG','uY','uBase','uSun','uWarm','uSky','uBounce','uGround',
+   'cLow','cMid','cHigh','cWater','cSoil','cAcc','uT','uFog','uBands','uNight','uDim','uAmb']
+    .forEach(function (n) { U[n] = gl.getUniformLocation(prog, n); });
+
+  /* ── matrices ────────────────────────────────────────────────── */
+  function mmul(a, b) {
+    var o = new Float32Array(16);
+    for (var r = 0; r < 4; r++) for (var c = 0; c < 4; c++) {
+      var s = 0; for (var q = 0; q < 4; q++) s += a[q * 4 + r] * b[c * 4 + q];
+      o[c * 4 + r] = s;
+    }
+    return o;
+  }
+  function persp(fov, asp, n, f) {
+    var t = 1 / Math.tan(fov / 2), o = new Float32Array(16);
+    o[0] = t / asp; o[5] = t; o[10] = (f + n) / (n - f); o[11] = -1; o[14] = 2 * f * n / (n - f);
+    return o;
+  }
+  function look(e, c, up) {
+    function nz(a) { var l = Math.hypot(a[0], a[1], a[2]) || 1; return [a[0]/l, a[1]/l, a[2]/l]; }
+    var z = nz([e[0]-c[0], e[1]-c[1], e[2]-c[2]]);
+    var x = nz([up[1]*z[2]-up[2]*z[1], up[2]*z[0]-up[0]*z[2], up[0]*z[1]-up[1]*z[0]]);
+    var y = [z[1]*x[2]-z[2]*x[1], z[2]*x[0]-z[0]*x[2], z[0]*x[1]-z[1]*x[0]];
+    return new Float32Array([
+      x[0], y[0], z[0], 0, x[1], y[1], z[1], 0, x[2], y[2], z[2], 0,
+      -(x[0]*e[0]+x[1]*e[1]+x[2]*e[2]), -(y[0]*e[0]+y[1]*e[1]+y[2]*e[2]), -(z[0]*e[0]+z[1]*e[1]+z[2]*e[2]), 1
+    ]);
+  }
+
+  /* ── ajustes ─────────────────────────────────────────────────── */
+  var P = window.VALLE_TUNE = {
+    exag: 0.36, base: 0.20,
+    az: -0.70, azScroll: 0.95, el: 0.60, dist: 10.4, fov: 0.34,
+    offX: 0.22, offY: -0.16,       // dónde se para el diorama en pantalla
+    fog: 0.30, bands: 30, amb: 0.58,
+    dim: 0.82,                     // presencia · 1 = a todo color
+    dimScroll: 0.34                // cuánto se apaga al bajar
+  };
+
+  var SOL = {
+    dawn:  { az: 1.75, el: 0.24, warm: [1.00, 0.78, 0.58], sky: [0.56, 0.53, 0.58], night: 0 },
+    day:   { az: 3.35, el: 0.88, warm: [1.00, 0.96, 0.86], sky: [0.62, 0.66, 0.63], night: 0 },
+    dusk:  { az: 4.60, el: 0.22, warm: [1.00, 0.70, 0.46], sky: [0.50, 0.45, 0.50], night: 0 },
+    night: { az: 0.75, el: 0.60, warm: [0.46, 0.55, 0.72], sky: [0.26, 0.30, 0.38], night: 1 }
+  };
+
+  var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var pal = {}, prog01 = 0, target01 = 0, t0 = performance.now(), dpr = 1;
+
+  function esNoche() {
+    var t = document.documentElement.getAttribute('data-t');
+    if (t) return t === 'night';
+    return matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function tod() {
+    var t = document.documentElement.getAttribute('data-t');
+    if (SOL[t]) return t;
+    return esNoche() ? 'night' : 'day';
+  }
+
+  function readPal() {
+    var noche = esNoche();
+    var ink   = noche ? [0.05, 0.08, 0.08] : css('--ink', [0.18, 0.24, 0.14]);
+    var musgo = css('--musgo', [0.42, 0.56, 0.38]);
+    var olive = css('--olive', [0.40, 0.47, 0.26]);
+    var khaki = css('--khaki', [0.80, 0.76, 0.55]);
+    var lima  = css('--lima',  [0.86, 0.92, 0.50]);
+    var agua  = css('--agua',  [0.44, 0.66, 0.70]);
+    pal.acc    = css('--acc',   [0.85, 0.42, 0.24]);
+    pal.low    = mix(musgo, ink, 0.56);
+    pal.mid    = mix(olive, ink, 0.10);
+    pal.high   = mix(khaki, lima, 0.30);
+    pal.water  = mix(agua,  ink, 0.30);
+    pal.soil   = mix(mix(khaki, pal.acc, 0.20), ink, 0.44);
+    pal.ground = css('--ground', noche ? [0.10, 0.14, 0.13] : [0.90, 0.92, 0.84]);
+    if (noche) {                       /* de noche el terreno es masa, no color */
+      ['low','mid','high','water','soil'].forEach(function (n) { pal[n] = scale(pal[n], 0.52); });
+      pal.acc = scale(pal.acc, 0.85);
+    }
+  }
+  readPal();
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var w = host.clientWidth, h = host.clientHeight;
+    cv.width = Math.max(1, Math.round(w * dpr));
+    cv.height = Math.max(1, Math.round(h * dpr));
+    cv.style.width = w + 'px'; cv.style.height = h + 'px';
+  }
+
+  var cur = SOL[tod()];
+  var L = { az: cur.az, el: cur.el, warm: cur.warm.slice(), sky: cur.sky.slice(), night: cur.night };
+
+  function draw(now) {
+    var t = (now - t0) / 1000, tgt = SOL[tod()], e = 0.03;
+    L.az += (tgt.az - L.az) * e; L.el += (tgt.el - L.el) * e;
+    L.night += (tgt.night - L.night) * e;
+    for (var q = 0; q < 3; q++) {
+      L.warm[q] += (tgt.warm[q] - L.warm[q]) * e;
+      L.sky[q]  += (tgt.sky[q]  - L.sky[q])  * e;
+    }
+    prog01 += (target01 - prog01) * 0.07;
+
+    /* encuadre: en pantallas angostas hay que alejarse y centrar */
+    var asp = cv.width / cv.height;
+    var fit = 1 + Math.max(0, 1.05 / asp - 1) * 0.72;
+    var estrecho = Math.min(1, Math.max(0, (1.15 - asp) / 0.55));
+    var az = P.az + prog01 * P.azScroll + (reduce ? 0 : Math.sin(t * 0.055) * 0.045);
+    var el = P.el + prog01 * 0.14;
+    var d  = (P.dist + prog01 * 1.1) * fit;
+    var eye = [Math.sin(az) * Math.cos(el) * d, Math.sin(el) * d, Math.cos(az) * Math.cos(el) * d];
+    var vp = mmul(persp(P.fov, cv.width / cv.height, 0.1, 40), look(eye, [0, -0.03, 0], [0, 1, 0]));
+
+    gl.viewport(0, 0, cv.width, cv.height);
+    gl.clearColor(0, 0, 0, 0);
+    gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+    gl.enable(gl.DEPTH_TEST);
+
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, vbo);
+    gl.enableVertexAttribArray(aPos); gl.vertexAttribPointer(aPos, 3, gl.FLOAT, false, 24, 0);
+    gl.enableVertexAttribArray(aNrm); gl.vertexAttribPointer(aNrm, 3, gl.FLOAT, false, 24, 12);
+    gl.bindBuffer(gl.ARRAY_BUFFER, ibuf);
+    gl.enableVertexAttribArray(aIns); gl.vertexAttribPointer(aIns, 4, gl.FLOAT, false, 16, 0);
+    ext.vertexAttribDivisorANGLE(aIns, 1);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ibo);
+
+    gl.uniformMatrix4fv(U.uVP, false, vp);
+    var ox = P.offX * (1 - estrecho), oy = P.offY + (-0.10 - P.offY) * estrecho;
+    gl.uniform2f(U.uOff, ox, oy);
+    gl.uniform1f(U.uG, G);
+    gl.uniform1f(U.uY, P.exag);
+    gl.uniform1f(U.uBase, P.base);
+    gl.uniform1f(U.uT, t);
+    gl.uniform1f(U.uFog, P.fog);
+    gl.uniform1f(U.uBands, P.bands);
+    gl.uniform1f(U.uAmb, P.amb);
+    gl.uniform1f(U.uNight, L.night);
+    gl.uniform1f(U.uDim, Math.max(0.05, (P.dim - prog01 * P.dimScroll) * (1 - estrecho * 0.22)));
+    gl.uniform3f(U.uSun, Math.sin(L.az) * Math.cos(L.el), Math.sin(L.el), Math.cos(L.az) * Math.cos(L.el));
+    gl.uniform3fv(U.uWarm, L.warm);
+    gl.uniform3fv(U.uSky, L.sky);
+    gl.uniform3f(U.uBounce, L.sky[0] * 0.5, L.sky[1] * 0.5, L.sky[2] * 0.56);
+    gl.uniform3fv(U.uGround, pal.ground);
+    gl.uniform3fv(U.cLow, pal.low);
+    gl.uniform3fv(U.cMid, pal.mid);
+    gl.uniform3fv(U.cHigh, pal.high);
+    gl.uniform3fv(U.cWater, pal.water);
+    gl.uniform3fv(U.cSoil, pal.soil);
+    gl.uniform3fv(U.cAcc, pal.acc);
+
+    ext.drawElementsInstancedANGLE(gl.TRIANGLES, I.length, gl.UNSIGNED_SHORT, 0, N);
+
+    host.style.setProperty('--dx', (50 + ox * 50).toFixed(1) + '%');
+    host.style.setProperty('--dy', (50 - oy * 50 + 13).toFixed(1) + '%');
+    host.style.setProperty('--dw', (215 / d).toFixed(1) + 'vmin');
+    host.style.setProperty('--dop', (0.9 * Math.max(0.05, P.dim - prog01 * P.dimScroll)).toFixed(2));
+  }
+
+  /* ── bucle a 30 fps, en pausa si la pestaña no se ve ─────────── */
+  var last = 0;
+  function loop(now) {
+    requestAnimationFrame(loop);
+    if (document.hidden) return;
+    if (now - last < 33) return;
+    last = now; draw(now);
+  }
+  function onScroll() {
+    var h = Math.max(1, window.innerHeight * 1.5);
+    target01 = Math.min(1, (window.scrollY || 0) / h);
+    host.style.setProperty('--baja', String(target01));
+  }
+
+  resize(); onScroll();
+  addEventListener('resize', resize, { passive: true });
+  addEventListener('scroll', onScroll, { passive: true });
+  new MutationObserver(readPal).observe(document.documentElement, { attributes: true, attributeFilter: ['data-t'] });
+  try { matchMedia('(prefers-color-scheme: dark)').addEventListener('change', readPal); } catch (e) {}
+  requestAnimationFrame(loop);
+
+  window.VALLE_PRESETS = {
+    fondo:     { dist: 9.2, offX: 0.04, offY: -0.10, dim: 0.40, el: 0.68, exag: 0.32 },
+    lado:      { dist: 10.4, offX: 0.22, offY: -0.16, dim: 0.82, el: 0.60, exag: 0.36 },
+    escenario: { dist: 8.8, offX: 0.02, offY: -0.54, dim: 1.00, el: 0.50, exag: 0.42 }
+  };
+  window.VALLE_APPLY = function (name) {
+    var q = window.VALLE_PRESETS[name]; if (!q) return;
+    for (var key in q) P[key] = q[key];
+  };
+  window.VALLE_STATS = { columnas: N, triangulos: N * (I.length / 3), instBytes: ins.byteLength };
+  window.VALLE_REPAL = readPal;
+})();
+
+</script>
+<script>
+/* ═══ panel de ajuste · no forma parte del bloque de la escena ═══ */
+(function(){
+  var R=document.documentElement, P=window.VALLE_TUNE;
+  if(!P){ document.getElementById('stats').innerHTML='<b>Sin WebGL.</b> El sitio cae de vuelta a los anillos del placeholder.'; return; }
+  var map=[['dim','dim',2],['exag','exag',2],['base','base',2],['el','el',2],['dist','dist',2],
+           ['offx','offX',2],['offy','offY',2],['azs','azScroll',2],['bands','bands',0]];
+  map.forEach(function(m){
+    var s=document.getElementById('s-'+m[0]), v=document.getElementById('v-'+m[0]);
+    s.value=P[m[1]]; v.textContent=(+P[m[1]]).toFixed(m[2]);
+    s.addEventListener('input',function(){ P[m[1]]=+s.value; v.textContent=(+s.value).toFixed(m[2]); });
+  });
+  var pbtn=[].slice.call(document.querySelectorAll('.horas button[data-p]'));
+  function sync(){ map.forEach(function(m){
+    var s=document.getElementById('s-'+m[0]), v=document.getElementById('v-'+m[0]);
+    s.value=P[m[1]]; v.textContent=(+P[m[1]]).toFixed(m[2]); }); }
+  pbtn.forEach(function(b){ b.addEventListener('click',function(){
+    window.VALLE_APPLY(b.dataset.p);
+    document.body.classList.toggle('escenario', b.dataset.p==='escenario');
+    pbtn.forEach(function(o){ o.setAttribute('aria-pressed', String(o===b)); });
+    sync(); }); });
+  pbtn[1].setAttribute('aria-pressed','true');
+  var btns=[].slice.call(document.querySelectorAll('.horas button[data-t]'));
+  function marca(t){ btns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.t===t)); }); }
+  btns.forEach(function(b){ b.addEventListener('click',function(){ R.setAttribute('data-t', b.dataset.t); marca(b.dataset.t); }); });
+  function hora(){ var h=new Date().getHours(); return h>=5&&h<9?'dawn':h>=9&&h<17?'day':h>=17&&h<20?'dusk':'night'; }
+  var h0=hora(); R.setAttribute('data-t',h0); marca(h0);
+  var S=window.VALLE_STATS;
+  document.getElementById('stats').innerHTML =
+    '<b>'+S.columnas.toLocaleString('es-MX')+'</b> columnas · <b>'+
+    S.triangulos.toLocaleString('es-MX')+'</b> triángulos · <b>1</b> llamada de dibujo · '+
+    (S.instBytes/1024).toFixed(0)+' KB en la GPU';
+})();
+</script>

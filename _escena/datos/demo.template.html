@@ -1,0 +1,285 @@
+<title>El Lago en Bloques</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* ═══ tokens · Verde Lago · copiados tal cual de index.html ═══ */
+:root{
+  --ground:oklch(93.5% .036 132); --sunk:oklch(89.5% .048 133);
+  --card:oklch(97.6% .022 116);   --lift:oklch(99% .014 110);
+  --ink:oklch(30% .056 138);      --mid:oklch(46% .046 137);
+  --soft:oklch(60% .036 136);     --line:oklch(84% .045 133);
+  --hair:oklch(88% .036 133);
+  --olive:oklch(52% .088 128);    --lima:oklch(86% .155 122);
+  --agua:oklch(74% .078 178);     --musgo:oklch(63% .085 152);
+  --khaki:oklch(80% .08 104);     --acc:oklch(63% .175 44);
+  --acc-ink:oklch(99% .01 60);
+  --r:26px; --r2:18px; --r3:12px;
+  --e:cubic-bezier(.2,.9,.24,1);
+  --sh:0 1px 0 oklch(100% 0 0/.7) inset, 0 22px 34px -26px oklch(30% .06 138/.55);
+  --in:inset 0 2px 5px oklch(30% .06 138/.14), inset 0 -1px 0 oklch(100% 0 0/.5);
+}
+:root[data-t="dawn"] {--ground:oklch(93% .04 108);--sunk:oklch(89% .05 106);--acc:oklch(66% .17 34);--lima:oklch(88% .14 100)}
+:root[data-t="day"]  {--ground:oklch(93.5% .036 132);--sunk:oklch(89.5% .048 133);--acc:oklch(63% .175 44)}
+:root[data-t="dusk"] {--ground:oklch(91% .045 92);--sunk:oklch(87% .058 88);--acc:oklch(60% .17 28);--lima:oklch(84% .15 96)}
+:root[data-t="night"]{
+  --ground:oklch(22% .038 168);--sunk:oklch(18.5% .036 170);--card:oklch(26% .04 165);--lift:oklch(29% .042 163);
+  --ink:oklch(94% .03 130);--mid:oklch(76% .036 140);--soft:oklch(60% .034 145);
+  --line:oklch(34% .04 165);--hair:oklch(30% .036 166);
+  --olive:oklch(72% .09 130);--lima:oklch(84% .15 122);--agua:oklch(76% .08 180);
+  --musgo:oklch(72% .09 152);--khaki:oklch(78% .085 104);
+  --acc:oklch(70% .16 48);--acc-ink:oklch(18% .03 60);
+  --sh:0 1px 0 oklch(100% 0 0/.07) inset, 0 24px 40px -26px oklch(0% 0 0/.7);
+  --in:inset 0 2px 6px oklch(0% 0 0/.4), inset 0 -1px 0 oklch(100% 0 0/.06);
+}
+:root[data-theme="dark"]:not([data-t]){
+  --ground:oklch(22% .038 168);--sunk:oklch(18.5% .036 170);--card:oklch(26% .04 165);
+  --ink:oklch(94% .03 130);--mid:oklch(76% .036 140);--soft:oklch(60% .034 145);
+  --line:oklch(34% .04 165);--hair:oklch(30% .036 166);--olive:oklch(72% .09 130);
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--ground);color:var(--ink);
+  font-family:Manrope,system-ui,sans-serif;font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;font-variant-numeric:tabular-nums;
+  overflow-x:clip;transition:background 1.4s var(--e),color 1.4s var(--e)}
+.w{max-width:1180px;margin:0 auto;padding:0 clamp(14px,3.4vw,34px)}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+
+/* ═══ la escena ═══ */
+.escena{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.escena .lienzo{position:absolute;inset:0;display:block;width:100%;height:100%}
+/* sombra de contacto · sigue al diorama */
+.escena::after{content:"";position:absolute;left:var(--dx,50%);top:var(--dy,60%);
+  width:var(--dw,30vmin);height:calc(var(--dw,30vmin) * .30);
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(ellipse at center, oklch(30% .06 138/.26), transparent 72%);
+  filter:blur(18px);opacity:var(--dop,.7);pointer-events:none}
+:root[data-t="night"] .escena::after{background:radial-gradient(ellipse at center, oklch(0% 0 0/.55), transparent 72%)}
+/* modo escenario: el hero deja sitio abajo para el diorama */
+body.escenario header{padding-bottom:min(54vh,540px)}
+/* respaldo si no hay WebGL: los anillos originales */
+.escena .anillos{position:absolute;left:50%;top:50%;width:min(158vw,1700px);height:min(158vw,1700px);
+  transform:translate(-50%,-46%);opacity:.5;display:none}
+.escena.sin-webgl .anillos{display:block}
+.escena .ring{fill:none;stroke:var(--olive);stroke-width:1.4;opacity:.34;transform-origin:center;
+  animation:breathe 14s var(--e) infinite alternate}
+.escena .ring:nth-child(2n){stroke:var(--agua);opacity:.26;animation-duration:18s}
+@keyframes breathe{0%{transform:scale(.965)}100%{transform:scale(1.045)}}
+.grano{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.16;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+:root[data-t="night"] .grano{mix-blend-mode:screen;opacity:.1}
+header,main,.barra{position:relative;z-index:2}
+
+/* ═══ barra ═══ */
+.barra{position:sticky;top:0;z-index:70;backdrop-filter:blur(16px) saturate(1.4);
+  background:oklch(from var(--ground) l c h / .74);border-bottom:1px solid var(--hair)}
+.barra .in{display:flex;align-items:center;gap:12px;height:56px;font-size:12.5px}
+.marca{display:inline-flex;align-items:center;gap:9px;font-weight:700;font-size:13.5px;letter-spacing:-.01em}
+.marca svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.vivo{display:inline-flex;align-items:center;gap:8px;padding:6px 13px;border-radius:99px;
+  background:var(--card);border:1px solid var(--hair);color:var(--mid);box-shadow:var(--sh)}
+.vivo i{width:7px;height:7px;border-radius:50%;background:var(--acc);flex:none}
+
+/* ═══ hero ═══ */
+header{padding:clamp(40px,9vw,110px) 0 clamp(20px,3vw,30px)}
+h1{margin:0;font-family:Fraunces,Georgia,serif;
+  font-variation-settings:'opsz' 144,'wght' 560,'SOFT' 90,'WONK' 1;
+  font-size:clamp(46px,10.5vw,124px);line-height:.86;letter-spacing:-.038em;text-wrap:balance;
+  max-width:14ch}
+h1 span{display:block;color:var(--olive)}
+.baja{max-width:46ch;color:var(--mid);font-size:clamp(15px,1.6vw,18px);margin:22px 0 0}
+.sello{display:inline-block;margin-top:22px;padding:9px 16px;border-radius:99px;
+  background:var(--card);border:1px solid var(--line);box-shadow:var(--sh);
+  font-size:13px;font-weight:600}
+.act{color:var(--soft);font-size:12.5px;margin-top:12px}
+
+/* ═══ contenido de relleno para poder hacer scroll ═══ */
+main{padding-bottom:22vh}
+.dias{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin:clamp(40px,7vw,80px) 0 26px}
+.dia{padding:14px 6px;border-radius:var(--r3);border:1px solid var(--hair);background:var(--card);
+  text-align:center;box-shadow:var(--sh);font-size:12px;color:var(--mid)}
+.dia b{display:block;font-family:"IBM Plex Mono",monospace;font-size:19px;color:var(--ink);font-weight:500}
+.dia.hoy{border-color:var(--acc);color:var(--acc)}
+.dia.hoy b{color:var(--acc)}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.tarjeta{background:var(--card);border:1px solid var(--hair);border-radius:var(--r2);
+  padding:20px;box-shadow:var(--sh)}
+.tarjeta .h{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--soft);
+  letter-spacing:.06em;text-transform:uppercase}
+.tarjeta h3{margin:8px 0 4px;font-family:Fraunces,Georgia,serif;font-size:22px;
+  font-variation-settings:'opsz' 40,'wght' 500,'SOFT' 60;letter-spacing:-.02em}
+.tarjeta p{margin:6px 0 0;color:var(--mid);font-size:14.5px}
+.tarjeta.lead{background:var(--ink);color:var(--ground);grid-column:span 2;border-color:transparent}
+.tarjeta.lead h3,.tarjeta.lead p{color:inherit}
+.tarjeta.lead .h{color:var(--acc)}
+@media(max-width:640px){.tarjeta.lead{grid-column:span 1}}
+
+/* ═══ panel de ajuste · SOLO para esta demo, no va al sitio ═══ */
+.tuner{position:fixed;right:14px;bottom:14px;z-index:90;width:280px;max-width:calc(100vw - 28px);
+  background:var(--card);border:1px solid var(--line);border-radius:var(--r2);
+  box-shadow:0 30px 60px -30px oklch(30% .06 138/.55);
+  font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:11.5px;color:var(--mid)}
+.tuner summary{cursor:pointer;padding:11px 14px;font-weight:500;color:var(--ink);
+  list-style:none;display:flex;justify-content:space-between;align-items:center;gap:10px}
+.tuner summary::-webkit-details-marker{display:none}
+.tuner summary::after{content:"▾";transition:transform .3s var(--e)}
+.tuner[open] summary::after{transform:rotate(180deg)}
+.tuner .cuerpo{padding:0 14px 14px;max-height:62vh;overflow-y:auto;display:flex;flex-direction:column;gap:9px}
+.tuner label{display:grid;grid-template-columns:1fr auto;gap:4px;align-items:center}
+.tuner input[type=range]{grid-column:1/-1;width:100%;accent-color:var(--acc);height:18px}
+.tuner .val{color:var(--ink)}
+.tuner .horas{display:flex;gap:5px;flex-wrap:wrap;margin-top:2px}
+.tuner .horas button{flex:1;min-width:56px;padding:6px 4px;border-radius:8px;cursor:pointer;
+  border:1px solid var(--line);background:var(--ground);color:var(--mid);
+  font-family:inherit;font-size:11px;transition:.2s var(--e)}
+.tuner .horas button[aria-pressed=true]{background:var(--acc);color:var(--acc-ink);border-color:var(--acc)}
+.tuner .horas button:focus-visible,.tuner summary:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.tuner .nota{border-top:1px solid var(--hair);padding-top:9px;line-height:1.5;color:var(--soft)}
+.tuner .nota b{color:var(--ink);font-weight:500}
+@media (prefers-reduced-motion: reduce){*{animation-duration:.01ms !important;transition-duration:.01ms !important}}
+</style>
+
+<!-- ═══ la escena · este bloque completo reemplaza a #escena3d ═══ -->
+<div class="escena" id="escena3d" aria-hidden="true">
+  <svg class="anillos" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
+    <circle class="ring" cx="500" cy="520" r="132"/><circle class="ring" cx="500" cy="520" r="248"/>
+    <circle class="ring" cx="500" cy="520" r="380"/><circle class="ring" cx="500" cy="520" r="528"/>
+  </svg>
+</div>
+<div class="grano" aria-hidden="true"></div>
+
+<div class="barra"><div class="w in">
+  <span class="marca"><svg viewBox="0 0 24 24"><path d="M3 16l5-6 4 4 3-5 6 7"/><circle cx="17" cy="6" r="2.2"/></svg> Valle Esta Semana</span>
+  <span class="vivo"><i></i><span>Maqueta de la escena</span></span>
+</div></div>
+
+<header><div class="w">
+  <h1>Todo lo que pasa<span>junto al lago</span></h1>
+  <p class="baja">Una página por semana, con lo que de verdad está pasando en Valle de Bravo.</p>
+  <div><span class="sello">24 – 30 agosto 2026</span></div>
+  <p class="act mono">El diorama es el terreno real: 16 km de lado, 112 × 112 columnas, presa incluida.</p>
+</div></header>
+
+<main><div class="w">
+  <div class="dias">
+    <div class="dia"><b>24</b>Lun</div><div class="dia"><b>25</b>Mar</div>
+    <div class="dia"><b>26</b>Mié</div><div class="dia"><b>27</b>Jue</div>
+    <div class="dia hoy"><b>28</b>Vie</div><div class="dia"><b>29</b>Sáb</div>
+    <div class="dia"><b>30</b>Dom</div>
+  </div>
+  <div class="board">
+    <article class="tarjeta lead">
+      <div class="h">19:00 · noche</div>
+      <h3>Baja y mira cómo se mueve</h3>
+      <p>Al hacer scroll la cámara gira alrededor del vaso de la presa y el diorama se hunde
+         detrás del contenido. Este bloque es relleno: sirve para tener algo por donde bajar.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">datos</div>
+      <h3>Elevación real</h3>
+      <p>Mosaicos terrarium de AWS sobre Copernicus/SRTM, 30 m, remuestreados a 142 m por columna.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">peso</div>
+      <h3>Sin dependencias</h3>
+      <p>WebGL escrito a mano. Ni three.js ni ninguna librería. Una sola llamada de dibujo.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">el lago</div>
+      <h3>1783 metros</h3>
+      <p>La superficie del agua sale plana en el modelo de elevación, así que la máscara del vaso
+         es exacta: 840 celdas, 16.9 km².</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">paleta</div>
+      <h3>La toma del sitio</h3>
+      <p>Los colores se leen de tus variables CSS en vivo. Cambia <span class="mono">data-t</span>
+         y el terreno cambia contigo, noche incluida.</p>
+    </article>
+    <article class="tarjeta">
+      <div class="h">luz</div>
+      <h3>El sol de verdad</h3>
+      <p>La dirección de la luz sigue la hora: al amanecer prende las laderas del oriente,
+         al atardecer las del poniente.</p>
+    </article>
+  </div>
+</div></main>
+
+<details class="tuner" open>
+  <summary>Ajustes de la maqueta</summary>
+  <div class="cuerpo">
+    <label>presencia <span class="val" id="v-dim">—</span>
+      <input type="range" id="s-dim" min="0.1" max="1" step="0.01"></label>
+    <label>relieve <span class="val" id="v-exag">—</span>
+      <input type="range" id="s-exag" min="0.12" max="0.75" step="0.01"></label>
+    <label>grosor del zócalo <span class="val" id="v-base">—</span>
+      <input type="range" id="s-base" min="0" max="0.45" step="0.01"></label>
+    <label>altura de cámara <span class="val" id="v-el">—</span>
+      <input type="range" id="s-el" min="0.15" max="1.35" step="0.01"></label>
+    <label>acercamiento <span class="val" id="v-dist">—</span>
+      <input type="range" id="s-dist" min="3.4" max="11" step="0.05"></label>
+    <label>posición ↔ <span class="val" id="v-offx">—</span>
+      <input type="range" id="s-offx" min="-0.7" max="0.7" step="0.01"></label>
+    <label>posición ↕ <span class="val" id="v-offy">—</span>
+      <input type="range" id="s-offy" min="-0.8" max="0.5" step="0.01"></label>
+    <label>giro al hacer scroll <span class="val" id="v-azs">—</span>
+      <input type="range" id="s-azs" min="0" max="2.6" step="0.02"></label>
+    <label>estratos <span class="val" id="v-bands">—</span>
+      <input type="range" id="s-bands" min="6" max="70" step="1"></label>
+    <div class="horas" role="group" aria-label="Composición">
+      <button type="button" data-p="fondo">fondo</button>
+      <button type="button" data-p="lado">a un lado</button>
+      <button type="button" data-p="escenario">escenario</button>
+    </div>
+    <div class="horas" role="group" aria-label="Hora del día">
+      <button type="button" data-t="dawn">amanecer</button>
+      <button type="button" data-t="day">día</button>
+      <button type="button" data-t="dusk">tarde</button>
+      <button type="button" data-t="night">noche</button>
+    </div>
+    <p class="nota" id="stats">—</p>
+  </div>
+</details>
+
+<script>
+__SCENE__
+</script>
+<script>
+/* ═══ panel de ajuste · no forma parte del bloque de la escena ═══ */
+(function(){
+  var R=document.documentElement, P=window.VALLE_TUNE;
+  if(!P){ document.getElementById('stats').innerHTML='<b>Sin WebGL.</b> El sitio cae de vuelta a los anillos del placeholder.'; return; }
+  var map=[['dim','dim',2],['exag','exag',2],['base','base',2],['el','el',2],['dist','dist',2],
+           ['offx','offX',2],['offy','offY',2],['azs','azScroll',2],['bands','bands',0]];
+  map.forEach(function(m){
+    var s=document.getElementById('s-'+m[0]), v=document.getElementById('v-'+m[0]);
+    s.value=P[m[1]]; v.textContent=(+P[m[1]]).toFixed(m[2]);
+    s.addEventListener('input',function(){ P[m[1]]=+s.value; v.textContent=(+s.value).toFixed(m[2]); });
+  });
+  var pbtn=[].slice.call(document.querySelectorAll('.horas button[data-p]'));
+  function sync(){ map.forEach(function(m){
+    var s=document.getElementById('s-'+m[0]), v=document.getElementById('v-'+m[0]);
+    s.value=P[m[1]]; v.textContent=(+P[m[1]]).toFixed(m[2]); }); }
+  pbtn.forEach(function(b){ b.addEventListener('click',function(){
+    window.VALLE_APPLY(b.dataset.p);
+    document.body.classList.toggle('escenario', b.dataset.p==='escenario');
+    pbtn.forEach(function(o){ o.setAttribute('aria-pressed', String(o===b)); });
+    sync(); }); });
+  window.VALLE_APPLY('escenario'); document.body.classList.add('escenario');
+  pbtn[2].setAttribute('aria-pressed','true'); 
+  var btns=[].slice.call(document.querySelectorAll('.horas button[data-t]'));
+  function marca(t){ btns.forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.t===t)); }); }
+  btns.forEach(function(b){ b.addEventListener('click',function(){ R.setAttribute('data-t', b.dataset.t); marca(b.dataset.t); }); });
+  function hora(){ var h=new Date().getHours(); return h>=5&&h<9?'dawn':h>=9&&h<17?'day':h>=17&&h<20?'dusk':'night'; }
+  var h0=hora(); R.setAttribute('data-t',h0); marca(h0);
+  var S=window.VALLE_STATS;
+  document.getElementById('stats').innerHTML =
+    '<b>'+S.casas.toLocaleString('es-MX')+'</b> casas ('+S.luces.toLocaleString('es-MX')+
+    ' con luz) · <b>'+S.arboles.toLocaleString('es-MX')+'</b> árboles · <b>'+
+    S.columnas.toLocaleString('es-MX')+'</b> columnas<br><b>'+
+    S.triangulos.toLocaleString('es-MX')+'</b> triángulos · <b>1</b> llamada de dibujo · '+
+    (S.gpuBytes/1024).toFixed(0)+' KB en la GPU';
+})();
+</script>
