@@ -4,10 +4,12 @@
 
 | | |
 |---|---|
-| bloque de la escena | **48.0 KB** en crudo · **17.6 KB** con gzip |
-| `index.html` completo | 90.5 KB · **30.7 KB** con gzip |
-| dibujo | 1 llamada de día · 2 de noche (la segunda es el resplandor) |
-| geometría | ~19 000 instancias · ~190 000 triángulos · 594 KB en la GPU |
+| bloque de la escena | **74.3 KB** en crudo · **26.5 KB** con gzip |
+| `index.html` completo | 139 KB · **46.0 KB** con gzip |
+| dibujo | 2 de día (bloques + veleros) · 2 de noche (bloques + resplandor) · hasta 4 con lluvia |
+| geometría | ~18 600 instancias · ~186 000 triángulos · 0.80 MB en la GPU |
+| calcomanías | 1 413 resplandores · 420 salpicaduras · 9 veleros · 3 parapentes |
+| lluvia | 2 600 gotas, movidas en el vertex shader · 0 trabajo de CPU por cuadro |
 
 ## Los datos
 
@@ -21,6 +23,10 @@
 | luces | 1 462 prendidas de noche, con resplandor que se suma al apiñarse |
 | calles | red principal de OSM (sin residenciales) → 1 890 celdas |
 | árboles | 3 905, deducidos de la pendiente del terreno · **0 bytes** |
+| orilla | 167 celdas secas que tocan el agua, de la máscara del lago · **0 bytes** |
+| aguas abiertas | agua tres celdas a la redonda · de ahí salen los veleros · **0 bytes** |
+| crestas | pendiente alta en la mitad oriente · de ahí salen los parapentes · **0 bytes** |
+| luz del pueblo | mapa difuminado de ventanas encendidas, radio 3, dos pasadas · al cargar |
 
 Las residenciales se dejaron fuera a propósito: a 142 m por celda sólo manchan el
 pueblo de un color parejo. Los árboles no son dato: OSM tiene apenas el 7 % del
@@ -51,10 +57,21 @@ Un lugar que no esté en la lista cae al Centro. También puedes mandarlos desde
 - **Paleta viva.** Lee `--musgo`, `--olive`, `--khaki`, `--lima`, `--agua`, `--acc`,
   `--lift` y `--ground` en vivo. Cambia un token y el terreno cambia. Ni un color
   duplicado en el JS.
-- **Noche automática.** Si el sistema está en oscuro, es de noche. Si de verdad es
-  de noche (20:00–05:00), es de noche aunque el sistema esté en claro. Lo demás lo
-  manda el reloj: amanecer, día, tarde. Para verla a cualquier hora: **`?noche`**
-  al final de la dirección.
+- **El sol de verdad.** Ya no hay horario fijo: la luz sale de la posición solar real
+  sobre Valle (`window.VALLE_SOLAR`, ~18 líneas, aproximación NOAA). Amanecer, día,
+  tarde y noche siguen al sol de la fecha de hoy, y el sol sale por el oriente del
+  mapa. Si el sistema está en oscuro, es de noche igual. Para verla a cualquier hora:
+  **`?noche`**, o la barra del panel del pie.
+  A propósito: a la elevación del sol se le puso techo (0.80) porque a mediodía queda
+  casi vertical y aplana el relieve. El diorama es una maqueta, no un simulador.
+- **Luz del pueblo derramada.** De noche las ventanas encendidas iluminan el cerro, la
+  calle, la orilla y el lago que tienen enfrente — no sólo su propia caja. Sale de un
+  mapa de densidad difuminado que entra como atributo de cada bloque.
+- **Clima.** `window.VALLE_CLIMA = {lluvia, nubes, viento}` (0–1, viento hasta 1.6)
+  mueve lluvia, salpicaduras, bruma, dureza del sol y oleaje. Lo llena Open-Meteo
+  desde `index.html`; si no llega, todo queda en cero y la escena se ve como siempre.
+- **Veleros y parapentes sólo de día.** El shader los apaga con `uNight`: de noche no
+  navega ni vuela nadie.
 - **Foco al elegir día.** Al tocar un día la cámara se acerca a los lugares de ese
   día y planta un pin con ondas. Se suelta sola al llegar al fondo de la página.
 - **Scroll.** La cámara gira alrededor del vaso y el diorama se apaga mientras el
@@ -86,6 +103,17 @@ altura de cámara, `dist`, `offX`/`offY`, `dim` presencia, `azScroll`).
 `VALLE_STATS` reporta los conteos y `VALLE_STATS.cuadros()` los cuadros dibujados.
 `VALLE_FOCO([{lat,lon,label}])` acerca la cámara a mano; `VALLE_FOCO(null)` la suelta.
 
+`VALLE_CAM` es la cámara del panel del pie: `tomar()` / `soltar()` le quitan y le
+devuelven el control a la automática; además `gira(dAz,dEl)`, `zoom(f)`,
+`mueve(dx,dz)`, `reset()`, `marco(ox,oy,on)` —que recorta la escena a un
+rectángulo— y `estado()`, que reporta noche, lluvia y distancia.
+
+`VALLE_HORA_OVR = 22.5` fuerza la hora (0–24) para el sol, el color del sitio y las
+ventanas; `null` vuelve al reloj. Después de cambiarlo hay que llamar `VALLE_SETT()`
+para que el `data-t` del sitio se entere.
+
+`VALLE_DORMIR` (0–1) apaga las casas una por una. Ahí vive lo que está escondido.
+
 ## Tres bichos que costaron y por qué
 
 1. **`flat` es palabra reservada de GLSL.** Tumbaba el shader entero y la escena
@@ -100,6 +128,17 @@ altura de cámara, `dist`, `offX`/`offY`, `dim` presencia, `azScroll`).
 
 También: el suavizado de las transiciones va **por tiempo, no por cuadro**, para
 que en un teléfono lento el amanecer tarde lo mismo.
+
+---
+
+## Un cuarto bicho, del 31 ago
+
+4. **`build.js` escribe `escena.js` en `_escena/datos/`, no en `_escena/`.** Corre con
+   `cwd` en `datos/`, así que ahí deja el archivo; `_escena/escena.js` es una copia que
+   hay que actualizar a mano. Integré la copia vieja por no fijarme y el diorama salió
+   sin ninguno de los cambios de la sesión, sin un solo error que lo delatara.
+   **Antes de integrar, verifica que el bloque traiga lo que esperas**, por ejemplo
+   `grep -c VALLE_CAM _escena/datos/escena.js`.
 
 ---
 

@@ -11,3 +11,8 @@ TOKEN.txt
 # Sólo se dejan fuera los pesos muertos.
 _escena/node_modules/
 _escena/demo.html
+
+# copias de respaldo y salidas de build
+*.bak
+_escena/datos/demo.html
+_escena/datos/escena.js

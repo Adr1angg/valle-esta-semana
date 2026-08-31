@@ -19,8 +19,10 @@
 >    de la semana que termina en `historial.js`, que es de donde el calendario saca
 >    las semanas pasadas. Si se te olvida, esa semana desaparece para siempre.
 >    `historial.js` **sólo crece**: nunca lo reescribas a mano ni lo borres.
-> 6. **Si el push se rechaza con "fetch first":** no intentes rebase. Clona `main` de nuevo,
->    copia encima tu `data.js`, commitea y publica desde el clon limpio.
+> 6. **Si el push se rechaza con "fetch first":** `git pull --rebase` y vuelve a publicar.
+>    (Antes esto decía "clona `main` de nuevo y copia encima tu `data.js`". **Eso descarta
+>    cualquier commit que no venga de la tarea del jueves** — en una sesión habría borrado
+>    tres. Corregido el 31 ago 2026.)
 
 
 Sitio público de una sola página con lo que pasa cada semana en Valle de Bravo.
@@ -125,16 +127,33 @@ No rediseñar en la actualización semanal.
   levantadas (`--sh` / `--sh2`).
 - Tipografía: **Fraunces** (`opsz` · `wght` · `SOFT` · `WONK`) display, **Manrope** UI,
   **IBM Plex Mono** para horas y datos.
-- La paleta se mueve con la hora real (`data-t` = dawn · day · dusk · night). Automático.
+- La paleta se mueve con la **posición real del sol** sobre Valle (`data-t` = dawn · day ·
+  dusk · night). No es un horario fijo: en diciembre oscurece a las 18:10 y en junio a las
+  20:15, y el sitio lo sabe. La cuenta vive en `window.VALLE_SOLAR` dentro de `index.html`
+  y de ahí cuelgan el color del sitio y la luz del diorama, para que no se contradigan.
 - El día es el gesto principal: tiles arriba, el tablero se recompone al hacer clic.
   La página abre en **hoy**.
 
 ### La escena del fondo
 
 `<div class="escena" id="escena3d">` es el **diorama de vóxeles** del vaso de la presa:
-terreno real, casas reales de OpenStreetMap, calles, árboles y ventanas encendidas de
-noche. Gira con el scroll y la luz sigue la hora. WebGL 1 escrito a mano, **sin
-dependencias**, 17.9 KB comprimido, una sola llamada de dibujo de día.
+terreno real, casas reales de OpenStreetMap, calles, árboles, orilla, veleros, parapentes
+y ventanas encendidas de noche. Gira con el scroll y la luz sigue al sol de verdad. WebGL 1
+escrito a mano, **sin dependencias**, 26.5 KB comprimido, de dos a cuatro llamadas de
+dibujo según haya luces y lluvia.
+
+De noche el pueblo **derrama luz sobre lo que tiene alrededor** —el cerro, la calle, la
+orilla y el lago, que lo refleja—, no sólo sobre su propio edificio. Eso sale de un mapa
+difuminado de ventanas encendidas que se calcula una vez al cargar.
+
+**El clima entra en vivo.** `window.VALLE_CLIMA = {lluvia, nubes, viento}` mueve la lluvia,
+la bruma, la dureza del sol y el oleaje. Lo llena Open-Meteo (ver abajo), pero cualquiera
+puede escribirlo desde la consola para probar.
+
+**Hasta abajo hay un panel** —"El valle, de cerca"— que le pasa la cámara al usuario:
+arrastrar gira, la rueda o el pellizco acercan, y una barra de horas mueve el sol, el color
+del sitio y las ventanas. Al salir del panel la cámara se suelta sola. La API es
+`window.VALLE_CAM` (`tomar`, `soltar`, `gira`, `zoom`, `reset`, `marco`, `estado`).
 
 Los anillos topográficos siguen ahí como plan B: si el navegador no da WebGL, la clase
 `sin-webgl` los saca y la página se ve bien igual.
@@ -142,6 +161,27 @@ Los anillos topográficos siguen ahí como plan B: si el navegador no da WebGL, 
 El bloque va incrustado en `index.html`. **Los datos y el renderizador viven en
 `_escena/datos/`** y se rearman con `node build.js`. De dónde salió cada dato, cómo está
 codificado y qué cuidar si se rehace: **`_escena/DATOS-GEOGRAFICOS.md`**.
+
+---
+
+## El clima
+
+Única llamada externa del sitio, y es opcional: **Open-Meteo**
+(`api.open-meteo.com`), sin llave y sin atribución obligatoria. Se pide 1.2 s
+después de cargar y se guarda 15 min en `localStorage` — una llamada por visita.
+**Si falla, no pasa nada:** la escena se comporta como siempre y la barra no dice
+nada. El sitio nunca depende de esto.
+
+De ahí salen la lluvia y las nubes del diorama, el viento que mece los árboles, y
+el renglón `19° · nublado` de la barra.
+
+Aviso honesto para quien lea esto en tres meses: el `current` de Open-Meteo es un
+modelo sobre una rejilla de kilómetros, no una estación en el malecón. En un valle
+con lago y mil metros de desnivel a veces dirá que llueve con el cielo seco. Le
+atina casi siempre; no es una ventana.
+
+Para probar sin esperar a que llueva: el botón **Llover** del panel del pie, o
+`window.VALLE_CLIMA = {lluvia:.8, nubes:.9, viento:.8}` en la consola.
 
 ---
 

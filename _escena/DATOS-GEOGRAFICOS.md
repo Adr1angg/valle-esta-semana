@@ -133,6 +133,33 @@ porque la tarea del jueves lo lee y lo escribe; está documentado en el
 README. Cuatro de las diez entradas están verificadas contra OSM, las
 demás son a nivel de colonia y están marcadas como tales.
 
+## 4b · Lo que se deduce de lo anterior — 0 bytes nuevos
+
+Nada de esto se descargó: todo sale de la rejilla, la máscara del lago y
+las casas que ya estaban. Se calcula al cargar la página y no pesa un
+solo byte en el archivo.
+
+| capa | de dónde sale |
+|---|---|
+| **árboles** | pendiente alta, sin agua y sin caserío |
+| **orilla** | celda seca con agua en alguno de sus cuatro vecinos · 167 celdas |
+| **aguas abiertas** | celda con agua en las tres celdas a la redonda · ahí navegan los veleros, para que ninguno encalle |
+| **crestas** | altura sobre el nivel 20 y pendiente fuerte, en la mitad oriente del encuadre · de ahí se tiran los parapentes |
+| **luz del pueblo** | densidad de ventanas encendidas, difuminada con un separable de radio 3 en dos pasadas y normalizada con una curva de 0.78 |
+
+La **luz del pueblo** es la que importa: entra como atributo de cada
+bloque y es lo que hace que de noche el cerro detrás de las casas, la
+calle y el agua estén iluminados, en vez de quedarse en negro con
+puntitos amarillos encima. Se calcula una sola vez —unas 450 mil
+cuentas, imperceptible— porque el mapa no cambia nunca.
+
+Las ventanas encendidas se eligen con una semilla determinista por
+celda, así que **hay que decidirlas antes de armar las instancias**: el
+mapa difuminado tiene que existir cuando se empuja el primer bloque.
+Por eso el código hace dos pasadas sobre la rejilla y no una.
+
+---
+
 ## 5 · La rejilla cruda — `datos/grid.json`
 
 El paso intermedio, antes de codificar: los niveles y la máscara de agua
