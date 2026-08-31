@@ -189,17 +189,48 @@ sale los jueves.** Eso deja un hueco de lunes a miércoles, *todas las
 semanas*, con el sitio enseñando una semana ya terminada. No fue mala
 suerte; pasa cada siete días.
 
-Parches de presentación, no de la causa:
+Primero lo parché mal: hice que en el hueco se eligiera el **último**
+día de la semana publicada en vez del primero, y puse un letrero coral
+explicando la situación. Adrián lo cortó en seco: *"el día que debe
+salir es el 31, no el lunes de la semana pasada, aunque no tenga
+nada"*. Tenía toda la razón — yo estaba escogiendo mejor dentro del
+conjunto equivocado.
 
-- Si la semana ya pasó, se elige el **último** día, no el primero. El
-  domingo es lo último que ocurrió; el lunes es lo más viejo.
-- El aviso pasó de un susurro verde a **coral desde el primer día**, con
-  fecha: *"Hoy es lunes 31 ago. Lo que ves es la semana del 24 – 30
-  agosto 2026, que ya terminó · la nueva edición sale el jueves 3 sep."*
+**Lo que se hizo de verdad:** cuando hoy no cae dentro de la semana
+publicada, la tira ya no sale de `data.js`. Se **arma la semana real**
+—el lunes→domingo que contiene hoy— aunque venga vacía, y el sello del
+encabezado la acompaña. Hoy es hoy, con su "Hoy" y su tile
+seleccionado, y los otros seis días dicen "—".
 
-**La causa sigue viva:** mover la tarea semanal del jueves a la
-madrugada del lunes. Es tarea local del escritorio, así que la mueve
-Adrián desde la app.
+Lo publicado no se pierde: el calendario del mes deja **pinchables las
+dos semanas** mientras dure el hueco, y el tablero vacío dice dónde
+quedó. Además `historial.js` ya trae la semana 24–30 archivada, así que
+cuando el jueves reescriba `data.js` esos eventos siguen saliendo en el
+calendario.
+
+Y el letrero coral se fue. Adrián otra vez: *"cuando esto esté
+arreglado, esa tira no hace falta"*. Cierto: si la página ya enseña la
+semana de verdad, no está mintiendo, y no hay nada que disculpar. El
+aviso quedó **sólo como alarma de que la tarea se rompió** — aparece
+pasados 10 días sin edición nueva, que es cuando algo de verdad falló.
+
+**La causa de fondo sigue viva:** mover la tarea semanal del jueves a
+la madrugada del lunes. Es tarea local del escritorio, así que la mueve
+Adrián desde la app. Con la tira arreglada ya no urge, pero el hueco
+sigue ahí.
+
+### Dos que salieron de rebote
+
+- **Dos `var MESL` en el mismo ámbito**, uno con los meses largos y otro
+  con los cortos. El de abajo pisaba al de arriba, así que el encabezado
+  del calendario decía *"Ago – sep 2026"* mientras el sello decía
+  *"31 agosto – 6 septiembre 2026"*. Peor: `armaSemana()` usaba los
+  largos al cargar y los cortos si el latido la volvía a llamar. El
+  corto pasó a llamarse `MESC`.
+- **`verify.js` daba FALLA por estar desactualizado, no por un bug.**
+  Asumía que siempre hay tarjetas de evento, y en el hueco de lunes a
+  miércoles legítimamente hay cero. Ahora acepta cero tarjetas *si* el
+  tablero puso su estado vacío, y sólo falla si se queda en blanco.
 
 ### De paso
 

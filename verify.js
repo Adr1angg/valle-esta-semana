@@ -34,6 +34,7 @@ function chrome(){
           ox: document.documentElement.scrollWidth-document.documentElement.clientWidth,
           bodyH: document.body.scrollHeight,
           evs: document.querySelectorAll('.ww').length,
+          nada: !!document.querySelector('#board .nada'),
           dias: document.querySelectorAll('.dia').length,
           rej: document.querySelectorAll('#rej .cd').length,
           siem: document.querySelectorAll('#siem .mn').length,
@@ -45,12 +46,18 @@ function chrome(){
             .map(a=>a.getAttribute('href'))
         }));
         const esIndex = f==='index.html';
+        /* De lunes a miercoles la semana publicada ya termino y la tira
+           ensena la semana de verdad, que puede venir vacia a proposito.
+           Cero tarjetas NO es falla si el tablero puso su estado vacio;
+           lo que no puede pasar es que el tablero se quede en blanco.   */
+        const tableroOk = r.evs>0 || r.nada;
         const mal = r.ox>0 || errs.length>0 || r.bodyH<600 || r.muertas.length>0 ||
-          (esIndex && (r.evs===0 || r.dias!==7 || r.rej!==21 || r.siem===0 || !r.escena));
+          (esIndex && (!tableroOk || r.dias!==7 || r.rej!==21 || r.siem===0 || !r.escena));
         if(mal) fail++;
         console.log((mal?'FAIL ':'ok   ')+scheme.padEnd(5)+vp.n.padEnd(6)+f.padEnd(12)+
           ' ox='+r.ox+' h='+r.bodyH+
-          (esIndex?(' eventos='+r.evs+' dias='+r.dias+' calendario='+r.rej+' siempre='+r.siem+
+          (esIndex?(' eventos='+r.evs+(r.evs?'':(r.nada?' (semana vacia, tablero ok)':' TABLERO EN BLANCO'))+
+                    ' dias='+r.dias+' calendario='+r.rej+' siempre='+r.siem+
                     ' escena='+(r.escena?'si':'NO')):'')+
           (r.muertas.length?' ligasMuertas='+JSON.stringify(r.muertas):'')+
           (errs.length?'\n     '+errs.join('\n     '):''));

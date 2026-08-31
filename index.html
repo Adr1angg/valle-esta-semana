@@ -484,7 +484,7 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
     <div class="sh"><h2>Agosto</h2><span class="n">Toca un día</span></div>
     <div class="cal rv">
       <div class="calin">
-        <div class="calhd"><b>Agosto 2026</b><span class="lg" id="lg"></span></div>
+        <div class="calhd"><b id="calmes">Agosto 2026</b><span class="lg" id="lg"></span></div>
         <div class="rej" id="rej"></div>
       </div>
     </div>
@@ -646,28 +646,66 @@ vivo();
 
 /* ── tiles de día ── */
 var dias=$("#dias"),board=$("#board");
-/* Cuando hoy no cae dentro de la semana publicada hay que elegir algo.
-   Si la semana ya pasó, el domingo es lo último que ocurrió; el lunes
-   es lo más viejo, y quedarse ahí hacía parecer que el sitio creía que
-   hoy era lunes 24. */
+
+/* ── qué semana se enseña ─────────────────────────────────────
+   Normalmente la que trae data.js. Pero la edición sale los jueves y
+   la semana corre lunes→domingo, así que de lunes a miércoles la
+   publicada ya terminó.
+
+   En ese hueco NO se enseña la semana pasada. Se arma la semana de
+   verdad —la que contiene hoy— aunque venga vacía: vale más un lunes
+   31 sin nada que un lunes 24 que ya pasó. Lo publicado sigue a un
+   clic en el calendario del mes, que deja pinchables las dos semanas.  */
+var DOWC=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
+var MESC=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
+var MESL=["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
+          "septiembre","octubre","noviembre","diciembre"];
+function semanaDe(f){                      /* lunes→domingo que contiene f */
+  var d=new Date(f+"T12:00:00");           /* mediodía: a salvo de husos y DST */
+  d.setDate(d.getDate()-((d.getDay()+6)%7));
+  var out=[];
+  for(var i=0;i<7;i++){
+    out.push({date:iso(d), s:DOWC[d.getDay()], dn:d.getDate(), m:MESC[d.getMonth()]});
+    d.setDate(d.getDate()+1);
+  }
+  return out;
+}
+function etiqueta(a,b){
+  var x=new Date(a+"T12:00:00"), y=new Date(b+"T12:00:00");
+  return x.getMonth()===y.getMonth()
+    ? x.getDate()+" – "+y.getDate()+" "+MESL[y.getMonth()]+" "+y.getFullYear()
+    : x.getDate()+" "+MESL[x.getMonth()]+" – "+y.getDate()+" "+MESL[y.getMonth()]+" "+y.getFullYear();
+}
+var SEMANA=[], alDia=true;
+function armaSemana(){
+  alDia = D.days.some(function(d){return d.date===HOY});
+  SEMANA = alDia ? D.days : semanaDe(HOY);
+  $("#sem").textContent = alDia ? D.week.label : etiqueta(SEMANA[0].date, SEMANA[6].date);
+}
+armaSemana();
+
 function porDefecto(){
-  if(D.days.some(function(d){return d.date===HOY})) return HOY;
-  return (D.week&&D.week.end&&HOY>D.week.end) ? D.days[D.days.length-1].date : D.days[0].date;
+  return SEMANA.some(function(d){return d.date===HOY}) ? HOY : SEMANA[0].date;
 }
 var sel=porDefecto();
-D.days.forEach(function(d){
-  var ev=D.events.filter(function(e){return e.date===d.date});
-  var b=document.createElement("button");
-  b.type="button"; b.dataset.date=d.date; b.setAttribute("role","tab");
-  b.className="dia"+(ev.length?"":" vac")+(d.date===HOY?" hoy":"")+(d.date<HOY?" pas":"");
-  b.dataset.s=d.s;
-  b.setAttribute("aria-selected",d.date===sel?"true":"false");
-  b.innerHTML='<span class="dw">'+(d.date===HOY?"Hoy":d.s)+'</span><span class="dd">'+d.dn+'</span>'+
-    '<span class="cn">'+(ev.length?ev.length+(ev.length>1?" cosas":" cosa"):"—")+'</span>'+
-    (ev.length?'<span class="pts">'+ev.slice(0,4).map(function(e){return '<i style="--kc:'+KC[e.cat]+'"></i>'}).join("")+'</span>':'');
-  b.addEventListener("click",function(){pick(d.date,1)});
-  dias.appendChild(b);
-});
+
+function pintaDias(){
+  dias.innerHTML="";
+  SEMANA.forEach(function(d){
+    var ev=D.events.filter(function(e){return e.date===d.date});
+    var b=document.createElement("button");
+    b.type="button"; b.dataset.date=d.date; b.setAttribute("role","tab");
+    b.className="dia"+(ev.length?"":" vac")+(d.date===HOY?" hoy":"")+(d.date<HOY?" pas":"");
+    b.dataset.s=d.s;
+    b.setAttribute("aria-selected",d.date===sel?"true":"false");
+    b.innerHTML='<span class="dw">'+(d.date===HOY?"Hoy":d.s)+'</span><span class="dd">'+d.dn+'</span>'+
+      '<span class="cn">'+(ev.length?ev.length+(ev.length>1?" cosas":" cosa"):"—")+'</span>'+
+      (ev.length?'<span class="pts">'+ev.slice(0,4).map(function(e){return '<i style="--kc:'+KC[e.cat]+'"></i>'}).join("")+'</span>':'');
+    b.addEventListener("click",function(){pick(d.date,1)});
+    dias.appendChild(b);
+  });
+}
+pintaDias();
 
 /* reparto de tamaños: destacado ocupa todo, el resto se acomoda de a pares */
 function spans(n,leadIdx){
@@ -681,7 +719,9 @@ function spans(n,leadIdx){
 function render(date){
   var L=D.events.filter(function(e){return e.date===date}).sort(function(a,b){return a.s-b.s});
   if(!L.length){
-    board.innerHTML='<div class="nada"><b>Nada programado</b>Baja a <a href="#siempre">Siempre</a> — el lago no cierra.</div>';
+    board.innerHTML='<div class="nada"><b>Nada programado</b>'+
+      (alDia?'':'La última edición cubre '+E(D.week.label)+' y sigue en el calendario de abajo. ')+
+      'Baja a <a href="#siempre">Siempre</a> — el lago no cierra.</div>';
     return;
   }
   var li=-1; L.forEach(function(e,i){if(e.lead)li=i});
@@ -765,8 +805,11 @@ function latido(){
   var n=new Date(), f=iso(n);
   MIN=n.getHours()*60+n.getMinutes();
   if(f!==HOY){
-    var eraHoy = (sel===HOY);
+    var eraHoy = (sel===HOY), antes = SEMANA[0].date;
     HOY=f;
+    armaSemana();
+    /* cruzar de domingo a lunes cambia la semana entera, no sólo el día */
+    if(SEMANA[0].date!==antes){ if(!elegido) sel=porDefecto(); pintaDias(); pintaCalendario(); }
     remarca(); vencida();
     /* si estabas parado en "hoy", te llevo al hoy nuevo; si elegiste
        un día a mano, ahí te quedas */
@@ -785,38 +828,49 @@ addEventListener("visibilitychange",function(){ if(!document.hidden) latido(); }
 
 /* ── ¿la semana que se muestra ya pasó? ── */
 var DOWL=["domingo","lunes","martes","miércoles","jueves","viernes","sábado"];
-var MESL=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
 function hoyLargo(){
   var n=new Date(HOY+"T12:00:00");
-  return DOWL[n.getDay()]+" "+n.getDate()+" "+MESL[n.getMonth()];
+  return DOWL[n.getDay()]+" "+n.getDate()+" "+MESC[n.getMonth()];
 }
 function vencida(){
   var el=$("#viejo"); if(!el||!D.week||!D.week.end) return;
   el.className="viejo"; el.hidden=true;
   if(HOY<=D.week.end) return;
   var cuantos=Math.round((new Date(HOY+"T12:00:00")-new Date(D.week.end+"T12:00:00"))/864e5);
+  /* El hueco normal —lunes a miércoles, mientras no sale la edición del
+     jueves— ya no se avisa. La tira de días enseña la semana de verdad,
+     así que la página no está mintiendo y el letrero sobraba. Esto queda
+     nada más como alarma de que la tarea semanal se rompió. */
+  if(cuantos<=10) return;
   el.hidden=false; el.className="viejo alerta";
-  if(cuantos<=7){
-    el.textContent="Hoy es "+hoyLargo()+". Lo que ves es la semana del "+D.week.label+
-      ", que ya terminó"+(D.week.next?" · la nueva edición sale el "+D.week.next:"")+".";
-  }else{
-    el.textContent="Hoy es "+hoyLargo()+" y esta página lleva "+cuantos+
-      " días sin actualizarse · puede que ya nada de esto aplique.";
-  }
+  el.textContent="Hoy es "+hoyLargo()+" y esta página lleva "+cuantos+
+    " días sin actualizarse · puede que ya nada de esto aplique.";
 }
 vencida();
 
 /* ── calendario widget ── */
-(function(){
-  var g=$("#rej"),h="",wk={}; D.days.forEach(function(d){wk[d.date]=1});
+function pintaCalendario(){
+  var g=$("#rej"),h="",wk={};
+  /* pinchables las dos: la semana que se enseña y la publicada. En el
+     hueco de lunes a miércoles son distintas, y lo publicado tiene que
+     seguir estando a un clic. */
+  SEMANA.forEach(function(d){wk[d.date]=1});
+  D.days.forEach(function(d){wk[d.date]=1});
   /* data.js se reescribe cada jueves, así que las semanas pasadas
      saldrían vacías. historial.js sólo crece y las rellena. */
   var HIST=(window.VH&&window.VH.events)||[];
   ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"].forEach(function(x){h+='<div class="h">'+x+'</div>'});
-  var y=2026,mo=7,dim=new Date(y,mo+1,0).getDate();
   function lunes(d){var x=new Date(d);x.setDate(x.getDate()-((x.getDay()+6)%7));return x}
-  var ini=lunes(new Date(D.week.start+"T12:00:00"));
+  var ini=lunes(new Date(SEMANA[0].date+"T12:00:00"));
   ini.setDate(ini.getDate()-7);                      /* una semana antes */
+  var fin=new Date(ini); fin.setDate(ini.getDate()+20);
+  var cm=$("#calmes");
+  if(cm){
+    var may=function(t){return t.charAt(0).toUpperCase()+t.slice(1)};
+    cm.textContent = (ini.getMonth()===fin.getMonth()
+      ? may(MESL[fin.getMonth()])
+      : may(MESL[ini.getMonth()])+" – "+MESL[fin.getMonth()])+" "+fin.getFullYear();
+  }
   for(var k=0;k<3*7;k++){                            /* tres semanas: antes, esta, despues */
     var cur=new Date(ini); cur.setDate(ini.getDate()+k);
     var ds=cur.getFullYear()+"-"+String(cur.getMonth()+1).padStart(2,"0")+"-"+String(cur.getDate()).padStart(2,"0");
@@ -836,7 +890,8 @@ vencida();
     b.addEventListener("click",function(){pick(b.dataset.date,1);
       document.getElementById("dias").scrollIntoView({behavior:"smooth",block:"center"})});
   });
-})();
+}
+pintaCalendario();
 
 (function(){
   var n=$("#siem-n"); if(n) n.textContent=D.always.length;
