@@ -118,43 +118,54 @@ a{color:inherit}
 :root[data-t="night"] .grano{mix-blend-mode:screen;opacity:.1}
 /* en el celular el grano se veia como una capa de polvo sobre el diorama */
 @media(max-width:760px){.grano{opacity:.07}:root[data-t="night"] .grano{opacity:.05}}
-/* ═══════════ el valle de cerca · el panel del pie ═══════════
-   El diorama vive fijo detras de toda la pagina. Cuando este panel
-   entra en pantalla, la escena se recorta al marco y el usuario se
-   queda con la camara: arrastrar gira, la rueda acerca, la barra
-   mueve el sol. Al salir del panel se suelta sola. */
-.cerca{padding:0 0 clamp(40px,7vw,84px)}
-.cerca .cab{max-width:660px;margin:0 0 18px}
-.cerca h4{margin:0 0 7px;font-family:Fraunces,Georgia,serif;
-  font-variation-settings:'wght' 560,'SOFT' 40;font-size:clamp(20px,2.6vw,26px);letter-spacing:-.015em}
-.cerca .cab p{margin:0;color:var(--mid);font-size:13.5px;line-height:1.65}
-.marco{position:relative;height:min(62vh,520px);border-radius:var(--r);overflow:hidden;
+/* ═══════════ el mapa, si lo pides ═══════════
+   Una línea chica al pie del último recuadro, no una sección entera.
+   Cerrado no ocupa nada. Abierto, la escena —que vive fija detrás de
+   toda la página— se recorta al marco y el usuario se queda con la
+   cámara: arrastrar gira, la rueda acerca, la barra mueve el sol. Al
+   salir del marco se suelta sola. */
+.mapa{margin-top:18px}
+.mapa summary{cursor:pointer;list-style:none;display:inline-flex;align-items:center;gap:7px;
+  font-size:12.5px;color:var(--soft);padding:5px 0;transition:color .2s var(--e)}
+.mapa summary::-webkit-details-marker{display:none}
+.mapa summary:hover{color:var(--acc)}
+.mapa summary:focus-visible{outline:2px solid var(--acc);outline-offset:4px;border-radius:6px}
+.mapa summary b{font-weight:500}
+.mapa summary svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:2.3;
+  stroke-linecap:round;stroke-linejoin:round;transition:transform .3s var(--e)}
+.mapa[open] summary svg{transform:rotate(180deg)}
+.mapa summary .ocultar{display:none}
+.mapa[open] summary .ver{display:none}
+.mapa[open] summary .ocultar{display:inline}
+.cerca{padding-top:12px}
+.cerca .pista{margin:0 0 13px;color:var(--mid);font-size:13px;line-height:1.6;max-width:640px}
+.marco{position:relative;height:min(52vh,420px);border-radius:var(--r2);overflow:hidden;
   border:1px solid var(--line);box-shadow:var(--in)}
-.marco .agarre{position:absolute;inset:0;cursor:grab;touch-action:pan-y;border-radius:var(--r)}
+.marco .agarre{position:absolute;inset:0;cursor:grab;touch-action:pan-y;border-radius:var(--r2)}
 .marco .agarre:active{cursor:grabbing}
-.marco .leyenda{position:absolute;left:13px;bottom:11px;right:60px;display:flex;flex-wrap:wrap;gap:7px;
-  pointer-events:none;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10.5px;color:var(--mid)}
+.marco .leyenda{position:absolute;left:12px;bottom:10px;right:58px;display:flex;flex-wrap:wrap;gap:6px;
+  pointer-events:none;font-family:"IBM Plex Mono",ui-monospace,monospace;font-size:10px;color:var(--mid)}
 .marco .leyenda i{display:inline-flex;align-items:center;gap:6px;font-style:normal;
-  padding:4px 9px;border-radius:99px;background:oklch(from var(--card) l c h / .82);
+  padding:3px 8px;border-radius:99px;background:oklch(from var(--card) l c h / .82);
   backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border:1px solid var(--hair)}
-.marco .leyenda b{width:8px;height:8px;border-radius:50%;flex:none}
+.marco .leyenda b{width:7px;height:7px;border-radius:50%;flex:none}
 .marco .leyenda .p1{background:oklch(84% .145 82)}
 .marco .leyenda .p2{background:var(--khaki)}
 .marco .leyenda .p3{background:var(--musgo)}
-.mandos{position:absolute;right:11px;top:11px;display:flex;flex-direction:column;gap:6px}
-.bx{width:34px;height:34px;border-radius:11px;border:1px solid var(--hair);cursor:pointer;
+.mandos{position:absolute;right:10px;top:10px;display:flex;flex-direction:column;gap:6px}
+.bx{width:32px;height:32px;border-radius:10px;border:1px solid var(--hair);cursor:pointer;
   background:oklch(from var(--card) l c h / .84);backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);color:var(--ink);font-size:15px;line-height:1;padding:0;
+  -webkit-backdrop-filter:blur(8px);color:var(--ink);font-size:14px;line-height:1;padding:0;
   font-family:inherit;box-shadow:var(--sh);transition:transform .18s var(--e),background .18s var(--e)}
 .bx:hover{transform:translateY(-1px)}
-.perillas{display:flex;flex-wrap:wrap;align-items:center;gap:11px;margin-top:14px}
+.perillas{display:flex;flex-wrap:wrap;align-items:center;gap:11px;margin-top:12px}
 .perillas .hr{display:flex;align-items:center;gap:11px;flex:1 1 290px;min-width:210px}
 .perillas .hr span{min-width:62px;font-size:12px;color:var(--mid)}
 .perillas input[type=range]{flex:1;accent-color:var(--acc);height:24px;cursor:pointer}
 .chip{cursor:pointer;font-family:inherit}
 .chip[aria-pressed="true"]{background:var(--acc);color:var(--acc-ink);border-color:transparent}
 .escena{clip-path:inset(var(--my,0px) var(--mr,0px) var(--mb,0px) var(--mx,0px) round var(--mrad,0px))}
-@media(max-width:760px){.marco{height:min(54vh,400px)}.marco .leyenda{right:56px}}
+@media(max-width:760px){.marco{height:min(48vh,340px)}.marco .leyenda{right:54px}}
 body>header,body>main,body>footer,body>section,.barra{position:relative;z-index:2}
 
 /* ═══════════ barra ═══════════ */
@@ -522,40 +533,38 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
     Fuentes: <a href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">@elcuencovalle</a> ·
     <a href="https://ra.co/events/mx/mexicocity" target="_blank" rel="noopener">Resident Advisor</a> ·
     <a href="https://ligmincha.org/center-mexico-valledebravo/" target="_blank" rel="noopener">Ligmincha</a>.</p>
-</div></div></footer>
+</div>
 
-<!-- el valle de cerca · el diorama con las riendas, hasta abajo -->
-<section class="cerca" id="cerca">
-  <div class="w">
-    <div class="cab">
-      <h4 class="fr">El valle, de cerca</h4>
-      <p>Es el mismo diorama que est&aacute; detr&aacute;s de toda la p&aacute;gina. Aqu&iacute; lo puedes mover:
-         arrastra para girar, la rueda o dos dedos para acercarte, y la barra de horas
-         mueve el sol y las luces del pueblo.</p>
-    </div>
-    <div class="marco" id="marco">
-      <div class="agarre" id="agarre" role="application" tabindex="0"
-           aria-label="Diorama de Valle de Bravo. Arrastra para girar, rueda para acercar."></div>
-      <div class="mandos">
-        <button class="bx" type="button" data-cam="mas" aria-label="Acercar">+</button>
-        <button class="bx" type="button" data-cam="menos" aria-label="Alejar">&minus;</button>
-        <button class="bx" type="button" data-cam="reset" aria-label="Volver al encuadre de siempre">&#8635;</button>
+  <!-- el mapa, si lo pides · una línea chica, no una sección entera -->
+  <details class="mapa" id="mapa">
+    <summary><b class="ver">Explora el mapa</b><b class="ocultar">Cerrar el mapa</b>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></summary>
+    <div class="cerca">
+      <p class="pista">Es el mismo diorama que est&aacute; detr&aacute;s de toda la p&aacute;gina. Arrastra para girar,
+        la rueda o dos dedos para acercarte, y la barra de horas mueve el sol y las luces del pueblo.</p>
+      <div class="marco" id="marco">
+        <div class="agarre" id="agarre" role="application" tabindex="0"
+             aria-label="Diorama de Valle de Bravo. Arrastra para girar, rueda para acercar."></div>
+        <div class="mandos">
+          <button class="bx" type="button" data-cam="mas" aria-label="Acercar">+</button>
+          <button class="bx" type="button" data-cam="menos" aria-label="Alejar">&minus;</button>
+          <button class="bx" type="button" data-cam="reset" aria-label="Volver al encuadre de siempre">&#8635;</button>
+        </div>
+        <div class="leyenda">
+          <i><b class="p1"></b>ventanas encendidas</i>
+          <i><b class="p2"></b>calles principales</i>
+          <i><b class="p3"></b>bosque</i>
+        </div>
       </div>
-      <div class="leyenda">
-        <i><b class="p1"></b>ventanas encendidas</i>
-        <i><b class="p2"></b>calles principales</i>
-        <i><b class="p3"></b>bosque</i>
+      <div class="perillas">
+        <label class="hr"><span class="mono" id="horaTxt">ahora</span>
+          <input type="range" id="horaR" min="0" max="1435" step="5" aria-label="Hora del d&iacute;a en Valle"></label>
+        <button class="bt chip" type="button" id="lluviaB" aria-pressed="false">Llover</button>
+        <button class="bt chip" type="button" id="ahoraB">Volver a ahora</button>
       </div>
     </div>
-    <div class="perillas">
-      <label class="hr"><span class="mono" id="horaTxt">ahora</span>
-        <input type="range" id="horaR" min="0" max="1435" step="5" aria-label="Hora del d&iacute;a en Valle"></label>
-      <button class="bt chip" type="button" id="lluviaB" aria-pressed="false">Llover</button>
-      <button class="bt chip" type="button" id="ahoraB">Volver a ahora</button>
-    </div>
-  </div>
-</section>
-
+  </details>
+</div></footer>
 <script src="lugares.js"></script>
 <script src="historial.js"></script>
 <script src="data.js"></script>
@@ -633,7 +642,7 @@ $("#nota").textContent=D.week.note; $("#pronto").textContent=D.soon; $("#chk").t
 $("#cdxp").textContent=D.cdmx.length+" sets que sí justifican manejar dos horas y media este fin. Página aparte, solo DJs.";
 $("#lg").innerHTML=Object.keys(C).map(function(k){return '<i style="--kc:'+KC[k]+'">'+C[k].label+'</i>'}).join("");
 
-(function(){
+function vivo(){
   var t=D.events.filter(function(e){return e.date===HOY}).sort(function(a,b){return a.s-b.s});
   var lv=t.filter(function(e){return MIN>=e.s&&MIN<e.e})[0], nx=t.filter(function(e){return e.s>MIN})[0];
   var x;
@@ -642,8 +651,8 @@ $("#lg").innerHTML=Object.keys(C).map(function(k){return '<i style="--kc:'+KC[k]
   else{var f=D.events.filter(function(e){return e.date>HOY}).sort(function(a,b){return a.date<b.date?-1:1})[0];
     x=f?"Hoy ya no hay nada · sigue "+f.title:"Semana tranquila";}
   $("#vivo").textContent=x;
-})();
-(function tk(){var n=new Date();$("#reloj").textContent=String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0");setTimeout(tk,2e4)})();
+}
+vivo();
 
 /* ── tiles de día ── */
 var dias=$("#dias"),board=$("#board"),sel=HOY;
@@ -653,6 +662,7 @@ D.days.forEach(function(d){
   var b=document.createElement("button");
   b.type="button"; b.dataset.date=d.date; b.setAttribute("role","tab");
   b.className="dia"+(ev.length?"":" vac")+(d.date===HOY?" hoy":"")+(d.date<HOY?" pas":"");
+  b.dataset.s=d.s;
   b.setAttribute("aria-selected",d.date===sel?"true":"false");
   b.innerHTML='<span class="dw">'+(d.date===HOY?"Hoy":d.s)+'</span><span class="dd">'+d.dn+'</span>'+
     '<span class="cn">'+(ev.length?ev.length+(ev.length>1?" cosas":" cosa"):"—")+'</span>'+
@@ -712,8 +722,9 @@ function punto(v){var z=LUGARES[v];
   if(!z) return ZONAS.centro;
   return Object.prototype.toString.call(z)==="[object Array]" ? z : (ZONAS[z]||ZONAS.centro);}
 
+var elegido=0;
 function pick(date,porClic){
-  sel=date;
+  sel=date; if(porClic) elegido=1;
   [].forEach.call(dias.querySelectorAll(".dia"),function(b){b.setAttribute("aria-selected",b.dataset.date===date?"true":"false")});
   [].forEach.call(document.querySelectorAll(".cd"),function(c){c.classList.toggle("sel",c.dataset.date===date)});
   render(date);
@@ -730,19 +741,67 @@ function pick(date,porClic){
 }
 pick(sel);
 
+/* ── el latido ────────────────────────────────────────────────
+   Todo lo de arriba se calculaba una sola vez al cargar, así que
+   una pestaña abierta desde ayer seguía diciendo que hoy era ayer:
+   el tile de "Hoy" en el día equivocado, el renglón de "en 20 min"
+   congelado, y el aviso de semana vencida sin aparecer hasta que
+   alguien recargara. Ahora la fecha se vuelve a leer cada 20 s y,
+   si cambió el día, la página se reacomoda sola. Nada de esto
+   espera a la tarea del jueves.                                    */
+function remarca(){
+  [].forEach.call(dias.querySelectorAll(".dia"),function(b){
+    var f=b.dataset.date;
+    b.classList.toggle("hoy",f===HOY);
+    b.classList.toggle("pas",f<HOY);
+    var dw=b.querySelector(".dw");
+    if(dw) dw.textContent = f===HOY ? "Hoy" : (b.dataset.s||dw.textContent);
+  });
+  [].forEach.call(document.querySelectorAll("#rej .cd"),function(c){
+    var f=c.dataset.date;
+    c.classList.toggle("hoy",f===HOY);
+    c.classList.toggle("pas",f<HOY);
+  });
+}
+function latido(){
+  var n=new Date(), f=iso(n);
+  MIN=n.getHours()*60+n.getMinutes();
+  if(f!==HOY){
+    var eraHoy = (sel===HOY);
+    HOY=f;
+    remarca(); vencida();
+    /* si estabas parado en "hoy", te llevo al hoy nuevo; si elegiste
+       un día a mano, ahí te quedas */
+    if(eraHoy && !elegido){
+      pick(D.days.some(function(d){return d.date===HOY}) ? HOY : D.days[0].date);
+    }
+  }
+  vivo();
+}
+(function tk(){
+  var n=new Date();
+  $("#reloj").textContent=String(n.getHours()).padStart(2,"0")+":"+String(n.getMinutes()).padStart(2,"0");
+  latido();
+  setTimeout(tk,2e4);
+})();
+/* al volver a la pestaña, no esperes al siguiente latido */
+addEventListener("visibilitychange",function(){ if(!document.hidden) latido(); });
+
 /* ── ¿la semana que se muestra ya pasó? ── */
-(function(){
+function vencida(){
   var el=$("#viejo"); if(!el||!D.week||!D.week.end) return;
+  el.className="viejo"; el.hidden=true;
   if(HOY<=D.week.end) return;
-  var dias=Math.round((new Date(HOY+"T12:00:00")-new Date(D.week.end+"T12:00:00"))/864e5);
+  var cuantos=Math.round((new Date(HOY+"T12:00:00")-new Date(D.week.end+"T12:00:00"))/864e5);
   el.hidden=false;
-  if(dias<=7){
+  if(cuantos<=7){
     el.textContent="Esta semana ya terminó · la nueva edición sale el jueves";
   }else{
     el.className="viejo alerta";
-    el.textContent="Esta página lleva "+dias+" días sin actualizarse · puede que ya nada de esto aplique";
+    el.textContent="Esta página lleva "+cuantos+" días sin actualizarse · puede que ya nada de esto aplique";
   }
-})();
+}
+vencida();
 
 /* ── calendario widget ── */
 (function(){
@@ -1232,7 +1291,15 @@ if("IntersectionObserver" in window){
     '    a = exp(-pow((r-0.70)*6.5, 2.0)) * inten * smoothstep(1.02, 0.88, r);',
     '    col = vec3(0.86, 0.92, 1.0);',
     '  } else if (tipo < 2.5) {',
-    '    a = smoothstep(1.0, 0.30, r) * inten; col = cVela;',
+    '    float le = (fract(vI.z*13.7) - 0.5) * 0.44;',
+    '    vec2 p = mat2(cos(le), sin(le), -sin(le), cos(le)) * vQ;',
+    '    float t = clamp((0.88 - p.y)/1.16, 0.0, 1.0);',
+    '    float vela = smoothstep(0.46*t, 0.46*t - 0.17, abs(p.x))',
+    '              * smoothstep(-0.34, -0.23, p.y) * smoothstep(0.95, 0.78, p.y);',
+    '    float casco = 1.0 - smoothstep(0.70, 1.04, length(vec2(p.x/0.56, (p.y+0.39)/0.17)));',
+    '    float estela = (1.0 - smoothstep(0.10, 1.0, length(vec2(p.x/1.10, (p.y+0.58)/0.12)))) * 0.34;',
+    '    a = max(max(vela, casco*0.94), estela) * inten;',
+    '    col = mix(cVela*0.50, cVela, max(vela, estela));',
     '  } else {',
     '    a = smoothstep(0.98, 0.42, r) * (0.5 + 0.5*smoothstep(0.34, 0.0, abs(vQ.y + 0.18))) * inten;',
     '    col = mix(uWarm, vec3(0.95,0.95,0.95), 0.4);',
@@ -1486,7 +1553,8 @@ if("IntersectionObserver" in window){
   var pasoB = Math.max(1, Math.floor(abierta.length / 9));
   for (var kb = 0; kb < abierta.length && nBarco < 9; kb += pasoB) {
     var cb = abierta[kb];
-    calco(cb % G, (cb / G) | 0, hv[cb] / (LEV - 1), 2, 0.0078, rnd(cb * 5.19), 0.95, 0.030);
+    calco(cb % G, (cb / G) | 0, hv[cb] / (LEV - 1), 2,
+          0.0175 + rnd(cb * 9.7) * 0.0055, rnd(cb * 5.19), 0.95, 0.030);
     nBarco++;
   }
 
@@ -2102,7 +2170,7 @@ setInterval(pide,VIDA);
 /* ── 2 · el panel ────────────────────────────────────────────── */
 var marco=$("#marco"), agarre=$("#agarre"), horaR=$("#horaR"), horaTxt=$("#horaTxt");
 /* sin WebGL no hay nada que manejar: el panel se quita entero */
-if(!marco||!window.VALLE_CAM){ var sec=$("#cerca"); if(sec) sec.hidden=true; return; }
+if(!marco||!window.VALLE_CAM){ var sec=$("#mapa"); if(sec) sec.hidden=true; return; }
 
 /* la escena se recorta al marco cuando el panel toma el control.
    mAmt va de 0 (pantalla completa) a 1 (dentro del marco) y se
@@ -2118,7 +2186,7 @@ function tick(){
   esc.style.setProperty("--my",(b.top*mAmt).toFixed(1)+"px");
   esc.style.setProperty("--mr",((vw-b.right)*mAmt).toFixed(1)+"px");
   esc.style.setProperty("--mb",((vh-b.bottom)*mAmt).toFixed(1)+"px");
-  esc.style.setProperty("--mrad",(26*mAmt).toFixed(1)+"px");
+  esc.style.setProperty("--mrad",(18*mAmt).toFixed(1)+"px");
   window.VALLE_CAM.marco(((b.left+b.width/2)/vw)*2-1, 1-((b.top+b.height/2)/vh)*2, mTgt>.5);
   if(mAmt!==mTgt||mTgt) requestAnimationFrame(tick); else corriendo=0;
 }
@@ -2133,7 +2201,14 @@ function toma(si){
    por cuadro y sólo cuando hubo scroll. Antes esto era un
    IntersectionObserver y hay entornos donde no dispara nunca — el
    panel se quedaba sin cámara sin decir nada. */
+var det=document.getElementById("mapa");
 function revisa(){
+  /* Ojo: un <details> cerrado ya no esconde a sus hijos con display:none
+     — Chrome les pone content-visibility:hidden, que conserva el layout.
+     getBoundingClientRect devuelve los 420 px del marco aunque no se vea
+     nada. Sin esta guarda, bajar al pie con el mapa cerrado recortaba la
+     escena a una caja invisible y el diorama desaparecía. */
+  if(det && !det.open){ toma(false); return; }
   var b=marco.getBoundingClientRect();
   var visible=Math.min(b.bottom,innerHeight)-Math.max(b.top,0);
   toma(visible > b.height*.55);
@@ -2146,6 +2221,12 @@ function revisa(){
 addEventListener("scroll",revisa,{passive:true});
 addEventListener("resize",revisa,{passive:true});
 addEventListener("visibilitychange",function(){ if(!document.hidden) revisa(); });
+/* abrir o cerrar la línea cuenta: cerrada, el marco mide cero y la
+   cámara ni se entera */
+if(det) det.addEventListener("toggle",function(){
+  revisa();
+  if(det.open) setTimeout(function(){ marco.scrollIntoView({block:"center",behavior:"smooth"}) },80);
+});
 revisa();
 
 /* arrastrar gira · pellizcar y la rueda acercan */

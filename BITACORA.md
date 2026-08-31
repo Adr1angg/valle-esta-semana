@@ -15,6 +15,102 @@ va hasta arriba.
 
 ---
 
+## 2026-08-31 · Facebook entra a la tarea, con un filtro de calidad encima
+
+Adrian: *"un montón de grupos de Facebook publican sus cosas ahí, y mucha
+gente solo publica en persona. El punto de esta app es tener un lugar
+centralizado para ver todo lo que pasa en el pueblo."* Se investigó a fondo
+y resultó que `sources.md` estaba **medio mal** sobre Facebook.
+
+### Lo que estaba mal, y lo que sí funciona
+
+`sources.md` decía que Facebook era puro ruido. Es cierto para el **muro** de
+los grupos —croquetas, gorras New Era, láminas— y para el buscador de
+**eventos** de Facebook, que solo devuelve excursiones que salen de CDMX al
+Nevado. Pero adentro de esos mismos grupos de compraventa **sí circulan
+volantes de eventos reales**; simplemente no se ven scrolleando.
+
+Lo que funciona es **buscar dentro del grupo**
+(`facebook.com/groups/<id>/search/?q=<palabra>`), que además no requiere
+unirse a nada. Con dos palabras clave en un solo grupo salieron tres cosas
+reales, y una de ellas —**BAR 7**, un bar que abrió este año en Durango #101
+piso 3, con música en vivo y clases gratis de salsa— **no existe en ninguna
+otra fuente**. Ese es el argumento entero para el cambio.
+
+También se confirmó que el truco del `alt` de las miniaturas, el que ya
+usábamos para Instagram, **funciona igual en Facebook**.
+
+### El filtro de admisión — lo más importante de este cambio
+
+Abrir Facebook sin un filtro habría llenado el sitio de basura, porque los
+grupos están llenos de **proveedores** de fiesta, no de fiestas. Adrian:
+*"no quiero eventos random. Los quinceaños no valen nada. Tienen que ser
+eventos públicos a los que quieran que la gente vaya."*
+
+Quedó en tres preguntas, y la de en medio hace casi todo el trabajo:
+
+> **¿alguien puede *ir* ese día, o es un anuncio para que le compre algo a
+> alguien?**
+
+Con eso se caen renta de sillas, DJs de contratación, banquetes, vacantes y
+cursos de estilismo de una sola pasada. Encima va la barra de calidad —
+*¿un desconocido tendría una razón concreta para ir?*— y la regla de que
+**ante la duda, fuera**.
+
+Dos cosas se acomodaron solas y quedaron mejor de lo esperado:
+
+- **Lo recurrente va a `always`, no a `events`.** Las clases de salsa de
+  BAR 7, el taller de poesía de los lunes en Espacio Odisea, la práctica de
+  la stupa del domingo. El esquema ya tenía el lugar correcto para eso.
+- **El `lead` nunca sale de un grupo de Facebook.** El widget grande se lo
+  gana algo confirmado en la cuenta del venue.
+
+### Qué se descartó, para no repetir el trabajo
+
+- **Todos los demás grupos**, uno por uno. Los nombres engañan en las dos
+  direcciones: *"EVENTOS y PROMOCIONES EN VALLE DE BRAVO"* es croquetas y
+  feria de maderas, y *"DE FIESTA EN VALLE DE BRAVO"* son proveedores de XV
+  años. Decisión de Adrian: no se vuelven a evaluar.
+- **Ningún grupo privado.** No se entra ni se solicita entrada a ninguno.
+- **`turismovalledebravo.gob.mx/Eventos/`** era el pendiente con más
+  potencial: un dominio distinto del sitio de turismo actual, con una página
+  literalmente titulada "EVENTOS". Se probó con WebFetch (robots.txt hace
+  ConnectTimeout), con Chrome y con el navegador integrado. **Nunca carga,
+  cuerpo vacío.** Muerto.
+- **Bar Don Chicho** (5.2K seguidores) existe y es de Valle, pero está
+  catalogado como *fast food* y solo publica memes de chelas. Sin
+  programación con fecha no vale el check semanal.
+- Boleteras, `cultura.edomex.gob.mx`, SIC, zonaturistica, todovalle,
+  TikTok/YouTube/Google Maps y todos los blogs de "qué hacer este fin de
+  semana": nada. **El ecosistema de eventos de Valle es genuinamente
+  Instagram/Facebook-first**, y eso es un hallazgo, no una falla de búsqueda.
+
+### Lo que sí se ganó fuera de Facebook
+
+`fmv.mx` (regatas, con la Copa Zarco y la Copa Alejandro Álvarez
+confirmadas en Valle) y `tritour.org` (carreras y triatlón hasta jul 2027),
+ambos 1×/mes. Más `eticket.mx?idciudad=141`, la única boletera con ID de
+ciudad propio para Valle — casi siempre vacía, pero el check cuesta 10
+segundos.
+
+⚠️ Y una advertencia que vale la pena repetir: **`fmvela.com` está
+secuestrado** y redirige a un sitio de apuestas. La Federación Mexicana de
+Vela real es `fmv.mx`.
+
+### Qué se tocó
+
+`sources.md` (venues nuevos, sección de Facebook, el filtro, y los
+callejones sin salida ampliados), `tarea-semanal.md` (paso nuevo de barrido
+y el filtro completo), `README.md` (una línea en la tabla de archivos) y
+`investigacion-facebook.md`, nuevo, con toda la investigación y lo
+descartado. **No se tocó `data.js`, `index.html` ni `cdmx.html`.**
+
+**Pendiente para Adrian:** la tarea programada del jueves vive en la app de
+Claude, no en la nube, así que hay que **pegarle a mano el texto nuevo de
+`tarea-semanal.md`** para que el cambio surta efecto.
+
+---
+
 ## 2026-08-31 · La noche, el clima de verdad y el panel del pie
 
 Adrián: *"de noche las luces se sienten como puntitos amarillos, no

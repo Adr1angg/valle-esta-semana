@@ -372,7 +372,15 @@
     '    a = exp(-pow((r-0.70)*6.5, 2.0)) * inten * smoothstep(1.02, 0.88, r);',
     '    col = vec3(0.86, 0.92, 1.0);',
     '  } else if (tipo < 2.5) {',
-    '    a = smoothstep(1.0, 0.30, r) * inten; col = cVela;',
+    '    float le = (fract(vI.z*13.7) - 0.5) * 0.44;',
+    '    vec2 p = mat2(cos(le), sin(le), -sin(le), cos(le)) * vQ;',
+    '    float t = clamp((0.88 - p.y)/1.16, 0.0, 1.0);',
+    '    float vela = smoothstep(0.46*t, 0.46*t - 0.17, abs(p.x))',
+    '              * smoothstep(-0.34, -0.23, p.y) * smoothstep(0.95, 0.78, p.y);',
+    '    float casco = 1.0 - smoothstep(0.70, 1.04, length(vec2(p.x/0.56, (p.y+0.39)/0.17)));',
+    '    float estela = (1.0 - smoothstep(0.10, 1.0, length(vec2(p.x/1.10, (p.y+0.58)/0.12)))) * 0.34;',
+    '    a = max(max(vela, casco*0.94), estela) * inten;',
+    '    col = mix(cVela*0.50, cVela, max(vela, estela));',
     '  } else {',
     '    a = smoothstep(0.98, 0.42, r) * (0.5 + 0.5*smoothstep(0.34, 0.0, abs(vQ.y + 0.18))) * inten;',
     '    col = mix(uWarm, vec3(0.95,0.95,0.95), 0.4);',
@@ -626,7 +634,8 @@
   var pasoB = Math.max(1, Math.floor(abierta.length / 9));
   for (var kb = 0; kb < abierta.length && nBarco < 9; kb += pasoB) {
     var cb = abierta[kb];
-    calco(cb % G, (cb / G) | 0, hv[cb] / (LEV - 1), 2, 0.0078, rnd(cb * 5.19), 0.95, 0.030);
+    calco(cb % G, (cb / G) | 0, hv[cb] / (LEV - 1), 2,
+          0.0175 + rnd(cb * 9.7) * 0.0055, rnd(cb * 5.19), 0.95, 0.030);
     nBarco++;
   }
 

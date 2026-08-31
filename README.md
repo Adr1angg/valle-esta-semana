@@ -199,6 +199,7 @@ Para probar sin esperar a que llueva: el botón **Llover** del panel del pie, o
 | `archivar.js` | guarda la semana en `historial.js` · se corre antes de tocar `data.js` |
 | `verify.js` | Playwright: desbordes, errores, y que la escena y el tablero existan |
 | `sources.md` | lista verificada de fuentes, con los callejones sin salida |
+| `investigacion-facebook.md` | investigación de Facebook y otras fuentes · qué se agregó, qué se descartó y por qué |
 | `BITACORA.md` | **qué cambió y por qué, con fecha** · se le agrega una entrada en cada cambio |
 | `_archivo/` | versiones anteriores del sitio, por si acaso |
 | `_escena/DATOS-GEOGRAFICOS.md` | de dónde salió el mapa y cómo está codificado |
