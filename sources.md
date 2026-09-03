@@ -25,9 +25,9 @@ La API `/api/v1/users/web_profile_info/` **ya no sirve** (400, schema borrado).
 
 | Fuente | Handle | Qué es | Estado |
 |---|---|---|---|
-| **El Cuenco** | [@elcuencovalle](https://instagram.com/elcuencovalle) · [FB](https://facebook.com/ElCuencoBarraDeEspecialidades/) | Barra de especialidades. **Publica volante de agenda semanal lun–mar** con los cinco días. Fijos: martes de martinis 2x1 18–21, miércoles game night 18:30. Jueves concierto o jam, viernes y sábado DJ sets. También masterclasses (té chino con Nanshan Cha). | ✅ **La mejor fuente del pueblo, con diferencia.** |
+| **El Cuenco** | [@elcuencovalle](https://instagram.com/elcuencovalle) · [FB](https://facebook.com/ElCuencoBarraDeEspecialidades/) | Barra de especialidades. **Publica volante de agenda semanal lun–mar** con los cinco días. Fijos: martes de martinis 2x1 18–21, miércoles game night 18:30. Jueves concierto o jam, viernes y sábado DJ sets. También masterclasses (té chino con Nanshan Cha). | ✅ **La mejor fuente de Valle, con diferencia.** |
 | **Espacio Odisea** | [@espacioodiseavb](https://instagram.com/espacioodiseavb) · [espacioodisea.org](https://espacioodisea.org/) | Biblioteca comunitaria en Santa María (Parque Santa María 10). **Ciclo de cine con entrada libre**, talleres, bazar mensual, Feria del Libro. Lun–vie 10–19, sáb 12–17. | ✅ **El hallazgo de agosto 2026.** Cultura de verdad, con fechas. |
-| **Turismo y Cultura Valle de Bravo** | [@turismovalledebravo](https://instagram.com/turismovalledebravo) | Cuenta oficial del municipio. Anuncia los festivales del pueblo (Festival del Hongo, Almas, fiestas patronales) con fecha y sede. | ✅ |
+| **Turismo y Cultura Valle de Bravo** | [@turismovalledebravo](https://instagram.com/turismovalledebravo) | Cuenta oficial del municipio. Anuncia los festivales de Valle (Festival del Hongo, Almas, fiestas patronales) con fecha y sede. | ✅ |
 | **Marina 33** | [@marina33terraza](https://instagram.com/marina33terraza) | Rooftop en Santa María, jue–dom 13–23. **Jueves Vallesano** semanal y promos jue–dom. | ✅ |
 | **Na-ha / El Santuario** | [@elsantuariovalle](https://instagram.com/elsantuariovalle) · [OpenTable](https://www.opentable.com/r/restaurante-naha-valle-de-bravo) | Restaurante del Santuario en San Gaspar. **Música en vivo vie y sáb 20:30–22:30**, brunch dom 8:30–13:00. | ✅ |
 | **Mestizo** | [@mestizosaborymezcal](https://instagram.com/mestizosaborymezcal) | Rooftop mezcalería, Pagaza 321, desde las 16:00, +18. DJ residente todos los fines; nunca publica line-up con fecha. Bellakeo. | ✅ como permanente, ⚠️ para eventos |
@@ -52,7 +52,7 @@ La API `/api/v1/users/web_profile_info/` **ya no sirve** (400, schema borrado).
 | El Santuario Music | [@el_santuario_music](https://instagram.com/el_santuario_music) | Sello y colectivo local; Quadrivium. Sin publicar desde julio 2026. ⚠️ |
 | Hotel Puesta del Sol / Terraza 360 | [@hotelpuestadelsol360](https://instagram.com/hotelpuestadelsol360) | Terraza 360° en el centro. Cuenta chica. ⚠️ |
 | Cervecería Nevado | [@cerveceria.nevado](https://instagram.com/cerveceria.nevado) | Cervecería artesanal, camino a San Simón. Programa carreras y eventos por ticketera. ⚠️ |
-| Skyline Cervecería | Barrio 28, Acatitlán | Cervecería con vista al lago. **Hace el Oktoberfest del pueblo cada finales de octubre.** ⚠️ sin IG confirmado |
+| Skyline Cervecería | Barrio 28, Acatitlán | Cervecería con vista al lago. **Hace el Oktoberfest de Valle cada finales de octubre.** ⚠️ sin IG confirmado |
 | Vinopremier | [@vinopremiervalle](https://instagram.com/vinopremiervalle) | Vinoteca en el centro, catas. ⚠️ |
 | Teva Skyroof · Forsyth Brewpub · Efecto · Celtics Pub · La Cocina de 5 · Quirina · Soleado · El Cien | — | Bares y rooftops del centro y Avándaro sin handle confirmado. Pendiente resolverlos con una pasada de Google Maps. ⚠️ |
 | FULLPASS | [@fullpassticket](https://instagram.com/fullpassticket) | Ticketera detrás de Surreal; caza eventos electrónicos sueltos. ⚠️ |
@@ -70,7 +70,7 @@ La API `/api/v1/users/web_profile_info/` **ya no sirve** (400, schema borrado).
 | Galerías | Zopolite · Venado Azul (Pagaza 504) · Arthouse (Santa María 125-A) · Victoria (El Salitre 111) · Tatiana H. Rajkov (Plaza Avándaro) | Exposiciones rotativas. |
 | Gaspart Studio | [@gaspartstudio](https://instagram.com/gaspartstudio) · Prol. Av. Toluca 438 | Escuela de ebanistería y cerámica, cursos recurrentes niños y adultos. |
 | Atelier Pia Seiersen | piaseiersen.com | Talleres permanentes de papel hecho a mano. |
-| Cinema Valle | Plaza Valle · cinemavalledebravo.com | La única sala del pueblo. Cartelera semanal. |
+| Cinema Valle | Plaza Valle · cinemavalledebravo.com | La única sala de cine de Valle. Cartelera semanal. |
 | Festival de las Almas | [festivaldelasalmas.com](https://festivaldelasalmas.com/) | XXIV edición, fin de oct a 2 nov. **Fechas 2026 aún sin publicar al 28 ago.** |
 | Feria del Libro de Valle de Bravo | Espacio Odisea, Casa Fuensanta, Museo Pagaza | Unos 60 actos. La XI edición fue del 22 al 31 may 2026. |
 | Parroquia de San Francisco de Asís · Santuario de Santa María (Cristo Negro) | Centro y Santa María | Fiestas patronales: **4 oct** y **3 may**. |
@@ -108,7 +108,7 @@ La API `/api/v1/users/web_profile_info/` **ya no sirve** (400, schema borrado).
 | [Rancho Avándaro Club de Esquí](https://ranchoavandaro.com.mx/clubdeesqui) | Lago de esquí, cable park, SUP, padel. |
 | Parque Estatal Monte Alto · La Peña · Cerro Gordo · Velo de Novia | Caminata, camping, enduro, cascada. Monte Alto abre 9–17. |
 | Club de Golf Avándaro · Club de Golf Izar | Golf. |
-| El Ranchito ([@elranchitodevalle](https://instagram.com/elranchitodevalle)) | Cabalgatas a cascadas y por el pueblo. |
+| El Ranchito ([@elranchitodevalle](https://instagram.com/elranchitodevalle)) | Cabalgatas a cascadas y por Valle. |
 | Santuario Piedra Herrada | Monarca, **temporada de mediados de nov a fines de marzo**, 8–17. Está en Temascaltepec, no en Valle. |
 | [asdeporte.com](https://www.asdeporte.com/) | Donde aparecen las carreras con fecha. **Triatlón Valle de Bravo: sáb 24 oct 2026.** |
 

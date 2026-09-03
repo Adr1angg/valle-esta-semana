@@ -15,6 +15,39 @@ va hasta arriba.
 
 ---
 
+## 2026-09-03 (2) · Se llama Valle, no "el pueblo"
+
+Adrian: *"can we stop calling it Pueblo? Why can't we just call it Valle?"*
+
+Tenía razón y era un tic heredado de los primeros textos. "El pueblo" es voz de
+folleto de turismo, y esta página la lee gente que ya vive en Valle: decirles "el
+pueblo" suena a que se les está explicando su propia casa. Además el sitio se
+llama *Esta semana en Valle*, así que la incoherencia estaba a la vista.
+
+**Qué se cambió:** las dos frases en `data.js` que lo veía el lector (el `blurb`
+del `lead` y el de la casa de cultura Pagaza) y las cinco de `sources.md`, que es
+lo que arrastra el vicio de una corrida a la siguiente. La regla quedó escrita en
+`tarea-semanal.md` y apuntada en el encabezado del README para que no vuelva.
+
+**Qué NO se cambió, y es la parte interesante:** hay 40 y tantos "pueblo" más en
+`index.html`, `_escena/` y los datos de la escena. Ahí *pueblo* no quiere decir
+Valle: es el nombre técnico de la mancha de casas encendidas del diorama, en
+contraste con el cerro, la orilla y el lago. Hay una variable `vec3 pueblo` en el
+shader. Renombrar eso no arregla nada que alguien lea y sí arriesga romper GLSL
+armado por concatenación de strings. Se queda, y la excepción está escrita en la
+regla para que la próxima corrida no se confunda y lo "arregle".
+
+Tampoco se tocó `_archivo/` ni las entradas viejas de esta bitácora: son el
+registro de lo que se publicó en su momento. Reescribirlas sería falsificarlo.
+
+**De pasada**, revisando la semana en vivo salió un error de verdad: la liga de
+"Agendar" de la Freestyle Electronic Night terminaba a medianoche, cuando el
+evento en `data.js` va hasta las 2 am. Quien la usara se habría puesto un
+recordatorio de dos horas menos. Corregido a `20260906T080000Z`. Vale la pena
+cotejar las ligas de calendario contra `s`/`e` cada vez que se cambie una hora:
+esta se quedó vieja porque la hora del evento se corrigió de 19:00 a 20:00 y la
+liga no se movió con ella.
+
 ## 2026-09-03 · La semana ahora corre jueves→miércoles
 
 Adrian, después de ver la edición del 31 ago publicada: *"I think it makes sense

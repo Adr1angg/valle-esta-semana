@@ -68,10 +68,10 @@ window.VS = {
 
     { id:"freestyle0905", date:"2026-09-05", s:1200, e:1560, time:"20:00", cat:"noche", lead:true,
       title:"Freestyle Electronic Night", venue:"El Cuenco", price:"Sin cover anunciado",
-      blurb:"La única noche del pueblo esta semana pensada de principio a fin para bailar. Live sets de El Niño Ruso y Yohui desde las ocho, y el Cuenco avisa de qué va: bass, techno, psytrance y freestyle. O sea que no es la noche de house de siempre — si vas, vas a eso.",
+      blurb:"La única noche de Valle esta semana pensada de principio a fin para bailar. Live sets de El Niño Ruso y Yohui desde las ocho, y el Cuenco avisa de qué va: bass, techno, psytrance y freestyle. O sea que no es la noche de house de siempre — si vas, vas a eso.",
       lineup:["El Niño Ruso","Yohui"],
       links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"},
-             {l:"Agendar", h:"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Freestyle%20Electronic%20Night&dates=20260906T020000Z/20260906T060000Z&location=El%20Cuenco%2C%20Valle%20de%20Bravo&ctz=America/Mexico_City"}] },
+             {l:"Agendar", h:"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Freestyle%20Electronic%20Night&dates=20260906T020000Z/20260906T080000Z&location=El%20Cuenco%2C%20Valle%20de%20Bravo&ctz=America/Mexico_City"}] },
 
     { id:"naha0905", date:"2026-09-05", s:1230, e:1350, time:"20:30 – 22:30", cat:"musica",
       title:"Música en vivo en Na-ha", venue:"El Santuario, San Gaspar", price:"", repeat:"viernes y sábado",
@@ -146,7 +146,7 @@ window.VS = {
     {cat:"cultura", title:"Museo de Arte Popular", when:"Entrada gratuita · recorrido guiado 30–40 min",
      blurb:"Arte popular mexicano pieza por pieza: barro de Metepec, perritos colimones, textiles. El recorrido guiado se reserva."},
     {cat:"cultura", title:"Centro Regional de Cultura Pagaza", when:"Mar–sáb 10–18 · dom 10–15 · gratis",
-     blurb:"La casa de cultura del pueblo, en un edificio del siglo XVII: salas permanentes, exposiciones temporales y talleres abiertos."},
+     blurb:"La casa de cultura de Valle, en un edificio del siglo XVII: salas permanentes, exposiciones temporales y talleres abiertos."},
     {cat:"cultura", title:"Espacio Odisea", when:"Lun–vie 10–19 · sáb 12–17",
      blurb:"Biblioteca comunitaria en Santa María, con ciclo de cine, talleres y un bazar una vez al mes."},
     {cat:"cultura", title:"Centro Ceramista y la ruta del barro", when:"Horario variable",

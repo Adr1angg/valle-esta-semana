@@ -129,6 +129,20 @@ Noche y música en vivo; mercados y comida; aire libre y deporte (parapente en E
 
 **Técnica:** `browser_batch` para navegar + capturar varios perfiles por viaje. La API de Instagram `/api/v1/users/web_profile_info/` está muerta (400, schema borrado); la técnica que sí funciona — leer el `alt` de las miniaturas, que transcribe el texto del volante — está documentada arriba de todo en `sources.md`. Los perfiles a veces salen en blanco al primer load; espera 3–4s y vuelve a capturar.
 
+## Cómo se le dice al lugar
+
+**Se llama Valle.** No "el pueblo". En los `blurb`, en `note`, en `checked`, en
+`soon` y en cualquier texto que lea la gente: *"la única noche de Valle"*, *"la
+casa de cultura de Valle"*, *"la mejor fuente de Valle"*. Tampoco "el Pueblo
+Mágico" ni "nuestro pueblo" — eso es voz de folleto de turismo, y este sitio lo
+lee gente que ya vive ahí. Si una frase necesita variedad, usa *Valle*, *Valle de
+Bravo*, o reescríbela sin sujeto.
+
+Única excepción: el diorama. En el código de la escena y en `_escena/`, "el
+pueblo" es el nombre técnico de la mancha de casas encendidas, en contraste con
+el cerro, la orilla y el lago — hay hasta una variable `pueblo` en el shader. Eso
+no lo lee nadie y ahí se queda.
+
 ## Estándares
 
 El `blurb` del evento con `lead` puede ser opinionado y en la voz de Adrian; los demás son neutrales y factuales — sus amigos y desconocidos leen esta página. Sé honesto: una semana tranquila es una respuesta perfectamente válida, nunca inventes eventos ni infles la lista. Si un venue simplemente no publicó, dilo en `checked` en vez de desaparecerlo. Los títulos en español, concretos, sin adjetivos de relleno.

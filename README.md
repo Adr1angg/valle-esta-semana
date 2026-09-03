@@ -6,6 +6,9 @@
 >
 > 0. **La semana corre jueves→miércoles**, no lunes→domingo. El jueves que se
 >    publica es el primer día. Cambió el 3 sep 2026; ver la bitácora.
+> 0.5 **Se llama Valle, nunca "el pueblo".** En todo lo que lee la gente. La
+>    excepción es el código del diorama, donde "pueblo" es la mancha de casas.
+>    Regla completa en `tarea-semanal.md`. Petición de Adrian, 3 sep 2026.
 > 1. **Esto no es un sitio de DJs.** El alcance son las seis categorías: noche, música en
 >    vivo, mercado, cultura, bienestar y aire libre. Museos, la casa de cultura, la
 >    biblioteca comunitaria, temazcales, mercados de a diario, clubes de vela y de bici
