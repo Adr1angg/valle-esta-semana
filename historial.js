@@ -15,5 +15,20 @@ window.VH={events:[
   {d:"2026-08-29",t:"Música en vivo en Na-ha",c:"musica"},
   {d:"2026-08-30",t:"Brunch dominical en Na-ha",c:"mercado"},
   {d:"2026-08-30",t:"Domingo de tianguis",c:"mercado"},
-  {d:"2026-08-30",t:"Meditación en Chamma Ling",c:"bienestar"}
+  {d:"2026-08-30",t:"Meditación en Chamma Ling",c:"bienestar"},
+  {d:"2026-08-31",t:"Tianguis de Avándaro",c:"mercado"},
+  {d:"2026-09-01",t:"Martes de Martinis",c:"noche"},
+  {d:"2026-09-02",t:"Game Night",c:"noche"},
+  {d:"2026-09-03",t:"Los Sultanes del Swing",c:"musica"},
+  {d:"2026-09-04",t:"Degustación de té chino con Awei",c:"cultura"},
+  {d:"2026-09-04",t:"Karaoke con Cristiane Bernal",c:"noche"},
+  {d:"2026-09-04",t:"Música en vivo en Na-ha",c:"musica"},
+  {d:"2026-09-05",t:"Clases gratis de salsa y bachata",c:"noche"},
+  {d:"2026-09-05",t:"Degustación de té chino con Awei · sesión 2",c:"cultura"},
+  {d:"2026-09-05",t:"Freestyle Electronic Night",c:"noche"},
+  {d:"2026-09-05",t:"Mercado El 100",c:"mercado"},
+  {d:"2026-09-05",t:"Música en vivo en Na-ha",c:"musica"},
+  {d:"2026-09-06",t:"Brunch dominical en Na-ha",c:"mercado"},
+  {d:"2026-09-06",t:"Domingo de tianguis",c:"mercado"},
+  {d:"2026-09-06",t:"Meditación en Chamma Ling",c:"bienestar"}
 ]};

@@ -1,12 +1,14 @@
-/* Valle Esta Semana — contenido de la semana. Lo unico que cambia cada jueves. */
+/* Valle Esta Semana — contenido de la semana. Lo unico que cambia cada jueves.
+   Desde el 3 sep 2026 la semana corre jueves→miercoles: el jueves que se
+   publica es el primer dia, para que no salgan dias ya muertos arriba.     */
 window.VS = {
   week: {
-    label: "31 agosto – 6 septiembre 2026",
-    start: "2026-08-31", end: "2026-09-06",
-    updated: "2026-09-03T12:25:00-06:00",
-    updatedText: "jue 3 sep, 12:25",
+    label: "3 – 9 septiembre 2026",
+    start: "2026-09-03", end: "2026-09-09",
+    updated: "2026-09-03T13:40:00-06:00",
+    updatedText: "jue 3 sep, 13:40",
     next: "jueves 10 sep",
-    note: "El Cuenco programó los cinco días de martes a sábado y eso sostiene la semana: swing en vivo el jueves, karaoke el viernes y noche electrónica el sábado. Se suma un bar nuevo en Agua Fría con clases gratis de salsa y bachata, y una degustación de té chino en dos sesiones. Nadie más del pueblo publicó agenda con fecha."
+    note: "Primera semana que corre de jueves a miércoles, para que la página abra siempre en un día que todavía no pasa. El fin viene cargado: swing en vivo hoy, karaoke el viernes, y el sábado se encima todo — mercado, té, clase de baile y la noche electrónica del Cuenco. De lunes a miércoles solo está lo de cada semana; El Cuenco publica su volante los lunes, así que esos días se llenarán en la edición del jueves 10."
   },
 
   cats: {
@@ -19,31 +21,16 @@ window.VS = {
   },
 
   days: [
-    {date:"2026-08-31", dow:"Lunes",     s:"Lun", dn:31, m:"ago"},
-    {date:"2026-09-01", dow:"Martes",    s:"Mar", dn: 1, m:"sep"},
-    {date:"2026-09-02", dow:"Miércoles", s:"Mié", dn: 2, m:"sep"},
     {date:"2026-09-03", dow:"Jueves",    s:"Jue", dn: 3, m:"sep"},
     {date:"2026-09-04", dow:"Viernes",   s:"Vie", dn: 4, m:"sep"},
     {date:"2026-09-05", dow:"Sábado",    s:"Sáb", dn: 5, m:"sep"},
-    {date:"2026-09-06", dow:"Domingo",   s:"Dom", dn: 6, m:"sep"}
+    {date:"2026-09-06", dow:"Domingo",   s:"Dom", dn: 6, m:"sep"},
+    {date:"2026-09-07", dow:"Lunes",     s:"Lun", dn: 7, m:"sep"},
+    {date:"2026-09-08", dow:"Martes",    s:"Mar", dn: 8, m:"sep"},
+    {date:"2026-09-09", dow:"Miércoles", s:"Mié", dn: 9, m:"sep"}
   ],
 
   events: [
-    { id:"avandaro0831", date:"2026-08-31", s:600, e:900, time:"Todo el día", cat:"mercado",
-      title:"Tianguis de Avándaro", venue:"Avándaro", price:"Gratis", repeat:"cada lunes",
-      blurb:"El mercado tradicional de Avándaro, con comida típica y puestos de siempre.",
-      links:[] },
-
-    { id:"martinis0901", date:"2026-09-01", s:1080, e:1260, time:"18:00 – 21:00", cat:"noche",
-      title:"Martes de Martinis", venue:"El Cuenco", price:"2x1", repeat:"cada martes",
-      blurb:"Dos por uno en martinis de seis a nueve. La única razón real para salir un martes en Valle.",
-      links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] },
-
-    { id:"gamenight0902", date:"2026-09-02", s:1110, e:1320, time:"18:30", cat:"noche",
-      title:"Game Night", venue:"El Cuenco", price:"", repeat:"cada miércoles",
-      blurb:"Juegos de mesa, dominó y billar. Sin DJ, sin cover, entre semana.",
-      links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] },
-
     { id:"sultanes0903", date:"2026-09-03", s:1260, e:1440, time:"21:00", cat:"musica",
       title:"Los Sultanes del Swing", venue:"El Cuenco", price:"Sin cover anunciado",
       blurb:"Banda de covers de los cincuenta, sesenta y setenta: Queen, Beatles, Pink Floyd, Led Zeppelin, y lo que pida el público.",
@@ -51,7 +38,7 @@ window.VS = {
 
     { id:"techino0904", date:"2026-09-04", s:1020, e:1170, time:"17:00", cat:"cultura",
       title:"Degustación de té chino con Awei", venue:"El Cuenco", price:"$800",
-      blurb:"Awei, de Nanshan Cha, guía una cata de varios estilos de té chino: aromas, sabores y formas de preparación. No hace falta experiencia previa; se reserva por teléfono.",
+      blurb:"Awei, de Nanshan Cha, guía una cata de varios estilos de té chino: aromas, sabores y formas de preparación. No hace falta experiencia previa; se reserva al 55 4503 6762.",
       links:[{l:"Instagram", h:"https://www.instagram.com/nanshancha/"}] },
 
     { id:"karaoke0904", date:"2026-09-04", s:1140, e:1380, time:"19:00", cat:"noche",
@@ -71,7 +58,7 @@ window.VS = {
 
     { id:"techino0905", date:"2026-09-05", s:660, e:810, time:"11:00", cat:"cultura",
       title:"Degustación de té chino con Awei · sesión 2", venue:"El Sauna, Acatitlán", price:"$900",
-      blurb:"La segunda sesión de la cata de Nanshan Cha, esta vez en El Sauna de Acatitlán y de mañana. Mismo formato que la del viernes en el Cuenco.",
+      blurb:"La segunda sesión de la cata de Nanshan Cha, de mañana y en Acatitlán. Esta incluye dos horas de sauna además de la degustación.",
       links:[{l:"Instagram", h:"https://www.instagram.com/nanshancha/"}] },
 
     { id:"salsabar7_0905", date:"2026-09-05", s:1080, e:1260, time:"Salsa 18:00 · Bachata 19:00", cat:"noche",
@@ -79,12 +66,12 @@ window.VS = {
       blurb:"Bar 7 abrió este año en Durango 101, tercer piso, y estrena noche de baile con el maestro Ale Pérez: salsa a las seis, bachata a las siete. Cupo limitado, se aparta por WhatsApp al 722 885 8454.",
       links:[{l:"Instagram", h:"https://www.instagram.com/_bar7.oficial_2026/"}] },
 
-    { id:"freestyle0905", date:"2026-09-05", s:1140, e:1560, time:"19:00", cat:"noche", lead:true,
+    { id:"freestyle0905", date:"2026-09-05", s:1200, e:1560, time:"20:00", cat:"noche", lead:true,
       title:"Freestyle Electronic Night", venue:"El Cuenco", price:"Sin cover anunciado",
-      blurb:"La única noche del pueblo esta semana pensada de principio a fin para bailar. El Niño Ruso a los controles desde las siete y un segundo DJ que el Cuenco no quiso nombrar. Sin cover anunciado, así que el riesgo es bajo.",
-      lineup:["El Niño Ruso","DJ sorpresa"],
+      blurb:"La única noche del pueblo esta semana pensada de principio a fin para bailar. Live sets de El Niño Ruso y Yohui desde las ocho, y el Cuenco avisa de qué va: bass, techno, psytrance y freestyle. O sea que no es la noche de house de siempre — si vas, vas a eso.",
+      lineup:["El Niño Ruso","Yohui"],
       links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"},
-             {l:"Agendar", h:"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Freestyle%20Electronic%20Night&dates=20260906T010000Z/20260906T060000Z&location=El%20Cuenco%2C%20Valle%20de%20Bravo&ctz=America/Mexico_City"}] },
+             {l:"Agendar", h:"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Freestyle%20Electronic%20Night&dates=20260906T020000Z/20260906T060000Z&location=El%20Cuenco%2C%20Valle%20de%20Bravo&ctz=America/Mexico_City"}] },
 
     { id:"naha0905", date:"2026-09-05", s:1230, e:1350, time:"20:30 – 22:30", cat:"musica",
       title:"Música en vivo en Na-ha", venue:"El Santuario, San Gaspar", price:"", repeat:"viernes y sábado",
@@ -104,7 +91,22 @@ window.VS = {
     { id:"medi0906", date:"2026-09-06", s:750, e:840, time:"12:30", cat:"bienestar",
       title:"Meditación en Chamma Ling", venue:"Chamma Ling", price:"Gratis", repeat:"cada domingo",
       blurb:"Práctica guiada por los lamas residentes, en la tradición bön, a los pies del Gran Stupa. El terreno solo ya vale el viaje.",
-      links:[{l:"Info", h:"https://ligmincha.org/center-mexico-valledebravo/"}] }
+      links:[{l:"Info", h:"https://ligmincha.org/center-mexico-valledebravo/"}] },
+
+    { id:"avandaro0907", date:"2026-09-07", s:600, e:900, time:"Todo el día", cat:"mercado",
+      title:"Tianguis de Avándaro", venue:"Avándaro", price:"Gratis", repeat:"cada lunes",
+      blurb:"El mercado tradicional de Avándaro, con comida típica y puestos de siempre.",
+      links:[] },
+
+    { id:"martinis0908", date:"2026-09-08", s:1080, e:1260, time:"18:00 – 21:00", cat:"noche",
+      title:"Martes de Martinis", venue:"El Cuenco", price:"2x1", repeat:"cada martes",
+      blurb:"Dos por uno en martinis de seis a nueve. La única razón real para salir un martes en Valle.",
+      links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] },
+
+    { id:"gamenight0909", date:"2026-09-09", s:1110, e:1320, time:"18:30", cat:"noche",
+      title:"Game Night", venue:"El Cuenco", price:"", repeat:"cada miércoles",
+      blurb:"Juegos de mesa, dominó y billar. Sin DJ, sin cover, entre semana.",
+      links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] }
   ],
 
   cdmx: [
@@ -165,6 +167,6 @@ window.VS = {
      blurb:"Mezcalería en Pagaza 316 que sí programa bandas en vivo, y de vez en cuando noche de stand-up."}
   ],
 
-  checked: "Espacio Odisea (sin ciclo de cine esta semana) · Marina 33 (solo promoción de carta) · Museo de Arte Popular · Turismo y Cultura Valle de Bravo · Mestizo · Monkeys (su fecha es el puente del 11 y 12) · Altitud 1700 (programó 12 y 15 sep) · Cinco Rodavento · Surreal · Basilico · El Santuario Music (solo lanzamientos del sello) · La Pila Seca (cuenta muerta desde 2021) · R27 · Kuun · Doña Barra · eticket (sin eventos en Valle) · Federación Mexicana de Vela (nada en septiembre) · Tri Tour (su calendario ahora pide cuenta) · grupo QUE TODO VALLE DE BRAVO SE ENTERE",
+  checked: "Espacio Odisea (sin ciclo de cine esta semana) · Marina 33 (solo promoción de carta) · Museo de Arte Popular · Turismo y Cultura Valle de Bravo · Mestizo · Monkeys (su fecha es el puente del 11 y 12) · Altitud 1700 (programó 12 y 15 sep) · Cinco Rodavento · Surreal · Basilico · El Santuario Music (solo lanzamientos del sello) · La Pila Seca (cuenta muerta desde 2021) · R27 · Kuun · Doña Barra · eticket (sin eventos en Valle) · Federación Mexicana de Vela (nada en septiembre) · Tri Tour (su calendario ahora pide cuenta) · grupo QUE TODO VALLE DE BRAVO SE ENTERE (nada con fecha del 7 al 9)",
   soon: "Noche Mexicana con música en vivo en Altitud 1700, sáb 12 sep · Puente de septiembre en Monkeys, 11 y 12 sep · Grito y verbena en la plaza el 15 sep, con cena y show en Altitud 1700 el mismo martes; desfile cívico el 16 · Kirtan con Swami Yatidharmananda el 1 oct y satsang el 3 · Fiesta patronal de San Francisco 4 oct · Festival de Vela 9 oct · Triatlón Valle de Bravo 24 oct · Festival de las Almas fin de oct."
 };

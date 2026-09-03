@@ -15,6 +15,55 @@ va hasta arriba.
 
 ---
 
+## 2026-09-03 · La semana ahora corre jueves→miércoles
+
+Adrian, después de ver la edición del 31 ago publicada: *"I think it makes sense
+to make the schedule from Thursday to Thursday so that next week also has some
+stuff in it."*
+
+Tenía razón y el problema era peor de lo que suena. La edición sale los jueves
+pero la semana iba de lunes a domingo, así que **al momento de publicar, tres de
+los siete días ya habían pasado**. La tira de días abría con lunes, martes y
+miércoles muertos, y a cambio el lunes siguiente la página se quedaba sin nada
+que enseñar hasta el jueves. Se estaba tirando casi la mitad de la vida útil de
+cada edición.
+
+Ahora `week.start` es el jueves que se publica y `week.end` el miércoles
+siguiente. Siete días, todos por delante.
+
+**Qué se movió:**
+
+- `data.js` — `week.start`/`end` y `days` en la ventana nueva.
+- `index.html` · `semanaDe()` — la red de emergencia que arma la semana cuando
+  hoy no cae en la publicada ahora corta en jueves: `(getDay()+3)%7` en vez de
+  `(getDay()+6)%7`. Esa rama existía justo para tapar el hueco lunes–miércoles;
+  se queda nada más por si la tarea del jueves se rompe.
+- `index.html` · `vencida()` — el aviso de semana vencida perdonaba **diez** días
+  porque el hueco lunes–miércoles era normal. Ya no hay hueco legítimo: que
+  `week.end` quede atrás significa que la tarea falló. Bajó a **dos** días, para
+  que sirva de alarma en vez de decorar.
+
+**Qué NO se movió, a propósito:** el calendario de tres semanas sigue siendo una
+rejilla lunes→domingo. Se consideró alinearlo a jueves para que cada renglón
+fuera una edición, pero un calendario que no empieza en lunes deja de leerse como
+calendario. La semana publicada se resalta a caballo entre dos renglones y ya.
+Las 21 celdas siguen conteniendo la semana entera, así que `verify.js` no cambia.
+
+**Tropiezo del día, y es el que hay que recordar:** antes de sobrescribir
+`data.js` hubo que correr `archivar.js` **otra vez**, aunque ya se había corrido
+en la mañana. Al mover la ventana, el lunes 31, martes 1 y miércoles 2 salían de
+la semana publicada sin haber pasado nunca por el historial —se habrían borrado
+del calendario para siempre—. `archivar.js` es idempotente (deduplica por
+fecha|título), así que correrlo de más no cuesta nada y correrlo de menos cuesta
+una semana. **Ante cualquier cambio de ventana: archiva primero.**
+
+**Nota aparte, del mismo día:** El Cuenco publicó un volante dedicado del sábado
+*después* de que salió la edición, y corregía dos datos del volante semanal —la
+Freestyle Electronic Night empieza a las **8**, no a las 7, y el "DJ sorpresa"
+resultó ser **Yohui**, con la noche marcada como bass, techno, psytrance y
+freestyle. Recordatorio de que el volante semanal del lunes es un plan, no un
+acta: cuando un venue publica un volante por evento, ése manda.
+
 ## 2026-08-31 · Facebook entra a la tarea, con un filtro de calidad encima
 
 Adrian: *"un montón de grupos de Facebook publican sus cosas ahí, y mucha

@@ -1,9 +1,11 @@
 # Valle Esta Semana
 
-> ## LEE ESTO PRIMERO — actualizado 28 ago 2026
+> ## LEE ESTO PRIMERO — actualizado 3 sep 2026
 >
 > Si algo del prompt de la tarea del jueves contradice esta sección, **gana esta sección**.
 >
+> 0. **La semana corre jueves→miércoles**, no lunes→domingo. El jueves que se
+>    publica es el primer día. Cambió el 3 sep 2026; ver la bitácora.
 > 1. **Esto no es un sitio de DJs.** El alcance son las seis categorías: noche, música en
 >    vivo, mercado, cultura, bienestar y aire libre. Museos, la casa de cultura, la
 >    biblioteca comunitaria, temazcales, mercados de a diario, clubes de vela y de bici
@@ -51,11 +53,23 @@ así que la manzana correcta basta — la puerta exacta y la esquina se ven igua
 venue que no esté cae al Centro. `data.js` puede mandar `lugares: {...}` para algo
 puntual, y eso gana sobre `lugares.js`.
 
+## La semana corre jueves → miércoles
+
+El jueves que se publica es el **primer** día de la semana, y el miércoles
+siguiente el último. Así los siete días están siempre por delante y la página
+abre en un día que todavía no pasa. Antes la semana era lunes→domingo y, como la
+edición sale los jueves, tres de los siete días ya estaban muertos al publicar y
+el lunes siguiente la página se quedaba sin nada.
+
+**El calendario de tres semanas sigue siendo lunes→domingo**, a propósito: es un
+calendario y tiene que leerse como tal. La semana publicada se resalta a caballo
+entre dos renglones, que es lo normal.
+
 ## Si la semana ya pasó
 
-Si `week.end` quedó atrás, la página lo dice sola: un aviso discreto los primeros
-siete días y uno en coral después. Así nadie lee una semana vieja creyendo que es
-la de hoy.
+Si `week.end` quedó atrás significa que la tarea del jueves no corrió — con la
+ventana en jueves ya no hay hueco legítimo. La página avisa en coral a partir del
+tercer día. Así nadie lee una semana vieja creyendo que es la de hoy.
 
 ## Lo único que cambia cada semana: `data.js`
 
@@ -65,9 +79,9 @@ Todo el contenido vive en `data.js`. La tarea del jueves reescribe ese archivo y
 ```js
 window.VS = {
   week: {
-    label:       "24 – 30 agosto 2026",   // rango que se muestra en el sello
-    start:       "2026-08-24",            // lunes de la semana (ISO)
-    end:         "2026-08-30",            // domingo
+    label:       "3 – 9 septiembre 2026", // rango que se muestra en el sello
+    start:       "2026-09-03",            // jueves: el dia que se publica (ISO)
+    end:         "2026-09-09",            // miercoles siguiente
     updated:     "2026-08-27T15:04:00-06:00",
     updatedText: "jue 27 ago, 15:04",
     next:        "jueves 3 sep",
@@ -76,8 +90,8 @@ window.VS = {
 
   cats: { … },   // no cambia — noche · musica · bienestar · mercado · cultura · aire
 
-  days: [        // siempre 7, lunes → domingo
-    {date:"2026-08-24", dow:"Lunes", s:"Lun", dn:24, m:"ago"}, …
+  days: [        // siempre 7, jueves → miercoles
+    {date:"2026-09-03", dow:"Jueves", s:"Jue", dn:3, m:"sep"}, …
   ],
 
   events: [{

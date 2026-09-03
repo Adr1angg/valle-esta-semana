@@ -648,21 +648,24 @@ vivo();
 var dias=$("#dias"),board=$("#board");
 
 /* ── qué semana se enseña ─────────────────────────────────────
-   Normalmente la que trae data.js. Pero la edición sale los jueves y
-   la semana corre lunes→domingo, así que de lunes a miércoles la
-   publicada ya terminó.
+   La que trae data.js. Desde el 3 sep 2026 la semana corre
+   jueves→miércoles, igual que la edición: el jueves que se publica es
+   el primer día, así que mientras la tarea semanal corra, hoy siempre
+   cae dentro de la semana publicada y no hay días muertos arriba.
 
-   En ese hueco NO se enseña la semana pasada. Se arma la semana de
-   verdad —la que contiene hoy— aunque venga vacía: vale más un lunes
-   31 sin nada que un lunes 24 que ya pasó. Lo publicado sigue a un
+   Antes la semana era lunes→domingo y de lunes a miércoles la publicada
+   ya había terminado; esta rama existía para tapar ese hueco. Ya no
+   debería entrar nunca. Se queda como red: si la tarea del jueves se
+   rompe, se arma la semana de verdad —la que contiene hoy— aunque venga
+   vacía, en vez de enseñar una semana vencida. Lo publicado sigue a un
    clic en el calendario del mes, que deja pinchables las dos semanas.  */
 var DOWC=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
 var MESC=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
 var MESL=["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
           "septiembre","octubre","noviembre","diciembre"];
-function semanaDe(f){                      /* lunes→domingo que contiene f */
+function semanaDe(f){                      /* jueves→miércoles que contiene f */
   var d=new Date(f+"T12:00:00");           /* mediodía: a salvo de husos y DST */
-  d.setDate(d.getDate()-((d.getDay()+6)%7));
+  d.setDate(d.getDate()-((d.getDay()+3)%7));   /* 0=dom … 4=jue → retrocede al jueves */
   var out=[];
   for(var i=0;i<7;i++){
     out.push({date:iso(d), s:DOWC[d.getDay()], dn:d.getDate(), m:MESC[d.getMonth()]});
@@ -837,11 +840,12 @@ function vencida(){
   el.className="viejo"; el.hidden=true;
   if(HOY<=D.week.end) return;
   var cuantos=Math.round((new Date(HOY+"T12:00:00")-new Date(D.week.end+"T12:00:00"))/864e5);
-  /* El hueco normal —lunes a miércoles, mientras no sale la edición del
-     jueves— ya no se avisa. La tira de días enseña la semana de verdad,
-     así que la página no está mintiendo y el letrero sobraba. Esto queda
-     nada más como alarma de que la tarea semanal se rompió. */
-  if(cuantos<=10) return;
+  /* Con la semana en jueves→miércoles ya no hay hueco que perdonar: si la
+     tarea del jueves corrió, hoy cae dentro de la semana publicada y esto
+     no se ve nunca. Que week.end quede atrás significa que la tarea se
+     rompió, y eso sí hay que decirlo pronto — antes se aguantaban diez
+     días porque de lunes a miércoles era normal. */
+  if(cuantos<=2) return;
   el.hidden=false; el.className="viejo alerta";
   el.textContent="Hoy es "+hoyLargo()+" y esta página lleva "+cuantos+
     " días sin actualizarse · puede que ya nada de esto aplique.";
@@ -851,9 +855,11 @@ vencida();
 /* ── calendario widget ── */
 function pintaCalendario(){
   var g=$("#rej"),h="",wk={};
-  /* pinchables las dos: la semana que se enseña y la publicada. En el
-     hueco de lunes a miércoles son distintas, y lo publicado tiene que
-     seguir estando a un clic. */
+  /* pinchables las dos: la semana que se enseña y la publicada. Son la
+     misma salvo que la tarea del jueves se haya roto, y aun así lo
+     publicado tiene que seguir estando a un clic. La rejilla se queda
+     lunes→domingo a propósito: es un calendario, y la semana publicada
+     se resalta a caballo entre dos renglones. */
   SEMANA.forEach(function(d){wk[d.date]=1});
   D.days.forEach(function(d){wk[d.date]=1});
   /* data.js se reescribe cada jueves, así que las semanas pasadas

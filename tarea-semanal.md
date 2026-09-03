@@ -21,7 +21,7 @@ coordenadas de venues nuevos desde `data.js` sin tocar la plantilla.
 
 ---
 
-Actualiza el sitio "Esta semana en Valle" de Adrian con lo que hay esta semana y publícalo. Corre `date` primero y calcula el lunes→domingo de la semana en curso (hoy es jueves); usa esas fechas en todo.
+Actualiza el sitio "Esta semana en Valle" de Adrian con lo que hay esta semana y publícalo. Corre `date` primero. **La semana corre jueves→miércoles:** el jueves de hoy es el primer día y el miércoles que viene es el último. Son siete días y todos están por delante, así que la página nunca abre en un día muerto. Usa esas fechas en todo.
 
 **El sitio vive en https://valle-esta-semana.pages.dev** — Cloudflare Pages conectado al repo de GitHub `Adr1angg/valle-esta-semana`. **Se publica haciendo push a `main`.** Cloudflare reconstruye solo en ~1 minuto. Nunca uses wrangler, la API de Cloudflare, ni la subida de archivos del dashboard — `api.cloudflare.com` está bloqueado por la lista de egress, y las subidas por el dashboard vía extensión producen deployments vacíos en silencio. GitHub sí es alcanzable; el push es la única ruta.
 
@@ -58,8 +58,9 @@ El token está en **`.gh_token`** dentro de la carpeta del proyecto. Es un PAT d
 
 **`index.html` y `cdmx.html` son plantillas. NO se tocan. NO rediseñes nada.** Ahí vive el diorama 3D del lago y todo el diseño. Todo el contenido de la semana vive en `data.js`. Lee el `README.md` del repo antes de empezar — ahí está el contrato completo del esquema. En resumen:
 
-- `week` — `label` (rango legible), `start`/`end` (lunes y domingo ISO), `updated` (ISO con -06:00), `updatedText`, `next` (el jueves siguiente), `note` (una o dos frases honestas de cómo viene la semana).
-- `days` — siempre 7, lunes→domingo, con `date` · `dow` · `s` · `dn` · `m`.
+- `week` — `label` (rango legible), `start`/`end` (**jueves de hoy** y **miércoles siguiente**, ISO), `updated` (ISO con -06:00), `updatedText`, `next` (el jueves siguiente, que es `end`+1), `note` (una o dos frases honestas de cómo viene la semana).
+- `days` — siempre 7, **jueves→miércoles**, con `date` · `dow` · `s` · `dn` · `m`.
+- Los últimos tres días (lun–mié) casi siempre vienen flacos: El Cuenco publica su volante los lunes, así que a la hora de la corrida todavía no existe. Poner lo recurrente y decirlo en `note` es la respuesta correcta; no inventes para rellenar.
 - `events` — solo Valle. `id` único y estable, `date` (tiene que existir en `days`), `s`/`e` en **minutos desde medianoche** (19:00 = 1140; si cruza medianoche, `e` pasa de 1440 — 2:00 am = 1560), `time` como se lee, `cat` (una de: `noche` `musica` `bienestar` `mercado` `cultura` `aire`), `title`, `venue`, `price` (`""` si no hay), `blurb` de una frase específica con nombres, y opcionales `repeat`, `lineup`, `links` (0–2, `{l,h}`).
 - **`lead: true` en UN SOLO evento de la semana** — es el widget grande y oscuro con la cinta coral. El plan del fin de semana. Si de verdad no hay nada que destaque, no pongas `lead` en ninguno.
 - `cdmx` — **CDMX nunca va en `events`.** Va aquí y sale en su propia página: `{id, date, time, title, venue, price, genre, blurb, link}`.
