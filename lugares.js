@@ -21,8 +21,11 @@ window.VL = {
   /* ── aproximados: caen en su zona, no en su puerta ──
      Estos negocios no están mapeados en OSM. Si alguna vez sabes el punto
      exacto, cámbialo aquí y el pin deja de caer en el Centro. */
+  "Bar 7":                     [19.19711, -100.13108],
+  "El Sauna, Acatitlán":       [19.20740, -100.09598],
   "El Cuenco":                 [19.19367, -100.13174],
   "Fünk":                      [19.19367, -100.13174],
+  "Sunday Sunday, Tabaqueros 16": [19.19367, -100.13174],
   "YuYu":                      [19.19367, -100.13174],
   "Espacio Odisea":            [19.19367, -100.13174],
   "Chamma Ling":               [19.19367, -100.13174],
