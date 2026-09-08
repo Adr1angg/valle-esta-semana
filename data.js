@@ -8,7 +8,7 @@ window.VS = {
     updated: "2026-09-03T13:40:00-06:00",
     updatedText: "jue 3 sep, 13:40",
     next: "jueves 10 sep",
-    note: "Primera semana que corre de jueves a miércoles, para que la página abra siempre en un día que todavía no pasa. El fin viene cargado: swing en vivo hoy, karaoke el viernes, y el sábado se encima todo — mercado, té, clase de baile y la noche electrónica del Cuenco. De lunes a miércoles solo está lo de cada semana; El Cuenco publica su volante los lunes, así que esos días se llenarán en la edición del jueves 10."
+    note: "El fin viene cargado: swing en vivo el jueves, karaoke el viernes, y el sábado se encima todo — mercado, té, clase de baile y la noche electrónica del Cuenco. De lunes a miércoles solo está lo de cada semana; El Cuenco publica su volante los lunes, así que esos días se llenarán en la edición del jueves 10."
   },
 
   cats: {

@@ -21,7 +21,9 @@ coordenadas de venues nuevos desde `data.js` sin tocar la plantilla.
 
 ---
 
-Actualiza el sitio "Esta semana en Valle" de Adrian con lo que hay esta semana y publícalo. Corre `date` primero. **La semana corre jueves→miércoles:** el jueves de hoy es el primer día y el miércoles que viene es el último. Son siete días y todos están por delante, así que la página nunca abre en un día muerto. Usa esas fechas en todo.
+Actualiza el sitio "Esta semana en Valle" de Adrian con lo que hay esta semana y publícalo. Corre `date` primero.
+
+**La ventana que cubres es de hoy jueves al domingo de la semana que entra** —o sea diez u once días—, y llenas `days` y `events` con eso. **La rejilla que se ve es lunes→domingo y la calcula la página sola con la fecha del navegador**, no tu `days`: tú pones los eventos con su fecha y cada uno cae en su día. No hay días muertos que evitar y no tienes que cuadrar `days` con nada; un día sin eventos sale apagado y está bien. Cambió el 8 sep 2026 — antes la semana era jueves→miércoles.
 
 **El sitio vive en https://valle-esta-semana.pages.dev** — Cloudflare Pages conectado al repo de GitHub `Adr1angg/valle-esta-semana`. **Se publica haciendo push a `main`.** Cloudflare reconstruye solo en ~1 minuto. Nunca uses wrangler, la API de Cloudflare, ni la subida de archivos del dashboard — `api.cloudflare.com` está bloqueado por la lista de egress, y las subidas por el dashboard vía extensión producen deployments vacíos en silencio. GitHub sí es alcanzable; el push es la única ruta.
 

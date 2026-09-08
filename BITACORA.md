@@ -15,6 +15,130 @@ va hasta arriba.
 
 ---
 
+## 2026-09-08 · La semana vuelve a ser lunes→domingo, y ahora la calcula la página
+
+Adrian, viendo la edición en vivo: *"The grid is from Monday to Sunday. If the
+week is over, since the week ends on Sunday, just change the week over as if it
+was real, like it just resets. If there is no information, obviously, there's no
+information."*
+
+El 3 de septiembre se había cambiado a jueves→miércoles para que la edición del
+jueves no abriera en días muertos. Resolvía ese problema y creaba otro peor de
+leer: **los siete cuadros empezaban en jueves**, y una semana que empieza en
+jueves no se lee como una semana. La pregunta que contesta esta página es "¿qué
+hay el sábado?", y para eso la tira tiene que ir de lunes a domingo como cualquier
+calendario del mundo.
+
+**Qué se cambió.** La rejilla ya no sale de `data.js`: se calcula del navegador,
+con `semanaDe(HOY)` anclado en lunes, y `armaSemana()` la rearma en cada latido.
+Tres consecuencias, y las tres son mejoras:
+
+- **Se pasa sola.** El domingo a medianoche la rejilla salta a la semana nueva sin
+  que corra nada. Antes eso dependía de que la tarea del jueves hubiera corrido.
+- **Ya no existe "semana vencida".** No se puede mostrar una semana que terminó.
+  El aviso en coral se reescribió para medir lo que sí puede fallar: la **edad de
+  los datos**. Más de ocho días desde `week.updated` = se saltó una edición.
+- **El sello dice el rango de verdad**, no `week.label`.
+
+**El costo, dicho de frente:** la tarea sigue corriendo el jueves, así que de
+lunes a miércoles la semana nueva llega casi vacía y la sostienen los 18
+`always`. Adrian lo sabe y lo aceptó: *"There is not going to be any information
+on Thursday of next week, but that's okay."* Si algún día molesta, la salida no
+es volver a mover la semana — es mover la tarea al lunes.
+
+## 2026-09-08 (2) · Tocar un evento lleva al mapa
+
+*"On the widgets of the specific events, when I click on them, nothing happens. I
+wish you could click on them, and the map zooms in 200% to where the event
+actually is."*
+
+Tenía razón y era un defecto de verdad: las tarjetas se levantan al pasarles el
+cursor —prometen que son pinchables— y no hacían nada. Ahora abren el diorama a
+pantalla completa, encuadrado en el venue, con su pin y el nombre del evento.
+
+Lo interesante fue **cómo** llegar ahí. Poner la cámara en el destino de un
+salto marea y hace perder de vista dónde estabas, así que se agregó
+`VALLE_CAM.vuela(lat, lon, cerca)`: un destino al que la cámara de mano se acerca
+sola en poco más de un segundo. Cualquier arrastre, rueda o pellizco lo cancela —
+manda el dedo, no la animación. La distancia de reposo es 7.33 y se vuela a 3.4,
+que es el "200%" que pedía, con un poco de picada porque de cerca la vista
+cenital aplana el cerro.
+
+Los enlaces de adentro de la tarjeta ganan: `ev.target.closest("a")` sale antes.
+El chip "En el mapa" en el pie es la señal visible de que la tarjeta lleva a algún
+lado; sin él nadie lo descubre.
+
+## 2026-09-08 (3) · La noche
+
+Cuatro cosas, todas al fragment shader salvo la última:
+
+**La luz sobre el agua.** El reflejo que había sólo encendía la celda de agua
+pegada al pueblo, y un pueblo junto a un lago no se ve así: la luz se estira
+sobre el agua **hacia quien mira**, en una columna que tiembla. Es el mismo
+cálculo del reflejo del sol —vector medio entre la vista y la dirección de la
+fuente— con el pueblo de fuente. El centro luminoso se saca una vez al cargar,
+del centroide del mapa de ventanas pesado al cuadrado, para que mande el núcleo y
+no lo arrastren los ranchos de la orilla.
+
+**El halo de las ventanas.** Una ventana era un cuadrito de color plano: de lejos,
+un pixel amarillo. Un término de canto —más fuerte donde la cara se va de perfil—
+le pone reborde encendido, y el derrame sobre el cerro ahora crece con el cuadrado
+de la densidad, así que el centro florece y las orillas se quedan tenues. Esto es
+exactamente lo que Adrian reportaba en agosto como "puntitos amarillos sin
+reflejo".
+
+**Aire.** La única bruma que había dependía de z en el mundo, no de la distancia a
+la cámara, así que el borde de atrás se veía tan nítido como la orilla de enfrente
+y el diorama salía plano. Ahora hay perspectiva aérea de verdad.
+
+**Vetas en el zócalo**, tres frecuencias con la altura de capa ondulada por x/z
+para que no queden perfectamente horizontales, que era lo que delataba el shader.
+
+**La luna** no es shader: es un `<div>` con un SVG detrás del lienzo, con su fase
+y su lugar de verdad sobre Valle (`window.VALLE_LUNA`, Meeus corto — le erra un
+grado o dos, que para un disco de 40 px no se nota). El filo son dos arcos: el
+borde del disco y el terminador, que es media elipse cuyo ancho es lo llena que
+está.
+
+**Lo que se rompió en el camino** y vale anotar: la luna quedó invisible dos
+intentos seguidos. La clase se ponía, la regla existía, el trazo estaba bien — y
+`getComputedStyle` devolvía `opacity: 0`. Era la **transición**: con
+`will-change:opacity` el elemento se promueve a su propia capa y en algunos
+contextos la transición no avanza nunca, así que se quedaba a medio camino desde
+0. Se quitó la transición y la opacidad la calcula JS a partir de la altura sobre
+el horizonte, que además hace que la luna se asome despacio entre los 2° y los 12°
+en vez de aparecer de golpe. Moraleja: para algo que ya cambia lento por su
+cuenta, una transición encima sólo agrega una manera de fallar.
+
+## 2026-09-08 (4) · La página de lugares, y el historial que ahora sabe dónde
+
+`lugares.html`: una tarjeta por lugar con lo de esta semana, lo que se repite y
+cuándo fue la última vez. No se edita nunca — se arma sola con `lugares.js`,
+`data.js` e `historial.js`. Sirve para la pregunta que la portada no contesta: no
+"¿qué hay hoy?" sino "¿qué hay en El Cuenco?", que es lo que la gente se pregunta
+un martes.
+
+**El bloqueo fue que `historial.js` no guardaba el venue** — sólo fecha, título y
+categoría. Sabía QUÉ pasó y no DÓNDE, así que la página no se podía armar. Ahora
+`archivar.js` guarda `v` (lugar) y `h` (hora), y rellena los viejos cuando el
+título coincide **exacto** con un evento de `data.js` que sí trae venue: los que
+se repiten cada semana. Rellenó 23 de 28. Los cinco que quedaron —Hongosto, el
+kirtan, el cine, Akira + Adris, Isis Bordetas— son eventos de una sola vez y se
+quedan sin lugar. Adivinárselos por parecido habría sido inventar.
+
+## 2026-09-08 (5) · Saber si esto lo usa alguien
+
+Tabla `valle_visitas`, mismo Supabase y mismo patrón que las sugerencias: anon
+sólo puede INSERT. Una fila al abrir y una por clic que importa. Sin IP, sin
+user-agent, sin cookies, sin nada que dure más que la pestaña; con Do Not Track
+prendido no se manda nada.
+
+No es vanidad: el sitio llevaba meses publicándose sin ninguna manera de saber si
+alguien lo abría, y eso vuelve opinión cada decisión sobre qué cubrir. Dos vistas
+(`valle_uso_dia`, `valle_uso_evento`) lo dejan leer sin escribir SQL.
+
+---
+
 ## 2026-09-03 (2) · Se llama Valle, no "el pueblo"
 
 Adrian: *"can we stop calling it Pueblo? Why can't we just call it Valle?"*

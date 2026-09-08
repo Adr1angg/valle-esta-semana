@@ -79,6 +79,31 @@ a{color:inherit}
 
 /* ═══════════ escena · placeholder abstracto del lago ═══════════ */
 .escena{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+/* ── el cielo · detrás del diorama ────────────────────────────────
+   El lienzo se limpia transparente, así que lo que se pinte aquí abajo
+   se ve por donde no hay valle. Es un degradado muy tenue que despega
+   el cerro del fondo plano, y de noche la luna, en su fase y su lugar
+   de verdad. De día no se ve nada de esto. */
+.escena .cielo{position:absolute;inset:0;opacity:0;transition:opacity 1.6s linear}
+:root[data-t="dusk"] .escena .cielo,
+:root[data-t="dawn"] .escena .cielo{opacity:.55}
+:root[data-t="night"] .escena .cielo{opacity:1}
+.escena .cielo .aire{position:absolute;inset:0;
+  background:radial-gradient(120% 78% at 50% 96%, oklch(from var(--ground) calc(l + .05) c h / .85) 0%,
+    oklch(from var(--ground) l c h / 0) 62%)}
+/* Sin transición a propósito. La opacidad la calcula JS a partir de la
+   altura de la luna y se vuelve a calcular cada minuto, así que ya sube
+   sola y despacio: una transición encima sólo agrega una capa que en
+   algunos navegadores se queda a medias y deja la luna invisible. */
+.escena .luna{position:absolute;width:var(--lw);height:var(--lw);margin:calc(var(--lw)/-2) 0 0 calc(var(--lw)/-2);
+  opacity:0;overflow:visible}
+.escena .luna .halo{position:absolute;left:50%;top:50%;width:340%;height:340%;
+  transform:translate(-50%,-50%);border-radius:50%;
+  background:radial-gradient(circle, oklch(94% .04 95 / .30) 0%, oklch(94% .04 95 / 0) 68%)}
+.escena .luna svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.escena .luna .disco{fill:oklch(96% .035 95 / .92)}
+.escena .luna .sombra{fill:oklch(from var(--ground) calc(l + .10) c h / .55)}
+@media (prefers-reduced-motion:reduce){.escena .luna{transition:opacity .01s}}
 .escena .lienzo{position:absolute;inset:0;display:block;width:100%;height:100%}
 /* pines de GPS · aparecen al elegir un día */
 .escena .pines{position:absolute;inset:0;pointer-events:none}
@@ -291,6 +316,23 @@ h1 span{display:block;color:var(--olive)}
 .et svg{width:13px;height:13px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .et.k{background:var(--kc);border-color:transparent;color:oklch(26% .05 140);font-weight:600}
 :root[data-t="night"] .et.k{color:oklch(20% .04 150)}
+/* La tarjeta entera lleva al mapa, así que tiene que verse pinchable.
+   El chip "En el mapa" es la señal visible; el cursor de lupa es el
+   refuerzo. Los enlaces de adentro siguen mandando a su destino. */
+.ww{cursor:zoom-in}
+.et.mapa{cursor:zoom-in;transition:.28s var(--e)}
+.ww:hover .et.mapa{background:var(--ink);color:var(--ground);border-color:transparent}
+.ww.destacado:hover .et.mapa{background:var(--acc);color:var(--acc-ink)}
+/* Rótulo del evento mientras el mapa está abierto: sin él, la vista
+   aterriza en un cerro y nadie se acuerda de qué venía a ver. */
+.mapaEv{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 92px);
+  z-index:6;display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center;
+  padding:11px 20px;border-radius:16px;pointer-events:none;max-width:min(92vw,420px);
+  background:oklch(from var(--ground) l c h / .82);border:1px solid var(--line);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--sh)}
+.mapaEv b{font-size:14.5px;line-height:1.25;color:var(--ink)}
+.mapaEv span{font-size:11.5px;color:var(--mid);font-family:var(--mono)}
+@media (max-width:640px){.mapaEv{bottom:calc(env(safe-area-inset-bottom,0px) + 140px)}}
 .ir{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:99px;font-size:11.5px;
   text-decoration:none;font-weight:600;background:var(--ink);color:var(--ground);transition:.32s var(--e)}
 .ir:hover{background:var(--acc);color:var(--acc-ink);transform:translateY(-2px)}
@@ -451,6 +493,15 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
 
 <!-- la escena · diorama de vóxeles del vaso de la presa (WebGL, sin dependencias) -->
 <div class="escena" id="escena3d" aria-hidden="true">
+  <div class="cielo" id="cielo"><i class="aire"></i>
+    <div class="luna" id="luna" style="--lw:clamp(26px,3.4vw,54px)">
+      <i class="halo"></i>
+      <svg viewBox="-12 -12 24 24" aria-hidden="true">
+        <circle class="sombra" cx="0" cy="0" r="11"></circle>
+        <path class="disco" id="lunaLuz" d=""></path>
+      </svg>
+    </div>
+  </div>
   <svg class="anillos" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice">
     <circle class="ring" cx="500" cy="520" r="132"/><circle class="ring" cx="500" cy="520" r="248"/>
     <circle class="ring" cx="500" cy="520" r="380"/><circle class="ring" cx="500" cy="520" r="528"/>
@@ -504,6 +555,9 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
   </div></section>
 
   <section class="sec"><div class="w">
+    <p class="fino rv" style="margin:0 0 clamp(16px,2.4vw,26px)">
+      ¿Buscas un lugar en particular y no un día?
+      <a href="lugares.html">Todos los lugares de Valle</a> — lo que hay en cada uno y lo que suele haber.</p>
     <a class="cdmx rv" href="cdmx.html">
       <span class="lb">Si vale el viaje</span>
       <h3>Ciudad de México</h3>
@@ -522,7 +576,7 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
         <a class="bt" id="wa" href="#" target="_blank" rel="noopener">WhatsApp</a>
         <button class="bt" id="cpy" type="button">Copiar liga</button>
       </div>
-      <details class="sug">
+      <details class="sug" id="sugerir">
         <summary>¿Tienes un lugar o un evento? Mándalo</summary>
         <form id="sugf">
           <label>Tu nombre
@@ -602,6 +656,36 @@ window.VALLE_SOLAR=function(f){
   var l=Math.sqrt(E*E+Nn*Nn+U*U)||1;
   return {x:E/l,y:U/l,z:-Nn/l};
 };
+/* ── la luna ──────────────────────────────────────────────────────
+   Misma idea que el sol: la de verdad, no una calcomanía. Devuelve
+   altura y azimut sobre Valle y la fracción iluminada. Es la versión
+   corta de Meeus —un par de términos, no la serie entera—, así que le
+   erra un grado o dos. Para un disco de 40 px en el cielo eso no se
+   nota, y a cambio cabe en veinte renglones.
+
+   `ilum` es cuánto de la cara se ve encendida (0 nueva, 1 llena) y
+   `creciendo` de qué lado está el filo, que es lo que decide si el
+   gajo se dibuja a la izquierda o a la derecha.                      */
+window.VALLE_LUNA=function(f){
+  var RAD=Math.PI/180, lat=19.1953*RAD, lonO=-100.1317;
+  var d=(f.getTime()-Date.UTC(2000,0,1,12,0,0))/864e5;
+  var Lm=(218.316+13.176396*d)*RAD, M=(134.963+13.064993*d)*RAD, F=(93.272+13.229350*d)*RAD;
+  var lon=Lm+6.289*RAD*Math.sin(M), bet=5.128*RAD*Math.sin(F);
+  var e=23.4397*RAD;
+  var ra=Math.atan2(Math.sin(lon)*Math.cos(e)-Math.tan(bet)*Math.sin(e),Math.cos(lon));
+  var dec=Math.asin(Math.sin(bet)*Math.cos(e)+Math.cos(bet)*Math.sin(e)*Math.sin(lon));
+  var gm=(18.697374558+24.06570982441908*d)%24; if(gm<0)gm+=24;
+  var ha=(gm*15+lonO)*RAD-ra;
+  var alt=Math.asin(Math.sin(lat)*Math.sin(dec)+Math.cos(lat)*Math.cos(dec)*Math.cos(ha));
+  /* azimut medido desde el sur, positivo hacia el poniente */
+  var az=Math.atan2(Math.sin(ha),Math.cos(ha)*Math.sin(lat)-Math.tan(dec)*Math.cos(lat));
+  var g=(357.529+0.98560028*d)*RAD, q=(280.459+0.98564736*d)*RAD;
+  var solL=q+(1.915*Math.sin(g)+0.020*Math.sin(2*g))*RAD;
+  var elong=Math.acos(Math.cos(bet)*Math.cos(lon-solL));
+  var dif=(lon-solL)%(2*Math.PI); if(dif<0)dif+=2*Math.PI;
+  return {alt:alt/RAD, az:az/RAD, ilum:(1-Math.cos(elong))/2, creciendo:dif<Math.PI};
+};
+
 /* La barra de horas del panel escribe VALLE_HORA_OVR (0–24) y de
    ahí cuelga todo: el sol, la paleta del sitio y las ventanas. */
 window.VALLE_AHORA=function(){
@@ -622,6 +706,41 @@ function tod(){
 }
 function setT(){R.setAttribute("data-t",tod())}
 window.VALLE_SETT=setT; setT();
+
+/* El filo de la luna son dos arcos: el borde del disco y el terminador,
+   que es media elipse cuyo ancho es lo lleno que está. Se dibuja el
+   trozo encendido y ya; el resto queda como sombra apenas visible. */
+(function(){
+  var el=document.getElementById("luna"), luz=document.getElementById("lunaLuz");
+  if(!el||!luz) return;
+  function pinta(){
+    var m=window.VALLE_LUNA(window.VALLE_AHORA());
+    var t=R.getAttribute("data-t");
+    var deNoche=(t==="night"||t==="dusk"||t==="dawn");
+    /* Se asoma entre los 2° y los 12° sobre el horizonte en vez de
+       aparecer de golpe, que es como se ve de verdad: saliendo, la luna
+       tarda un rato en despegarse del cerro. De día no se dibuja. */
+    var vis=deNoche ? Math.max(0,Math.min(1,(m.alt-2)/10))*0.82 : 0;
+    if(t==="dusk"||t==="dawn") vis*=0.6;
+    el.style.opacity=vis.toFixed(3);
+    if(vis<=0) return;
+    /* poniente a la derecha, oriente a la izquierda; la altura sube
+       hacia arriba de la pantalla. Es un cielo, no una proyección de
+       la cámara: no pretende cuadrar al grado con el diorama. */
+    el.style.left=(50+Math.max(-1,Math.min(1,m.az/95))*38)+"%";
+    el.style.top =(58-Math.max(0,Math.min(90,m.alt))/90*46)+"%";
+    var r=11, k=2*m.ilum-1;             /* −1 nueva · 0 cuarto · +1 llena */
+    var rx=Math.abs(k)*r, barrido=(k>0?1:0);
+    var d=m.creciendo
+      ? "M0,"+(-r)+"A"+r+","+r+" 0 0 1 0,"+r+"A"+rx+","+r+" 0 0 "+barrido+" 0,"+(-r)+"Z"
+      : "M0,"+(-r)+"A"+r+","+r+" 0 0 0 0,"+r+"A"+rx+","+r+" 0 0 "+(1-barrido)+" 0,"+(-r)+"Z";
+    luz.setAttribute("d",d);
+  }
+  pinta();
+  setInterval(pinta,6e4);
+  new MutationObserver(pinta).observe(R,{attributes:true,attributeFilter:["data-t"]});
+})();
+
 /* ojo: setInterval guarda la referencia de la funcion, asi que va
    envuelta — antes reasignar setT no apagaba nada */
 setInterval(function(){setT()},6e4);
@@ -648,24 +767,30 @@ vivo();
 var dias=$("#dias"),board=$("#board");
 
 /* ── qué semana se enseña ─────────────────────────────────────
-   La que trae data.js. Desde el 3 sep 2026 la semana corre
-   jueves→miércoles, igual que la edición: el jueves que se publica es
-   el primer día, así que mientras la tarea semanal corra, hoy siempre
-   cae dentro de la semana publicada y no hay días muertos arriba.
+   Desde el 8 sep 2026: SIEMPRE el lunes→domingo que contiene hoy,
+   calculado de la fecha del navegador. No sale de data.js.
 
-   Antes la semana era lunes→domingo y de lunes a miércoles la publicada
-   ya había terminado; esta rama existía para tapar ese hueco. Ya no
-   debería entrar nunca. Se queda como red: si la tarea del jueves se
-   rompe, se arma la semana de verdad —la que contiene hoy— aunque venga
-   vacía, en vez de enseñar una semana vencida. Lo publicado sigue a un
-   clic en el calendario del mes, que deja pinchables las dos semanas.  */
+   Eso quiere decir que la rejilla se pasa sola el domingo a medianoche
+   —el latido de 20 s la rearma— y que ya no existe el estado de "semana
+   vencida": no se puede enseñar una semana que terminó. A cambio, de
+   lunes a miércoles la semana nueva llega casi vacía, porque la tarea
+   corre el jueves. Es a propósito y está hablado: un día sin eventos
+   sale apagado y los 18 `always` sostienen esos días.
+
+   Entre el 3 y el 8 de septiembre la semana fue jueves→miércoles, para
+   que la edición del jueves no abriera en días muertos. Se revirtió
+   porque una semana que empieza en jueves no se lee como una semana, y
+   la pregunta que contesta esta página es "¿qué hay el sábado?".
+
+   Lo publicado sigue a un clic en el calendario del mes, que deja
+   pinchables tanto la semana visible como la de data.js.              */
 var DOWC=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
 var MESC=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
 var MESL=["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
           "septiembre","octubre","noviembre","diciembre"];
-function semanaDe(f){                      /* jueves→miércoles que contiene f */
+function semanaDe(f){                      /* lunes→domingo que contiene f */
   var d=new Date(f+"T12:00:00");           /* mediodía: a salvo de husos y DST */
-  d.setDate(d.getDate()-((d.getDay()+3)%7));   /* 0=dom … 4=jue → retrocede al jueves */
+  d.setDate(d.getDate()-((d.getDay()+6)%7));   /* 0=dom … 1=lun → retrocede al lunes */
   var out=[];
   for(var i=0;i<7;i++){
     out.push({date:iso(d), s:DOWC[d.getDay()], dn:d.getDate(), m:MESC[d.getMonth()]});
@@ -681,9 +806,14 @@ function etiqueta(a,b){
 }
 var SEMANA=[], alDia=true;
 function armaSemana(){
-  alDia = D.days.some(function(d){return d.date===HOY});
-  SEMANA = alDia ? D.days : semanaDe(HOY);
-  $("#sem").textContent = alDia ? D.week.label : etiqueta(SEMANA[0].date, SEMANA[6].date);
+  /* La rejilla se calcula de la fecha de hoy, no de data.js: siempre es
+     el lunes→domingo que contiene hoy, y por eso se pasa sola cada lunes
+     sin esperar a que corra la tarea. Los eventos que haya se acomodan
+     encima por fecha; un día sin nada sale apagado y ya. `alDia` sólo
+     dice si lo publicado coincide con la semana que se está viendo. */
+  SEMANA = semanaDe(HOY);
+  alDia  = D.days.some(function(d){return d.date===HOY});
+  $("#sem").textContent = etiqueta(SEMANA[0].date, SEMANA[6].date);
 }
 armaSemana();
 
@@ -739,8 +869,47 @@ function render(date){
       '<h3>'+E(e.title)+'</h3><p>'+E(e.blurb)+'</p>'+
       (e.lineup?'<div class="cartel">'+e.lineup.map(function(x){return '<span>'+E(x)+'</span>'}).join("")+'</div>':'')+
       '<div class="pie"><span class="et k" style="--kc:'+KC[e.cat]+'">'+ic(e.cat)+E(C[e.cat].label)+'</span>'+
-      '<span class="et">'+E(e.venue)+'</span>'+(e.price?'<span class="et">'+E(e.price)+'</span>':'')+links+'</div></article>';
+      '<span class="et">'+E(e.venue)+'</span>'+(e.price?'<span class="et">'+E(e.price)+'</span>':'')+links+
+      '<span class="et mapa"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>En el mapa</span>'+
+      '</div></article>';
   }).join("");
+  cablea(L);
+}
+
+/* ── clic en un evento → el mapa vuela hasta ahí ────────────────
+   Antes las tarjetas no hacían nada al tocarlas, que es justo lo que
+   uno espera de algo que se levanta al pasarle el cursor. Ahora abren
+   el diorama a pantalla completa, encuadrado en el venue y al doble de
+   acercamiento, con su pin. Los enlaces de adentro ganan: si tocas
+   "Instagram" te vas a Instagram, no al mapa. */
+function cablea(L){
+  [].forEach.call(board.querySelectorAll(".ww"),function(art,i){
+    var e=L[i]; if(!e) return;
+    art.addEventListener("click",function(ev){
+      if(ev.target.closest("a")) return;
+      alMapa(e);
+    });
+  });
+}
+/* Volar a un lugar sabiendo sólo su nombre — sin evento de por medio.
+   La usa la liga #mapa= que llega de la página de lugares. */
+window.VALLE_IR_A=function(venue){
+  if(!window.VALLE_MAPA||!window.VALLE_CAM||!window.VALLE_CAM.vuela) return;
+  var p=punto(venue);
+  if(window.VALLE_MIDE) window.VALLE_MIDE("mapa",venue);
+  window.VALLE_MAPA.abre();
+  if(window.VALLE_FOCO) window.VALLE_FOCO([{lat:p[0],lon:p[1],label:venue}]);
+  window.VALLE_CAM.vuela(p[0],p[1],3.4);
+  window.VALLE_MAPA.rotulo({title:venue,time:"",venue:"en el mapa"});
+};
+function alMapa(e){
+  if(!window.VALLE_MAPA||!window.VALLE_CAM||!window.VALLE_CAM.vuela) return;
+  var p=punto(e.venue);
+  if(window.VALLE_MIDE) window.VALLE_MIDE("evento", e.title+" · "+e.venue);
+  window.VALLE_MAPA.abre();
+  if(window.VALLE_FOCO) window.VALLE_FOCO([{lat:p[0],lon:p[1],label:e.venue}]);
+  window.VALLE_CAM.vuela(p[0],p[1],3.4);
+  window.VALLE_MAPA.rotulo(e);
 }
 /* ── dónde cae cada lugar en el diorama ───────────────────────────
    Las zonas están verificadas en OpenStreetMap. Los negocios chicos no
@@ -766,6 +935,7 @@ function punto(v){var z=LUGARES[v];
 var elegido=0;
 function pick(date,porClic){
   sel=date; if(porClic) elegido=1;
+  if(porClic&&window.VALLE_MIDE) window.VALLE_MIDE("dia",date);
   [].forEach.call(dias.querySelectorAll(".dia"),function(b){b.setAttribute("aria-selected",b.dataset.date===date?"true":"false")});
   [].forEach.call(document.querySelectorAll(".cd"),function(c){c.classList.toggle("sel",c.dataset.date===date)});
   render(date);
@@ -836,16 +1006,16 @@ function hoyLargo(){
   return DOWL[n.getDay()]+" "+n.getDate()+" "+MESC[n.getMonth()];
 }
 function vencida(){
-  var el=$("#viejo"); if(!el||!D.week||!D.week.end) return;
+  var el=$("#viejo"); if(!el||!D.week) return;
   el.className="viejo"; el.hidden=true;
-  if(HOY<=D.week.end) return;
-  var cuantos=Math.round((new Date(HOY+"T12:00:00")-new Date(D.week.end+"T12:00:00"))/864e5);
-  /* Con la semana en jueves→miércoles ya no hay hueco que perdonar: si la
-     tarea del jueves corrió, hoy cae dentro de la semana publicada y esto
-     no se ve nunca. Que week.end quede atrás significa que la tarea se
-     rompió, y eso sí hay que decirlo pronto — antes se aguantaban diez
-     días porque de lunes a miércoles era normal. */
-  if(cuantos<=2) return;
+  var u=(D.week.updated||"").slice(0,10); if(!u) return;
+  var cuantos=Math.round((new Date(HOY+"T12:00:00")-new Date(u+"T12:00:00"))/864e5);
+  /* La rejilla ya es la semana de verdad y se pasa sola cada lunes, así que
+     nunca se enseña una semana vencida: eso dejó de ser un problema que
+     tape un aviso. Lo que sí puede pasar es que la tarea del jueves se
+     rompa y los eventos se queden viejos, y eso es lo que mide esto: la
+     edad de los datos. Ocho días = se saltó una edición completa. */
+  if(cuantos<=8) return;
   el.hidden=false; el.className="viejo alerta";
   el.textContent="Hoy es "+hoyLargo()+" y esta página lleva "+cuantos+
     " días sin actualizarse · puede que ya nada de esto aplique.";
@@ -946,12 +1116,56 @@ if("IntersectionObserver" in window){
       "Content-Type":"application/json",Prefer:"return=minimal"},body:JSON.stringify(datos)})
       .then(function(r){
         b.disabled=false;
-        if(r.ok){ f.reset(); m.className="estado bien"; m.textContent="¡Gracias! Lo reviso esta semana."; }
+        if(r.ok){ f.reset(); m.className="estado bien"; m.textContent="¡Gracias! Lo reviso esta semana.";
+          if(window.VALLE_MIDE) window.VALLE_MIDE("sugerencia",null); }
         else { m.className="estado mal"; m.textContent="No salió. Escríbeme por WhatsApp y lo agrego."; }
       })
       .catch(function(){ b.disabled=false; m.className="estado mal";
         m.textContent="No salió. Escríbeme por WhatsApp y lo agrego."; });
   });
+})();
+
+/* ── la cuenta ─────────────────────────────────────────────────
+   Sirve para una sola pregunta: ¿esto lo usa alguien, y qué mira?
+   Va a la misma tabla de sólo escritura que las sugerencias, con la
+   misma llave publicable: con ella se puede insertar y nada más.
+
+   Lo que NO se guarda, a propósito: nada de IP, nada de user-agent,
+   nada de cookies, ningún identificador que dure más que la pestaña.
+   La "sesión" es un número al azar en sessionStorage y muere al
+   cerrarla; existe nada más para no contar diez clics como diez
+   personas. Si alguien trae Do Not Track prendido, no se manda nada.
+
+   Es a prueba de fallos: si la red no está o Supabase se cae, se
+   traga el error y la página sigue igual. Nunca bloquea nada. */
+(function(){
+  var API="https://zunjschqseekrntcokae.supabase.co/rest/v1/valle_visitas";
+  var KEY="sb_publishable_Qi5CAuoqQk2yc5OvJI4SHg_MjeU8ma_";
+  var no=(navigator.doNotTrack=="1"||window.doNotTrack=="1"||navigator.globalPrivacyControl===true);
+  var ses="";
+  try{ ses=sessionStorage.getItem("valle-ses")||"";
+       if(!ses){ ses=Math.random().toString(36).slice(2,12); sessionStorage.setItem("valle-ses",ses); }
+  }catch(e){ ses="efimera"; }
+  var mandados=0;                       /* techo por sesión, por si acaso */
+  window.VALLE_MIDE=function(tipo,detalle){
+    if(no||mandados>=40) return;
+    mandados++;
+    var fila={tipo:tipo, detalle:detalle?String(detalle).slice(0,160):null,
+      semana:(D.week&&D.week.label)||null, ruta:location.pathname.slice(0,120),
+      origen:(document.referrer||"").replace(/^https?:\/\//,"").split("/")[0].slice(0,120)||null,
+      ancho:Math.min(8000,Math.round(innerWidth)), sesion:ses};
+    try{
+      fetch(API,{method:"POST",keepalive:true,
+        headers:{apikey:KEY,Authorization:"Bearer "+KEY,
+                 "Content-Type":"application/json",Prefer:"return=minimal"},
+        body:JSON.stringify(fila)}).catch(function(){});
+    }catch(e){}
+  };
+  /* la visita se cuenta cuando ya se vio algo, no al primer byte */
+  setTimeout(function(){ window.VALLE_MIDE("visita", null) }, 2200);
+  var cd=$(".cdmx"); if(cd) cd.addEventListener("click",function(){ window.VALLE_MIDE("cdmx",null) });
+  var det=document.querySelector("#siempre details");
+  if(det) det.addEventListener("toggle",function(){ if(det.open) window.VALLE_MIDE("siempre",null) });
 })();
 
 (function(){var url=location.href.split("#")[0],t="Esta semana en Valle · "+D.week.label;
@@ -1183,7 +1397,8 @@ if("IntersectionObserver" in window){
     'varying vec3 vN, vW, vA, vB;',
     'uniform vec3 uSun, uWarm, uSky, uBounce, uGround, uLuz, uEye;',
     'uniform vec3 cLow, cMid, cHigh, cWater, cSoil, cTree, cCasa, cLampa, cCalle, cOrilla;',
-    'uniform float uFog, uBands, uDim, uAmb, uCloud, uRain, uDormir;',
+    'uniform float uFog, uBands, uDim, uAmb, uCloud, uRain, uDormir, uAlba;',
+    'uniform vec3 uTownC;',
     'uniform mediump float uY, uNight, uT, uWind;',
     'void main(){',
     '  float vH = vA.x, vKind = vA.y, vAO = vA.z;',
@@ -1201,8 +1416,19 @@ if("IntersectionObserver" in window){
     '  if (vW.y < -0.004) {',                                  /* zocalo · tierra cortada */
     '    float d = clamp(-vW.y*2.6, 0.0, 1.0);',
     '    base = mix(cSoil, cSoil*0.52, d);',
-    '    float st = fract(vW.y*9.0);',
-    '    base *= 1.0 - 0.16*smoothstep(0.0,0.09,st)*smoothstep(0.24,0.11,st);',
+    /* Vetas. Antes era una sola banda oscura repetida y el zocalo se
+       leia como una pared lisa con rayas. Ahora hay tres frecuencias
+       —capas gruesas con tinte ocre, una linea fina entre capa y capa,
+       y un grano muy corto— y la altura de la capa se ondula un poco
+       con x/z para que las vetas no queden perfectamente horizontales,
+       que es lo que delataba que era un shader y no tierra cortada. */
+    '    float onda = 0.16*sin(vW.x*6.5 + vW.z*4.1) + 0.07*sin(vW.x*15.0 - vW.z*11.0);',
+    '    float capa = fract(vW.y*11.0 + onda);',
+    '    float veta = smoothstep(0.0,0.11,capa)*smoothstep(0.46,0.18,capa);',
+    '    base = mix(base, base*vec3(1.26,1.04,0.78), veta*0.55);',
+    '    float st = fract(vW.y*34.0 + onda*2.0);',
+    '    base *= 1.0 - 0.15*smoothstep(0.0,0.07,st)*smoothstep(0.20,0.09,st);',
+    '    base *= 0.94 + 0.06*sin(vW.y*103.0 + vW.x*9.0 + vW.z*7.0);',
     '  } else if (vKind > 2.5 && vKind < 4.5) {',               /* casas */
     '    base = cCasa;',
     '    if (!topFace) base *= 0.86;',
@@ -1213,6 +1439,13 @@ if("IntersectionObserver" in window){
     '      float on = uNight * tit * step(vRnd, 1.0 - uDormir);',
     '      base = mix(base, cLampa, on * 0.95);',
     '      emis = cLampa * on * (topFace ? 0.80 : 1.30);',
+    /* Halo. Una ventana era un cuadrito plano de color solido, que de
+       lejos se leia como un pixel amarillo y no como luz. Este termino
+       de borde —mas fuerte donde la cara se va de canto a la camara—
+       le pone un reborde encendido, y el racimo de casas se funde en
+       una mancha de luz en vez de una reticula de puntos. */
+    '      float canto = 1.0 - max(dot(n, vd), 0.0);',
+    '      emis += cLampa * on * 0.62 * canto * canto;',
     '      plano = uNight;',
     '    }',
     '  } else if (vKind > 6.5) {',                              /* torre del centro */
@@ -1241,6 +1474,18 @@ if("IntersectionObserver" in window){
     '    brillo *= 0.5 + 0.85*uNight;',
     /* el pueblo se refleja en el agua que tiene enfrente */
     '    emis += uLuz * vTown * uNight * 0.50;',
+    /* La senda. Lo de arriba solo enciende el agua pegada al pueblo, y
+       un pueblo junto a un lago no se ve asi: la luz se estira sobre el
+       agua hacia quien mira, en una columna temblorosa. Es el mismo
+       calculo del reflejo del sol —vector medio entre la vista y la
+       direccion de la fuente— pero con el pueblo de fuente; la normal
+       ondulada del agua es lo que hace que la columna tiemble. Se apaga
+       con la distancia para no encender el lago entero. */
+    '    vec3 aP = uTownC - vW;',
+    '    float dP = length(aP.xz);',
+    '    vec3 hP = normalize(normalize(vec3(aP.x, max(aP.y, 0.05), aP.z)) + vd);',
+    '    float senda = pow(max(dot(wn, hP), 0.0), 21.0);',
+    '    emis += uLuz * senda * uNight * 1.45 * exp(-dP*1.25);',
     '  } else if (vKind > 4.5 && vKind < 5.5 && topFace) {',    /* calle */
     '    base = cCalle;',
     '    emis += uLuz * vTown * uNight * 0.13;',
@@ -1269,7 +1514,10 @@ if("IntersectionObserver" in window){
        encendidas, difuminada; aqui se convierte en luz que si cae
        sobre el cerro, la calle y la orilla. */
     '  float hemi = n.y*0.5 + 0.5;',
-    '  vec3 pueblo = uLuz * vTown * uNight * (1.0 - uDormir);',
+    /* El cuadrado extra hace que el derrame crezca mas rapido donde
+       las ventanas estan apretadas: el centro florece y las orillas del
+       pueblo se quedan tenues, que es como se ve de verdad. */
+    '  vec3 pueblo = uLuz * (vTown + 1.05*vTown*vTown) * uNight * (1.0 - uDormir);',
     '  vec3 amb = mix(uBounce, uSky, hemi) * uAmb + pueblo * (0.38 + 0.26*hemi);',
     '  float occ = mix(0.58, 1.0, vAO);',
     '  occ = mix(1.0, occ, clamp(vW.y*9.0, 0.0, 1.0));',
@@ -1284,10 +1532,23 @@ if("IntersectionObserver" in window){
        en el fondo del valle. Con lluvia sube; de noche se contiene
        para no borrar el pueblo. */
     '  float fog = clamp((vW.z*0.5 + 0.5) * uFog, 0.0, 0.7);',
+    /* Perspectiva aerea de verdad: lo lejano se lava contra el fondo.
+       La unica bruma que habia dependia de z en el mundo, no de que tan
+       lejos estaba de la camara, asi que el borde de atras se veia tan
+       nitido como la orilla de enfrente y el diorama salia plano. */
+    '  float dcam = length(uEye - vW);',
+    '  fog += clamp((dcam - 3.1)/7.2, 0.0, 1.0) * uFog * 0.62;',
     '  float bruma = clamp((0.26 - vW.y) * 2.1, 0.0, 1.0);',
     '  fog += bruma * uFog * (0.30 + 0.55*uRain + 0.25*uCloud) * (1.0 - uNight*0.62);',
-    '  fog = min(fog, 0.82);',
-    '  col = mix(col, uGround, fog * (1.0 - plano*0.7));',
+    /* Niebla del amanecer. Se acuesta sobre el agua y en lo hondo del
+       valle, y se levanta conforme sube el sol. uAlba ya trae dentro la
+       humedad de verdad: en un amanecer seco casi no sale. */
+    '  float agua = step(0.5, vKind) * step(vKind, 1.5);',
+    '  float rasa = clamp((0.19 - vW.y) * 3.6, 0.0, 1.0);',
+    '  float niebla = uAlba * rasa * (0.52 + 0.48*agua);',
+    '  fog = min(fog + niebla*0.66, 0.88);',
+    '  vec3 aire = mix(uGround, uSky, 0.42 + 0.30*niebla);',
+    '  col = mix(col, mix(uGround, aire, clamp(niebla*1.6, 0.0, 1.0)), fog * (1.0 - plano*0.7));',
     '  col = mix(uGround, col, mix(uDim, 1.0, plano*0.55));',
     '  gl_FragColor = vec4(col, 1.0);',
     '}'
@@ -1521,6 +1782,29 @@ if("IntersectionObserver" in window){
     return a;
   })();
 
+  /* ── el centro luminoso del pueblo ────────────────────────────
+     De donde sale la senda de luz sobre el agua. Es el centroide del
+     mapa de ventanas, pesado al cuadrado para que mande el nucleo
+     encendido del centro y no lo arrastren los ranchos sueltos de la
+     orilla. Se calcula una vez; sólo la altura se vuelve a leer cada
+     cuadro, porque P.exag puede cambiar de encuadre a encuadre. */
+  var townI = 0, townJ = 0;
+  (function () {
+    var sx = 0, sz = 0, sw = 0;
+    for (var j = 0; j < G; j++) for (var i = 0; i < G; i++) {
+      var w = town[j * G + i]; w *= w;
+      if (w < 0.02) continue;
+      sx += i * w; sz += j * w; sw += w;
+    }
+    if (sw > 0) { townI = sx / sw; townJ = sz / sw; }
+  })();
+  function centroPueblo() {
+    var i = Math.max(0, Math.min(G - 1, Math.round(townI)));
+    var j = Math.max(0, Math.min(G - 1, Math.round(townJ)));
+    return [-1 + (townI / G) * 2, hv[j * G + i] / (LEV - 1) * P.exag + 0.012,
+            -1 + (townJ / G) * 2];
+  }
+
   /* ── instancias · terreno, casas, árboles, orilla, torre ─────── */
   var gI = [], gE = [], gX = [], nCasas = 0, nArb = 0;
   function bloque(i, j, alt, kind, oc, dx, dz, w, hh, rr) {
@@ -1672,7 +1956,8 @@ if("IntersectionObserver" in window){
   };
   var U = unis(prog, ['uVP','uOff','uG','uY','uBase','uSun','uWarm','uSky','uBounce','uGround',
     'uLuz','uEye','cLow','cMid','cHigh','cWater','cSoil','cTree','cCasa','cLampa','cCalle','cOrilla',
-    'uT','uFog','uBands','uNight','uDim','uAmb','uRain','uCloud','uWind','uDormir']);
+    'uT','uFog','uBands','uNight','uDim','uAmb','uRain','uCloud','uWind','uDormir',
+    'uAlba','uTownC']);
   var UC = unis(progC, ['uVP','uOff','uRight','uUp','uT','uNight','uRain','uDim','uY','uDormir','cLampa','cVela','uWarm']);
   var UL = unis(progLL, ['uVP','uOff','uRight','uT','uRain','uWind','uTop','uDim']);
 
@@ -1717,8 +2002,14 @@ if("IntersectionObserver" in window){
   var foco = null, focoAmt = 0, focoTgt = 0, pines = [];
   var marco = { amt: 0, tgt: 0, ox: 0, oy: 0 };
   var man = { amt: 0, tgt: 0, az: 0, el: 0, dist: 0, tx: 0, tz: 0, listo: 0 };
-  var clima = { lluvia: 0, nubes: 0, viento: 0.30 };
-  var L = { sun: [0.4, 0.8, 0.4], warm: [1, .96, .86], sky: [.62, .66, .63], night: 0 };
+  /* Un vuelo es un destino al que la cámara de mano se acerca sola, en
+     lugar de saltar. Lo usa el clic en un evento: en vez de teletransportar
+     la vista al venue —que marea y hace perder de vista dónde estabas—,
+     la cámara viaja hasta ahí en poco más de un segundo. Cualquier
+     arrastre, rueda o pellizco lo cancela: mandas tú, no la animación. */
+  var vuelo = null;
+  var clima = { lluvia: 0, nubes: 0, viento: 0.30, humedad: 0.62 };
+  var L = { sun: [0.4, 0.8, 0.4], warm: [1, .96, .86], sky: [.62, .66, .63], night: 0, alba: 0 };
 
   /* ── la hora que manda ───────────────────────────────────────
      Normalmente el reloj. Si el panel de abajo trae la barra de
@@ -1746,7 +2037,15 @@ if("IntersectionObserver" in window){
      20:15, y el diorama lo sabe. La dirección también es la de
      verdad — el sol sale por el oriente del mapa.                  */
   function solActual() {
-    var s = SOLAR(ahora()), alt = s.y;
+    var f = ahora();
+    var s = SOLAR(f), alt = s.y;
+    /* ¿Va subiendo o bajando? Quince minutos después basta para saberlo,
+       y es el mismo truco con el que el sitio distingue dawn de dusk.
+       La niebla es de amanecer: al atardecer, con el suelo caliente, no
+       se forma, así que la puesta no la enciende. */
+    var sube = SOLAR(new Date(f.getTime() + 9e5)).y > alt;
+    var alba = sube ? Math.max(0, 1 - Math.abs(alt - 0.055) / 0.155) : 0;
+    alba *= 0.30 + 0.70 * clima.humedad;
     var noche = Math.max(0, Math.min(1, (0.10 - alt) / 0.24));
     if (document.documentElement.getAttribute('data-t') === 'night') noche = 1;
     /* de noche la luz clave es la luna, no un sol bajo tierra */
@@ -1766,7 +2065,7 @@ if("IntersectionObserver" in window){
       var gris = (warm[0] + warm[1] + warm[2]) / 3;
       for (var q2 = 0; q2 < 3; q2++) warm[q2] += (gris - warm[q2]) * n * 0.55;
     }
-    return { sun: nz(dir), warm: warm, sky: sky, night: noche };
+    return { sun: nz(dir), warm: warm, sky: sky, night: noche, alba: alba };
   }
 
   /* ── paleta ──────────────────────────────────────────────────
@@ -1822,7 +2121,7 @@ if("IntersectionObserver" in window){
     cnv.height = Math.max(1, Math.round(h * dpr));
     cnv.style.width = w + 'px'; cnv.style.height = h + 'px';
   }
-  (function () { var s = solActual(); L.sun = s.sun; L.warm = s.warm; L.sky = s.sky; L.night = s.night; })();
+  (function () { var s = solActual(); L.sun = s.sun; L.warm = s.warm; L.sky = s.sky; L.night = s.night; L.alba = s.alba; })();
 
   /* ── atributos ───────────────────────────────────────────────
      Los divisores de ANGLE_instanced_arrays son globales por índice
@@ -1862,12 +2161,15 @@ if("IntersectionObserver" in window){
     var tl = c ? Math.max(0, Math.min(1, c.lluvia || 0)) : 0;
     var tn = c ? Math.max(0, Math.min(1, c.nubes || 0)) : 0;
     var tv = c && c.viento != null ? Math.max(0, Math.min(1.6, c.viento)) : 0.30;
+    var th = c && c.humedad != null ? Math.max(0, Math.min(1, c.humedad)) : 0.62;
     clima.lluvia += (tl - clima.lluvia) * eClima;
     clima.nubes  += (tn - clima.nubes)  * eClima;
     clima.viento += (tv - clima.viento) * eClima;
+    clima.humedad += (th - clima.humedad) * eClima;
 
     var s = solActual();
     L.night += (s.night - L.night) * e;
+    L.alba += (s.alba - L.alba) * e;
     for (var q = 0; q < 3; q++) {
       L.sun[q]  += (s.sun[q]  - L.sun[q])  * e;
       L.warm[q] += (s.warm[q] - L.warm[q]) * e;
@@ -1894,6 +2196,18 @@ if("IntersectionObserver" in window){
     var tyA = -0.03 + (foco ? foco.y * focoAmt * 0.45 : 0);
     var tzA = foco ? foco.z * focoAmt * 0.62 : 0;
     lastAuto.az = azA; lastAuto.el = elA; lastAuto.dist = dA / fit; lastAuto.tx = txA; lastAuto.tz = tzA;
+
+    /* si hay un vuelo en curso, la cámara de mano se acerca a su destino */
+    if (vuelo) {
+      var kv = 1 - Math.pow(0.002, dt / 1.15);
+      man.tx += (vuelo.tx - man.tx) * kv;
+      man.tz += (vuelo.tz - man.tz) * kv;
+      man.el += (vuelo.el - man.el) * kv;
+      man.dist += (vuelo.dist - man.dist) * kv;
+      if (Math.abs(vuelo.tx - man.tx) < 0.003 &&
+          Math.abs(vuelo.tz - man.tz) < 0.003 &&
+          Math.abs(vuelo.dist - man.dist) < 0.02) vuelo = null;
+    }
 
     /* cámara del panel de abajo · se mezcla con la automática */
     var mm = man.amt;
@@ -1941,6 +2255,9 @@ if("IntersectionObserver" in window){
     gl.uniform1f(U.uWind, clima.viento);
     var dormir = Math.max(0, Math.min(1, window.VALLE_DORMIR || 0));
     gl.uniform1f(U.uDormir, dormir);
+    gl.uniform1f(U.uAlba, L.alba);
+    var cp = centroPueblo();
+    gl.uniform3f(U.uTownC, cp[0], cp[1], cp[2]);
     /* con nubes el sol pega menos y el ambiente sube; con lluvia y de
        noche la bruma se contiene para que el pueblo no se borre */
     gl.uniform1f(U.uAmb, P.amb * (1 + clima.nubes * 0.42));
@@ -2101,14 +2418,27 @@ if("IntersectionObserver" in window){
     },
     soltar: function () { man.tgt = 0; host.classList.remove('con-mano'); },
     gira: function (dAz, dEl) {
+      vuelo = null;
       man.az += dAz; man.el = pinza(man.el + dEl, 0.10, 1.36);
     },
-    zoom: function (f) { man.dist = pinza(man.dist * f, 2.3, 13.5); },
+    zoom: function (f) { vuelo = null; man.dist = pinza(man.dist * f, 2.3, 13.5); },
     mueve: function (dx, dz) {
+      vuelo = null;
       man.tx = pinza(man.tx + dx, -0.85, 0.85); man.tz = pinza(man.tz + dz, -0.85, 0.85);
     },
     reset: function () {
+      vuelo = null;
       man.az = -0.70; man.el = 0.52; man.dist = 7.33; man.tx = 0; man.tz = 0;
+    },
+    /* Volar a un punto del mapa. `cerca` es la distancia de cámara: la
+       vista de reposo es 7.33, así que 3.5 es más o menos el doble de
+       acercamiento. Se le da un poco de picada (el más bajo) porque de
+       cerca la vista cenital aplana el cerro y deja de leerse el relieve. */
+    vuela: function (lat, lon, cerca) {
+      var w = mundo(lat, lon);
+      this.tomar();
+      vuelo = { tx: pinza(w.x, -0.85, 0.85), tz: pinza(w.z, -0.85, 0.85),
+                el: 0.40, dist: pinza(cerca || 3.5, 2.3, 13.5) };
     },
     marco: function (ox, oy, on) { marco.ox = ox; marco.oy = oy; marco.tgt = on ? 1 : 0; },
     activa: function () { return man.tgt > 0.5; },
@@ -2178,6 +2508,7 @@ if("IntersectionObserver" in window){
     <span class="mtitu fr">El valle, de cerca</span>
     <button class="bx" type="button" id="cerrarMapa" aria-label="Cerrar el mapa">&#10005;</button>
   </div>
+  <div class="mapaEv" id="mapaEv" role="status" hidden></div>
   <div class="mandos">
     <button class="bx" type="button" data-cam="mas" aria-label="Acercar">+</button>
     <button class="bx" type="button" data-cam="menos" aria-label="Alejar">&minus;</button>
@@ -2218,7 +2549,7 @@ var R=document.documentElement, $=function(q){return document.querySelector(q)};
    afuera está seco. Le atina casi siempre; no es una ventana.      */
 var LLAVE="valle-clima", VIDA=9e5, real=null, forzada=false;
 var URL="https://api.open-meteo.com/v1/forecast?latitude=19.1953&longitude=-100.1317"+
-  "&current=temperature_2m,precipitation,weather_code,cloud_cover,wind_speed_10m"+
+  "&current=temperature_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,relative_humidity_2m"+
   "&timezone=America%2FMexico_City";
 
 function texto(wc){
@@ -2245,6 +2576,8 @@ function aplica(c){
     lluvia: llueve?Math.max(.30,Math.min(1,mm/2.2+.30)):Math.min(.22,mm*.6),
     nubes:  Math.max(0,Math.min(1,(+c.cloud_cover||0)/100)),
     viento: Math.max(0,Math.min(1.6,(+c.wind_speed_10m||0)/26)),
+    /* la humedad sólo la usa la niebla del amanecer del diorama */
+    humedad:Math.max(0,Math.min(1,(+c.relative_humidity_2m||62)/100)),
     temp:   Math.round(+c.temperature_2m),
     kmh:    Math.round(+c.wind_speed_10m||0),
     txt:    texto(wc)
@@ -2294,6 +2627,8 @@ function abre(){
 function cierra(){
   if(!abierto) return;
   abierto=0;
+  rotulo(null);
+  if(window.VALLE_FOCO) window.VALLE_FOCO(null);
   RAIZ.classList.remove("mapa-abierto");
   window.VALLE_CAM.soltar();
   window.VALLE_CAM.marco(0,0,false);
@@ -2303,7 +2638,40 @@ function cierra(){
   var destino=(volverA&&volverA.focus&&volverA!==document.body)?volverA:verMapa;
   try{ destino.focus() }catch(e){}
 }
-verMapa.addEventListener("click",abre);
+/* el rótulo del evento, cuando se llegó aquí desde una tarjeta */
+var rotEl=$("#mapaEv");
+function rotulo(e){
+  if(!rotEl) return;
+  if(!e){ rotEl.hidden=true; rotEl.innerHTML=""; return; }
+  var esc=function(x){return String(x==null?"":x)
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")};
+  var bajo=[e.time,e.venue].filter(function(x){return x}).map(esc).join(" · ");
+  rotEl.innerHTML='<b>'+esc(e.title)+'</b>'+(bajo?'<span>'+bajo+'</span>':'');
+  rotEl.hidden=false;
+}
+/* Lo que el resto de la página necesita para mandar aquí. Se expone
+   sólo esto —abrir, cerrar, rotular— para que nadie de afuera se meta
+   con el estado del diálogo. */
+window.VALLE_MAPA={abre:abre,cierra:cierra,rotulo:rotulo};
+
+/* Entrar con #mapa=El%20Cuenco abre el diorama ya encuadrado en ese
+   lugar. Es como la página de lugares manda para acá, y también sirve
+   para pegar una liga de un lugar en un chat. Se limpia el hash para
+   que recargar no vuelva a abrirlo sin querer. */
+(function(){
+  var m=/[#&]mapa=([^&]+)/.exec(location.hash);
+  if(!m) return;
+  var venue=""; try{ venue=decodeURIComponent(m[1]) }catch(e){ venue=m[1] }
+  if(!venue||!window.VALLE_IR_A) return;
+  setTimeout(function(){
+    window.VALLE_IR_A(venue);
+    try{ history.replaceState(null,"",location.pathname+location.search) }catch(e){}
+  },700);
+})();
+
+verMapa.addEventListener("click",function(){
+  if(window.VALLE_MIDE) window.VALLE_MIDE("mapa","pie");
+  rotulo(null); if(window.VALLE_FOCO) window.VALLE_FOCO(null); abre(); });
 $("#cerrarMapa").addEventListener("click",cierra);
 addEventListener("keydown",function(e){
   if(e.key==="Escape"&&abierto){ e.preventDefault(); cierra(); }

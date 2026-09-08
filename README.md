@@ -1,11 +1,14 @@
 # Valle Esta Semana
 
-> ## LEE ESTO PRIMERO — actualizado 3 sep 2026
+> ## LEE ESTO PRIMERO — actualizado 8 sep 2026
 >
 > Si algo del prompt de la tarea del jueves contradice esta sección, **gana esta sección**.
 >
-> 0. **La semana corre jueves→miércoles**, no lunes→domingo. El jueves que se
->    publica es el primer día. Cambió el 3 sep 2026; ver la bitácora.
+> 0. **La rejilla de días es lunes→domingo, siempre, y la calcula la página
+>    sola con la fecha de hoy.** No sale de `data.js`: el lunes se pasa sola a
+>    la semana nueva sin esperar a nadie. La tarea sigue corriendo el jueves.
+>    Un día sin eventos sale apagado y ya — eso es normal, no es una falla.
+>    Cambió el 8 sep 2026 (antes era jueves→miércoles); ver la bitácora.
 > 0.5 **Se llama Valle, nunca "el pueblo".** En todo lo que lee la gente. La
 >    excepción es el código del diorama, donde "pueblo" es la mancha de casas.
 >    Regla completa en `tarea-semanal.md`. Petición de Adrian, 3 sep 2026.
@@ -56,23 +59,33 @@ así que la manzana correcta basta — la puerta exacta y la esquina se ven igua
 venue que no esté cae al Centro. `data.js` puede mandar `lugares: {...}` para algo
 puntual, y eso gana sobre `lugares.js`.
 
-## La semana corre jueves → miércoles
+## La semana que se ve es lunes → domingo, y la calcula la página
 
-El jueves que se publica es el **primer** día de la semana, y el miércoles
-siguiente el último. Así los siete días están siempre por delante y la página
-abre en un día que todavía no pasa. Antes la semana era lunes→domingo y, como la
-edición sale los jueves, tres de los siete días ya estaban muertos al publicar y
-el lunes siguiente la página se quedaba sin nada.
+Los siete cuadros de arriba son **el lunes→domingo que contiene hoy**, sacados de
+la fecha del navegador. No salen de `data.js`. Eso quiere decir tres cosas:
 
-**El calendario de tres semanas sigue siendo lunes→domingo**, a propósito: es un
-calendario y tiene que leerse como tal. La semana publicada se resalta a caballo
-entre dos renglones, que es lo normal.
+1. **Se pasa sola.** El domingo a medianoche la rejilla salta a la semana
+   siguiente sin que corra nada. El latido de 20 s ya lo hacía para "hoy"; ahora
+   también para la semana.
+2. **Un día sin eventos sale apagado.** Es lo normal, no una falla. De lunes a
+   miércoles, hasta que corre la tarea del jueves, es probable que haya poco:
+   para eso están los 18 `always`.
+3. **`data.js` sólo pone los eventos.** Cada uno cae en su fecha; los que quedan
+   fuera de la semana visible simplemente no se pintan. `week.label` ya no manda
+   en el sello — el sello dice el rango de verdad de la rejilla.
 
-## Si la semana ya pasó
+**El calendario de tres semanas también es lunes→domingo**, como siempre.
 
-Si `week.end` quedó atrás significa que la tarea del jueves no corrió — con la
-ventana en jueves ya no hay hueco legítimo. La página avisa en coral a partir del
-tercer día. Así nadie lee una semana vieja creyendo que es la de hoy.
+Antes de esto la semana era jueves→miércoles para que la edición del jueves no
+abriera en días muertos. Se cambió el 8 sep 2026 a petición de Adrian: una semana
+tiene que leerse como una semana. El hueco de lunes a miércoles se acepta a
+cambio.
+
+## Si los datos ya están viejos
+
+El aviso en coral ya no mide si la semana terminó —eso no puede pasar, la rejilla
+se pasa sola—, sino **la edad de los datos**: si `week.updated` tiene más de ocho
+días, se saltó una edición completa y la página lo dice.
 
 ## Lo único que cambia cada semana: `data.js`
 
@@ -167,6 +180,21 @@ difuminado de ventanas encendidas que se calcula una vez al cargar.
 la bruma, la dureza del sol y el oleaje. Lo llena Open-Meteo (ver abajo), pero cualquiera
 puede escribirlo desde la consola para probar.
 
+**Cada evento lleva al mapa.** Tocar una tarjeta abre el diorama a pantalla
+completa, encuadrado en el venue y al doble de acercamiento, con su pin y el
+nombre del evento abajo. Los enlaces de adentro de la tarjeta siguen ganando: si
+tocas "Instagram" te vas a Instagram. La cámara viaja en poco más de un segundo
+(`VALLE_CAM.vuela`) y cualquier arrastre o rueda cancela el viaje.
+
+**De noche el pueblo se refleja en el agua en una columna**, no sólo en la celda
+que tiene enfrente: es el mismo cálculo del reflejo del sol pero con el pueblo de
+fuente, y por eso tiembla. Las ventanas llevan un halo de canto para que un
+racimo de casas se lea como una mancha de luz y no como una retícula de puntos.
+El zócalo tiene vetas de roca, lo lejano se lava contra el fondo con la distancia
+de cámara, y al amanecer se acuesta niebla sobre el lago según la humedad real.
+**La luna también es de verdad** —su fase y su lugar en el cielo— y vive en un
+`<div>` detrás del lienzo, no en WebGL: `window.VALLE_LUNA`.
+
 **Dentro del recuadro de las fuentes hay una línea** —"Explora el mapa"— que abre el
 diorama **a pantalla completa**. Y es el mismo diorama: no se monta un segundo mapa, se le
 sube el `z-index` a la escena que ya vive fija detrás de la página y se tapa el sitio con un
@@ -210,6 +238,45 @@ Para probar sin esperar a que llueva: el botón **Llover** del panel del pie, o
 
 ---
 
+## La página de lugares
+
+`lugares.html` no se edita nunca. Se arma sola al cargar con tres cosas que ya
+existen: `lugares.js` (qué lugares se conocen), `data.js` (qué hay esta semana) y
+`historial.js` (qué ha habido antes). Por cada lugar saca lo de esta semana, lo
+que se repite, cuándo fue la última vez, y una liga que abre el diorama ahí
+(`index.html#mapa=El%20Cuenco`).
+
+Para que eso funcione **`historial.js` guarda el venue desde el 8 sep 2026**
+(`v:` en cada entrada, y `h:` la hora). Las entradas viejas no lo traían;
+`archivar.js` las rellena solo cuando el título coincide **exacto** con un evento
+de `data.js` que sí tiene venue — los que se repiten cada semana. Quedaron cinco
+sin lugar, todos eventos de una sola vez, y ahí se quedan: inventarles un venue
+sería peor que no tenerlo.
+
+La página crece sola cada jueves. Entre más semanas pasen, más sirve.
+
+## La cuenta de uso
+
+Tabla `valle_visitas` en el mismo Supabase que las sugerencias, con la misma
+llave publicable y la misma regla: **anon sólo puede INSERT**, nunca leer. Se
+manda una fila al abrir la página y una por cada clic que importa (día, evento,
+mapa, siempre, CDMX, sugerencia enviada).
+
+Lo que **no** se guarda, a propósito: IP, user-agent, cookies, ni nada que dure
+más que la pestaña. La "sesión" es un número al azar en `sessionStorage` que
+muere al cerrarla, y existe nada más para no contar diez clics como diez
+personas. Con Do Not Track prendido no se manda nada. Techo de 40 filas por
+sesión. Si Supabase se cae, no pasa nada: el error se traga y la página sigue.
+
+Para leerlo hay dos vistas hechas, en el editor SQL de Supabase:
+
+```sql
+select * from valle_uso_dia;      -- visitas, sesiones y clics por día
+select * from valle_uso_evento;   -- qué eventos se tocaron más
+```
+
+---
+
 ## Archivos
 
 | archivo | qué es |
@@ -219,6 +286,7 @@ Para probar sin esperar a que llueva: el botón **Llover** del panel del pie, o
 | `data.js` | **lo único que cambia cada semana** |
 | `historial.js` | eventos de semanas pasadas · **sólo crece, nunca se reescribe** |
 | `lugares.js` | dónde cae cada venue en el diorama · se le agregan los nuevos |
+| `lugares.html` | página de lugares · plantilla, se arma sola con el historial |
 | `og.jpg` | la imagen que sale al compartir la liga · 1200×630 |
 | `tarea-semanal.md` | copia versionada del prompt de la tarea del jueves |
 | `archivar.js` | guarda la semana en `historial.js` · se corre antes de tocar `data.js` |

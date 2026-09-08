@@ -5,7 +5,7 @@
    nunca corras `playwright install`).                                      */
 const {chromium}=require('playwright');
 const fs=require('fs'), path=require('path');
-const P=['index.html','cdmx.html'];
+const P=['index.html','cdmx.html','lugares.html'];
 
 /* la ruta del binario cambia entre maquinas: se prueban varias */
 function chrome(){
