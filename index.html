@@ -320,19 +320,12 @@ h1 span{display:block;color:var(--olive)}
    El chip "En el mapa" es la señal visible; el cursor de lupa es el
    refuerzo. Los enlaces de adentro siguen mandando a su destino. */
 .ww{cursor:zoom-in}
+.ww.enfocada{border-color:var(--acc)}
+.ww.enfocada .et.mapa{background:var(--acc);color:var(--acc-ink);border-color:transparent}
+.ww.destacado.enfocada .et.mapa{background:var(--ground);color:var(--ink)}
 .et.mapa{cursor:zoom-in;transition:.28s var(--e)}
 .ww:hover .et.mapa{background:var(--ink);color:var(--ground);border-color:transparent}
 .ww.destacado:hover .et.mapa{background:var(--acc);color:var(--acc-ink)}
-/* Rótulo del evento mientras el mapa está abierto: sin él, la vista
-   aterriza en un cerro y nadie se acuerda de qué venía a ver. */
-.mapaEv{position:absolute;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 92px);
-  z-index:6;display:flex;flex-direction:column;gap:3px;align-items:center;text-align:center;
-  padding:11px 20px;border-radius:16px;pointer-events:none;max-width:min(92vw,420px);
-  background:oklch(from var(--ground) l c h / .82);border:1px solid var(--line);
-  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);box-shadow:var(--sh)}
-.mapaEv b{font-size:14.5px;line-height:1.25;color:var(--ink)}
-.mapaEv span{font-size:11.5px;color:var(--mid);font-family:var(--mono)}
-@media (max-width:640px){.mapaEv{bottom:calc(env(safe-area-inset-bottom,0px) + 140px)}}
 .ir{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:99px;font-size:11.5px;
   text-decoration:none;font-weight:600;background:var(--ink);color:var(--ground);transition:.32s var(--e)}
 .ir:hover{background:var(--acc);color:var(--acc-ink);transform:translateY(-2px)}
@@ -876,40 +869,60 @@ function render(date){
   cablea(L);
 }
 
-/* ── clic en un evento → el mapa vuela hasta ahí ────────────────
+/* ── clic en un evento → el diorama del fondo se cierra sobre él ──
    Antes las tarjetas no hacían nada al tocarlas, que es justo lo que
-   uno espera de algo que se levanta al pasarle el cursor. Ahora abren
-   el diorama a pantalla completa, encuadrado en el venue y al doble de
-   acercamiento, con su pin. Los enlaces de adentro ganan: si tocas
-   "Instagram" te vas a Instagram, no al mapa. */
+   uno espera de algo que se levanta al pasarle el cursor. Ahora hacen
+   lo mismo que elegir un día —encuadrar el fondo— pero cerrado sobre un
+   solo lugar y al doble de acercamiento. El mapa a pantalla completa se
+   queda donde estaba: en el botón del pie. Los enlaces de adentro de la
+   tarjeta ganan: si tocas "Instagram" te vas a Instagram. */
 function cablea(L){
   [].forEach.call(board.querySelectorAll(".ww"),function(art,i){
     var e=L[i]; if(!e) return;
     art.addEventListener("click",function(ev){
       if(ev.target.closest("a")) return;
-      alMapa(e);
+      alMapa(e,art);
     });
   });
 }
-/* Volar a un lugar sabiendo sólo su nombre — sin evento de por medio.
-   La usa la liga #mapa= que llega de la página de lugares. */
+/* Enfocar un lugar en el diorama del fondo, sabiendo sólo su nombre.
+   La usa la liga #mapa= que llega de la página de lugares: sube al
+   principio, que es donde se ve la escena, y la encuadra ahí. */
 window.VALLE_IR_A=function(venue){
-  if(!window.VALLE_MAPA||!window.VALLE_CAM||!window.VALLE_CAM.vuela) return;
+  if(!window.VALLE_FOCO) return;
   var p=punto(venue);
   if(window.VALLE_MIDE) window.VALLE_MIDE("mapa",venue);
-  window.VALLE_MAPA.abre();
-  if(window.VALLE_FOCO) window.VALLE_FOCO([{lat:p[0],lon:p[1],label:venue}]);
-  window.VALLE_CAM.vuela(p[0],p[1],3.4);
-  window.VALLE_MAPA.rotulo({title:venue,time:"",venue:"en el mapa"});
+  arriba();
+  window.VALLE_FOCO([{lat:p[0],lon:p[1],label:venue}], true);
 };
-function alMapa(e){
-  if(!window.VALLE_MAPA||!window.VALLE_CAM||!window.VALLE_CAM.vuela) return;
-  var p=punto(e.venue);
+
+/* Sube hasta donde la escena se ve, y sólo si hace falta. La cámara
+   suelta el foco cuando el scroll llega al fondo, así que enfocar sin
+   esto sería enfocar algo que no está en pantalla. */
+function arriba(){
+  var st=window.VALLE_CAM&&window.VALLE_CAM.estado?window.VALLE_CAM.estado():null;
+  if(st&&st.prog<0.72) return;
+  var y=Math.max(0,(dias.getBoundingClientRect().top+scrollY)-innerHeight*0.62);
+  var suave=!matchMedia("(prefers-reduced-motion: reduce)").matches;
+  try{ scrollTo({top:y,behavior:suave?"smooth":"auto"}) }catch(e){ scrollTo(0,y) }
+}
+
+/* Tocar un evento encuadra su lugar en el diorama del fondo — el mismo
+   gesto que elegir un día, pero cerrado al doble de acercamiento y en un
+   solo punto. NO abre el mapa a pantalla completa: eso se queda para el
+   botón del pie, porque el diorama es el escenario del sitio, no una
+   cosa que se apodera de la pantalla. Tocar la misma tarjeta otra vez
+   devuelve el foco a todos los lugares del día. */
+function alMapa(e,art){
+  if(!window.VALLE_FOCO) return;
+  var yaEsta=art&&art.classList.contains("enfocada");
+  [].forEach.call(board.querySelectorAll(".ww.enfocada"),function(x){x.classList.remove("enfocada")});
+  if(yaEsta){ focoDelDia(sel); return; }
+  if(art) art.classList.add("enfocada");
   if(window.VALLE_MIDE) window.VALLE_MIDE("evento", e.title+" · "+e.venue);
-  window.VALLE_MAPA.abre();
-  if(window.VALLE_FOCO) window.VALLE_FOCO([{lat:p[0],lon:p[1],label:e.venue}]);
-  window.VALLE_CAM.vuela(p[0],p[1],3.4);
-  window.VALLE_MAPA.rotulo(e);
+  var p=punto(e.venue);
+  arriba();
+  window.VALLE_FOCO([{lat:p[0],lon:p[1],label:e.venue}], true);
 }
 /* ── dónde cae cada lugar en el diorama ───────────────────────────
    Las zonas están verificadas en OpenStreetMap. Los negocios chicos no
@@ -939,16 +952,22 @@ function pick(date,porClic){
   [].forEach.call(dias.querySelectorAll(".dia"),function(b){b.setAttribute("aria-selected",b.dataset.date===date?"true":"false")});
   [].forEach.call(document.querySelectorAll(".cd"),function(c){c.classList.toggle("sel",c.dataset.date===date)});
   render(date);
-  if(porClic&&window.VALLE_FOCO){
-    var visto={},pts=[];
-    D.events.forEach(function(e){
-      if(e.date!==date||visto[e.venue])return;
-      visto[e.venue]=1;
-      var p=punto(e.venue);
-      pts.push({lat:p[0],lon:p[1],label:e.venue});
-    });
-    window.VALLE_FOCO(pts);
-  }
+  if(porClic) focoDelDia(date);
+}
+
+/* El foco suave del día: todos los lugares donde hay algo, con el
+   empujoncito de siempre. Es también a donde se vuelve cuando se
+   des-enfoca un evento. */
+function focoDelDia(date){
+  if(!window.VALLE_FOCO) return;
+  var visto={},pts=[];
+  D.events.forEach(function(e){
+    if(e.date!==date||visto[e.venue])return;
+    visto[e.venue]=1;
+    var p=punto(e.venue);
+    pts.push({lat:p[0],lon:p[1],label:e.venue});
+  });
+  window.VALLE_FOCO(pts);
 }
 pick(sel);
 
@@ -2002,12 +2021,6 @@ if("IntersectionObserver" in window){
   var foco = null, focoAmt = 0, focoTgt = 0, pines = [];
   var marco = { amt: 0, tgt: 0, ox: 0, oy: 0 };
   var man = { amt: 0, tgt: 0, az: 0, el: 0, dist: 0, tx: 0, tz: 0, listo: 0 };
-  /* Un vuelo es un destino al que la cámara de mano se acerca sola, en
-     lugar de saltar. Lo usa el clic en un evento: en vez de teletransportar
-     la vista al venue —que marea y hace perder de vista dónde estabas—,
-     la cámara viaja hasta ahí en poco más de un segundo. Cualquier
-     arrastre, rueda o pellizco lo cancela: mandas tú, no la animación. */
-  var vuelo = null;
   var clima = { lluvia: 0, nubes: 0, viento: 0.30, humedad: 0.62 };
   var L = { sun: [0.4, 0.8, 0.4], warm: [1, .96, .86], sky: [.62, .66, .63], night: 0, alba: 0 };
 
@@ -2143,6 +2156,9 @@ if("IntersectionObserver" in window){
     ext.drawElementsInstancedANGLE(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0, cuantos); llamadas++;
   }
 
+  /* fuerza del foco · Z acerca, P centra. Arrancan en la suave. */
+  var focoZ = 0.22, focoZt = 0.22, focoP = 0.62, focoPt = 0.62;
+
   var lastAuto = { az: 0, el: 0.52, dist: 7.33, tx: 0, tz: 0 };
 
   function draw(now) {
@@ -2191,23 +2207,18 @@ if("IntersectionObserver" in window){
     if (prog01 > 0.92 && !man.tgt) focoTgt = 0;     /* sólo hasta el fondo se suelta */
     focoAmt += (focoTgt - focoAmt) * (1 - Math.pow(0.002, dt / 1.1));
     if (focoAmt < 0.004 && focoTgt === 0 && pines.length) { limpiaPines(); host.classList.remove('con-foco'); }
-    dA *= 1 - 0.22 * focoAmt;
-    var txA = foco ? foco.x * focoAmt * 0.62 : 0;
-    var tyA = -0.03 + (foco ? foco.y * focoAmt * 0.45 : 0);
-    var tzA = foco ? foco.z * focoAmt * 0.62 : 0;
+    /* Cuánto se acerca el foco. Elegir un día usa la fuerza suave de
+       siempre (0.22 · 0.62); tocar un evento usa la cerrada, que deja la
+       cámara como al doble de acercamiento y centra casi del todo en el
+       punto. Las dos se interpolan igual que focoAmt para que pasar de
+       una a otra sea un movimiento, no un salto. */
+    focoZ += (focoZt - focoZ) * (1 - Math.pow(0.002, dt / 1.1));
+    focoP += (focoPt - focoP) * (1 - Math.pow(0.002, dt / 1.1));
+    dA *= 1 - focoZ * focoAmt;
+    var txA = foco ? foco.x * focoAmt * focoP : 0;
+    var tyA = -0.03 + (foco ? foco.y * focoAmt * (focoP * 0.72) : 0);
+    var tzA = foco ? foco.z * focoAmt * focoP : 0;
     lastAuto.az = azA; lastAuto.el = elA; lastAuto.dist = dA / fit; lastAuto.tx = txA; lastAuto.tz = tzA;
-
-    /* si hay un vuelo en curso, la cámara de mano se acerca a su destino */
-    if (vuelo) {
-      var kv = 1 - Math.pow(0.002, dt / 1.15);
-      man.tx += (vuelo.tx - man.tx) * kv;
-      man.tz += (vuelo.tz - man.tz) * kv;
-      man.el += (vuelo.el - man.el) * kv;
-      man.dist += (vuelo.dist - man.dist) * kv;
-      if (Math.abs(vuelo.tx - man.tx) < 0.003 &&
-          Math.abs(vuelo.tz - man.tz) < 0.003 &&
-          Math.abs(vuelo.dist - man.dist) < 0.02) vuelo = null;
-    }
 
     /* cámara del panel de abajo · se mezcla con la automática */
     var mm = man.amt;
@@ -2373,8 +2384,12 @@ if("IntersectionObserver" in window){
     pines.forEach(function (p) { if (p.el.parentNode) p.el.parentNode.removeChild(p.el); });
     pines = [];
   }
-  window.VALLE_FOCO = function (pts) {
+  /* `cerca` en true = el encuadre cerrado de tocar un evento. Sin él, el
+     de elegir un día, que es un empujoncito y nada más. */
+  window.VALLE_FOCO = function (pts, cerca) {
     limpiaPines();
+    focoZt = cerca ? 0.50 : 0.22;
+    focoPt = cerca ? 0.94 : 0.62;
     if (!pts || !pts.length) { focoTgt = 0; foco = null; return; }
     /* Varios lugares pueden caer en el mismo punto (los que todavia
        apuntan a su zona). Se agrupan para no encimar las etiquetas. */
@@ -2418,31 +2433,18 @@ if("IntersectionObserver" in window){
     },
     soltar: function () { man.tgt = 0; host.classList.remove('con-mano'); },
     gira: function (dAz, dEl) {
-      vuelo = null;
       man.az += dAz; man.el = pinza(man.el + dEl, 0.10, 1.36);
     },
-    zoom: function (f) { vuelo = null; man.dist = pinza(man.dist * f, 2.3, 13.5); },
+    zoom: function (f) { man.dist = pinza(man.dist * f, 2.3, 13.5); },
     mueve: function (dx, dz) {
-      vuelo = null;
       man.tx = pinza(man.tx + dx, -0.85, 0.85); man.tz = pinza(man.tz + dz, -0.85, 0.85);
     },
     reset: function () {
-      vuelo = null;
       man.az = -0.70; man.el = 0.52; man.dist = 7.33; man.tx = 0; man.tz = 0;
-    },
-    /* Volar a un punto del mapa. `cerca` es la distancia de cámara: la
-       vista de reposo es 7.33, así que 3.5 es más o menos el doble de
-       acercamiento. Se le da un poco de picada (el más bajo) porque de
-       cerca la vista cenital aplana el cerro y deja de leerse el relieve. */
-    vuela: function (lat, lon, cerca) {
-      var w = mundo(lat, lon);
-      this.tomar();
-      vuelo = { tx: pinza(w.x, -0.85, 0.85), tz: pinza(w.z, -0.85, 0.85),
-                el: 0.40, dist: pinza(cerca || 3.5, 2.3, 13.5) };
     },
     marco: function (ox, oy, on) { marco.ox = ox; marco.oy = oy; marco.tgt = on ? 1 : 0; },
     activa: function () { return man.tgt > 0.5; },
-    estado: function () { return { noche: L.night, lluvia: clima.lluvia, dist: man.dist }; }
+    estado: function () { return { noche: L.night, lluvia: clima.lluvia, dist: man.dist, prog: prog01 }; }
   };
 
   /* ── bucle a 30 fps, en pausa si la pestaña no se ve ───────────
@@ -2508,7 +2510,6 @@ if("IntersectionObserver" in window){
     <span class="mtitu fr">El valle, de cerca</span>
     <button class="bx" type="button" id="cerrarMapa" aria-label="Cerrar el mapa">&#10005;</button>
   </div>
-  <div class="mapaEv" id="mapaEv" role="status" hidden></div>
   <div class="mandos">
     <button class="bx" type="button" data-cam="mas" aria-label="Acercar">+</button>
     <button class="bx" type="button" data-cam="menos" aria-label="Alejar">&minus;</button>
@@ -2627,8 +2628,6 @@ function abre(){
 function cierra(){
   if(!abierto) return;
   abierto=0;
-  rotulo(null);
-  if(window.VALLE_FOCO) window.VALLE_FOCO(null);
   RAIZ.classList.remove("mapa-abierto");
   window.VALLE_CAM.soltar();
   window.VALLE_CAM.marco(0,0,false);
@@ -2638,21 +2637,10 @@ function cierra(){
   var destino=(volverA&&volverA.focus&&volverA!==document.body)?volverA:verMapa;
   try{ destino.focus() }catch(e){}
 }
-/* el rótulo del evento, cuando se llegó aquí desde una tarjeta */
-var rotEl=$("#mapaEv");
-function rotulo(e){
-  if(!rotEl) return;
-  if(!e){ rotEl.hidden=true; rotEl.innerHTML=""; return; }
-  var esc=function(x){return String(x==null?"":x)
-    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")};
-  var bajo=[e.time,e.venue].filter(function(x){return x}).map(esc).join(" · ");
-  rotEl.innerHTML='<b>'+esc(e.title)+'</b>'+(bajo?'<span>'+bajo+'</span>':'');
-  rotEl.hidden=false;
-}
 /* Lo que el resto de la página necesita para mandar aquí. Se expone
    sólo esto —abrir, cerrar, rotular— para que nadie de afuera se meta
    con el estado del diálogo. */
-window.VALLE_MAPA={abre:abre,cierra:cierra,rotulo:rotulo};
+window.VALLE_MAPA={abre:abre,cierra:cierra};
 
 /* Entrar con #mapa=El%20Cuenco abre el diorama ya encuadrado en ese
    lugar. Es como la página de lugares manda para acá, y también sirve
@@ -2671,7 +2659,7 @@ window.VALLE_MAPA={abre:abre,cierra:cierra,rotulo:rotulo};
 
 verMapa.addEventListener("click",function(){
   if(window.VALLE_MIDE) window.VALLE_MIDE("mapa","pie");
-  rotulo(null); if(window.VALLE_FOCO) window.VALLE_FOCO(null); abre(); });
+  abre(); });
 $("#cerrarMapa").addEventListener("click",cierra);
 addEventListener("keydown",function(e){
   if(e.key==="Escape"&&abierto){ e.preventDefault(); cierra(); }

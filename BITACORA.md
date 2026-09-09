@@ -15,6 +15,53 @@ va hasta arriba.
 
 ---
 
+## 2026-09-09 · El clic en un evento no debía abrir nada
+
+Adrian, viendo lo que se publicó ayer: *"I didn't mean that when you click an
+event widget, it zooms in completely on the map. I meant it zooms in as the day
+widget does, which just zooms in on the background. That's what I meant, but
+zooming in 200% is just the same function, just more zoom, not that the whole map
+becomes full screen."*
+
+Ayer se leyó "que el mapa se acerque al doble" como "llévame al mapa", y se armó
+un viaje de cámara que abría el diorama a pantalla completa. Es más aparatoso y
+es justo lo contrario de una regla que ya estaba escrita en este proyecto: **el
+mapa no se apodera de la pantalla.** La pista estaba en su propia frase —"as the
+day widget does"— y se pasó por alto.
+
+**Qué quedó.** `VALLE_FOCO(pts, cerca)` ahora toma un segundo argumento con la
+fuerza del encuadre: sin él, el empujoncito de elegir un día (0.22 de
+acercamiento, 0.62 de centrado); con él, el cerrado de tocar un evento
+(0.50 · 0.94), que deja la cámara a más o menos el doble. Las dos fuerzas se
+interpolan como focoAmt, así que pasar de una a otra es un movimiento. Tocar la
+misma tarjeta otra vez suelta y vuelve al foco del día; para eso se sacó
+`focoDelDia()` de dentro de `pick()`, que era donde vivía enterrado.
+
+Se agregó `arriba()`, que sube la página **sólo si** el scroll ya pasó el punto
+donde la cámara suelta el foco. Sin eso, tocar una tarjeta de hasta abajo enfoca
+algo que no está en pantalla, que se siente igual que cuando no hacía nada.
+
+**Qué se borró:** todo el viaje de cámara de ayer —`VALLE_CAM.vuela`, el
+suavizado del vuelo en `draw`, los cancelados en gira/zoom/mueve/reset— y el
+rótulo `#mapaEv` con su CSS. Nadie lo llamaba ya. Código muerto que nadie llama
+es código que la próxima corrida va a creerse.
+
+**Lo que quedó sin resolver, y hay que decirlo.** Se sospecha que los pines del
+diorama no se ven: se crean con la etiqueta correcta y `con-foco` se aplica, pero
+`opacity` queda en 0 y nunca se les pone `transform`. NO está confirmado. El
+lienzo pausa su bucle cuando `document.hidden` —que es correcto y ahorra
+batería— y resulta que **todos** los entornos de prueba automatizados a la mano
+reportan la pestaña como oculta: el Chrome sin cabeza del contenedor y la
+pestaña de la extensión por igual. Tres capturas seguidas después de un clic
+salieron idénticas pixel a pixel, o sea que el cuadro nunca se redibujó. Con eso
+no se puede distinguir "el pin está roto" de "la pestaña está dormida", y no se
+va a inventar la conclusión. Se comprueba en diez segundos con la pestaña al
+frente: elegir un día con eventos y ver si aparece un punto con nombre sobre el
+pueblo. Si de verdad falta, el sospechoso es la rama `cwp <= 0.0001` del bloque
+de pines en `draw`, que es la única que deja `transform` sin poner.
+
+---
+
 ## 2026-09-08 · La semana vuelve a ser lunes→domingo, y ahora la calcula la página
 
 Adrian, viendo la edición en vivo: *"The grid is from Monday to Sunday. If the

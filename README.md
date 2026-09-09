@@ -180,11 +180,18 @@ difuminado de ventanas encendidas que se calcula una vez al cargar.
 la bruma, la dureza del sol y el oleaje. Lo llena Open-Meteo (ver abajo), pero cualquiera
 puede escribirlo desde la consola para probar.
 
-**Cada evento lleva al mapa.** Tocar una tarjeta abre el diorama a pantalla
-completa, encuadrado en el venue y al doble de acercamiento, con su pin y el
-nombre del evento abajo. Los enlaces de adentro de la tarjeta siguen ganando: si
-tocas "Instagram" te vas a Instagram. La cámara viaja en poco más de un segundo
-(`VALLE_CAM.vuela`) y cualquier arrastre o rueda cancela el viaje.
+**Cada evento encuadra su lugar en el diorama del fondo.** Tocar una tarjeta
+hace lo mismo que elegir un día —mover la cámara del fondo hacia donde es— pero
+cerrado sobre un solo lugar y a más o menos el doble de acercamiento. **No** abre
+nada a pantalla completa: eso se queda en el botón del pie, porque el diorama es
+el escenario del sitio y no una cosa que se apodera de la pantalla. Tocar la
+misma tarjeta otra vez suelta el foco y vuelve a los lugares del día. Los enlaces
+de adentro de la tarjeta siguen ganando: si tocas "Instagram" te vas a Instagram.
+
+La fuerza del encuadre la maneja `VALLE_FOCO(pts, cerca)`: sin `cerca` es el
+empujoncito de siempre (0.22 de acercamiento, 0.62 de centrado), con `cerca` es
+el cerrado (0.50 · 0.94). Las dos se interpolan, así que pasar de una a otra es
+un movimiento y no un salto.
 
 **De noche el pueblo se refleja en el agua en una columna**, no sólo en la celda
 que tiene enfrente: es el mismo cálculo del reflejo del sol pero con el pueblo de
