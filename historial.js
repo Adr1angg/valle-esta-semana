@@ -31,5 +31,8 @@ window.VH={events:[
   {d:"2026-09-05",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar"},
   {d:"2026-09-06",t:"Brunch dominical en Na-ha",c:"mercado",v:"El Santuario, San Gaspar"},
   {d:"2026-09-06",t:"Domingo de tianguis",c:"mercado",v:"Centro"},
-  {d:"2026-09-06",t:"Meditación en Chamma Ling",c:"bienestar",v:"Chamma Ling"}
+  {d:"2026-09-06",t:"Meditación en Chamma Ling",c:"bienestar",v:"Chamma Ling"},
+  {d:"2026-09-07",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
+  {d:"2026-09-08",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
+  {d:"2026-09-09",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
 ]};
