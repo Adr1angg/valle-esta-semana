@@ -6,10 +6,10 @@ window.VS = {
   week: {
     label: "10 – 16 septiembre 2026",
     start: "2026-09-10", end: "2026-09-16",
-    updated: "2026-09-10T12:30:00-06:00",
-    updatedText: "jue 10 sep, 12:30",
+    updated: "2026-09-13T22:10:00-06:00",
+    updatedText: "dom 13 sep, 22:10",
     next: "jueves 17 sep",
-    note: "El martes se lleva la semana: el Grito en el Jardín Central cierra con Belinda, gratis. El sábado se encima todo —AvándaRock en Espacio Odisea, Marina Sessions y Roger Cornejo en el Cuenco—, pero el jueves va flaco porque El Cuenco no publicó su volante semanal esta vez. Del desfile del 16 todavía no se publica horario."
+    note: "El martes se lleva la semana y no está cerca: el Grito en el Jardín Central cierra con Belinda, gratis y sin boleto. Alrededor hay más de lo que parece —talleres desde mediodía, misa de la patria a las 18:30, cena en El Santuario y el Grito de Altitud 1700 en Avándaro—. Del desfile del miércoles sigue sin publicarse horario, y El Cuenco tampoco sacó volante semanal, así que de jueves en adelante va flaco hasta la corrida del 17."
   },
 
   cats: {
@@ -115,10 +115,20 @@ window.VS = {
       blurb:"Martinis al 2x1 de seis a nueve, el fijo de los martes del Cuenco.",
       links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] },
 
+    { id:"misa0915", date:"2026-09-15", s:1110, e:1200, time:"18:30", cat:"cultura",
+      title:"Misa de la Patria", venue:"Parroquia de San Francisco de Asís", price:"Entrada libre",
+      blurb:"La misa por la Independencia en la parroquia del centro, a unos pasos del jardín, antes de que arranque la verbena.",
+      links:[] },
+
     { id:"cena0915", date:"2026-09-15", s:1140, e:1440, time:"19:00 – 00:00", cat:"cultura",
       title:"Cena Mexicana en El Santuario", venue:"El Santuario, San Gaspar", price:"$1,865 adultos · $750 niños",
       blurb:"Cena de Fiestas Patrias frente al lago, de siete a medianoche. Se reserva al 726 262 3144.",
       links:[{l:"Instagram", h:"https://www.instagram.com/elsantuariovalle/"}] },
+
+    { id:"altitud0915", date:"2026-09-15", s:1200, e:1440, time:"Por la noche · sin horario publicado", cat:"cultura",
+      title:"Grito en Altitud 1700", venue:"Altitud 1700, Plaza Andaro, Avándaro", price:"Cena especial · se reserva",
+      blurb:"El Grito en Avándaro, con cena de menú patrio y música en vivo de Erick Tzintzun. No publicaron hora; se aparta mesa al 722 559 0359.",
+      links:[{l:"Instagram", h:"https://www.instagram.com/altitud1700/"}] },
 
     { id:"grito0915", date:"2026-09-15", s:1230, e:1500, time:"20:30 · Grito 22:00 · Belinda 22:30", cat:"cultura", lead:true,
       title:"Grito de Independencia y Belinda en el Jardín Central", venue:"Jardín Central", price:"Entrada libre",
@@ -126,6 +136,11 @@ window.VS = {
       links:[{l:"Ayuntamiento", h:"https://www.facebook.com/ayuntamientovdb"}] },
 
     /* ── miércoles 16 ── */
+    { id:"desfile0916", date:"2026-09-16", s:600, e:780, time:"Horario sin publicar", cat:"cultura",
+      title:"Desfile cívico del 16 de septiembre", venue:"Centro histórico", price:"Entrada libre",
+      blurb:"El desfile de la Independencia por las calles del centro, con escuelas, contingentes y carros alegóricos. Al cierre de esta edición el Ayuntamiento no había publicado hora ni ruta — suele avisarlo en su Facebook un día antes. En la Villa de Colorines hay desfile aparte.",
+      links:[{l:"Ayuntamiento", h:"https://www.facebook.com/ayuntamientovdb"}] },
+
     { id:"gamenight0916", date:"2026-09-16", s:1110, e:1290, time:"18:30", cat:"noche",
       title:"Game Night", venue:"El Cuenco", price:"Sin cover", repeat:"cada miércoles",
       blurb:"Juegos de mesa, dominó y billar en el Cuenco, el fijo de los miércoles.",
@@ -170,7 +185,7 @@ window.VS = {
     {cat:"musica", title:"La Mezca", when:"Jue–sáb, hasta las 2", blurb:"Mezcalería en Pagaza 316 que sí programa bandas en vivo, y de vez en cuando noche de stand-up."}
   ],
 
-  checked: "El Cuenco (esta vez no publicó su volante semanal; lo del viernes y el sábado salió en posts sueltos) · Altitud 1700 (Noche Mexicana el sáb 12 y Grito el mar 15, pero no publicó horario de ninguna; se reserva al 722 559 0359) · Monkeys (anunció el puente del 11 y 12 sin horario ni cartel) · Bar 7 (su última clase con fecha fue la del 5 de septiembre) · Mestizo · Cinco Rodavento · Surreal · Basilico · El Santuario Music (solo lanzamientos del sello) · Museo de Arte Popular · Turismo y Cultura Valle de Bravo · La Pila Seca · R27 · Kuun · Doña Barra · eticket (sin eventos en Valle) · grupo QUE TODO VALLE DE BRAVO SE ENTERE (solo el cartel del Grito, que ya confirmó el Ayuntamiento)",
+  checked: "Repaso del dom 13 sep, ya con la semana patria encima. El Cuenco (sigue sin volante semanal; sus fijos de martes y miércoles corren igual) · Ayuntamiento y Turismo Valle de Bravo (confirman Grito 22:00 y Belinda 22:30; del desfile del 16 nada) · Altitud 1700 (su Grito del 15 ya sube al tablero, pero nunca publicaron hora) · Monkeys (nada nuevo después del puente del 11 y 12) · Marina 33 · Mestizo · Cinco Rodavento · Bar 7 · Surreal · Basilico · El Santuario Music · Museo de Arte Popular · La Pila Seca · R27 · Kuun · Doña Barra · eticket · grupo QUE TODO VALLE DE BRAVO SE ENTERE (búsqueda de 'desfile': puro proveedor de moños y arreglos, ningún evento)",
 
   soon: "Esmeraldas bajo la luna, teatro para primeras infancias en Espacio Odisea, 24 y 25 sep 11:00 y 26 sep 13:00, entrada libre · Kirtan con Swami Yatidharmananda el 1 oct y satsang el 3 · Fiesta patronal de San Francisco 4 oct · Festival de Vela 9 oct · Oktoberfest en Skyline a fin de mes · Triatlón Valle de Bravo 24 oct · Festival de las Almas fin de oct a 2 nov."
 };

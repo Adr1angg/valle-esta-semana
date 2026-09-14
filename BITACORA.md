@@ -15,6 +15,47 @@ va hasta arriba.
 
 ---
 
+## 2026-09-13 · Repaso de media semana, y la clona de la Mac mintiendo
+
+Adrian, un domingo en la noche: *"There must be a bunch of events for
+independence this week no can you check it all and update the site."*
+
+**La trampa, primero, porque casi cuesta caro.** Al abrir el repo en la Mac,
+`git status` mostraba `data.js`, `historial.js` y `lugares.js` modificados sin
+commitear desde el jueves 10, y `HEAD` seguía en `75b91a4`, la semana del 3 al
+9. Leído así parecía que la edición del 10 nunca se había publicado y que el
+sitio llevaba cinco días congelado. **Era falso.** La edición del 10 sí se
+subió —`128e31c`, ese mismo día a las 12:26— sólo que desde otro lado; esta
+clona nunca hizo `fetch`, así que comparaba su árbol contra un `HEAD` viejo y
+pintaba como "sin publicar" un contenido que ya estaba idéntico en `origin`.
+
+Lo que salvó el día fue `git fetch` antes de empujar. Sin eso, el commit salía
+con padre `75b91a4` y el push habría entrado en divergencia — o peor, alguien
+la resuelve con un `--force` y se lleva la edición del jueves por delante.
+**Regla nueva: `git fetch origin main` y comparar contra `origin/main` antes de
+creerle una sola palabra a `git status` en esta clona.** El README ya avisaba
+de esto por el otro lado (la regla 6, la de "fetch first"); ahora también
+aplica al diagnóstico, no sólo al push.
+
+**Lo que sí cambió en el sitio.** Tres eventos nuevos, todos del martes y
+miércoles patrios: la **Misa de la Patria** (18:30, parroquia de San
+Francisco), el **Grito en Altitud 1700** de Avándaro —confirmado con Erick
+Tzintzun y teléfono, pero sin hora, y aun así entra: faltaba un día y esa hora
+ya no iba a salir— y el **desfile del miércoles 16**, publicado con "Horario
+sin publicar" en lugar de dejarlo fuera. Un desfile que sí ocurre vale más en
+el tablero sin hora que ausente. `lugares.js` ya tiene coordenada para los
+tres, así que ningún evento de la semana cae al Centro por omisión.
+
+**Revisado sin cosecha.** Ayuntamiento y Turismo confirman Grito 22:00 y
+Belinda 22:30, del desfile nada. El Cuenco va dos semanas sin volante. La
+búsqueda de "desfile" en el grupo de Facebook fue puro proveedor de moños — el
+filtro de admisión haciendo su trabajo.
+
+**Pendiente.** El `.git` de esta clona está en un mount sin permiso de borrado,
+así que git no puede quitar sus propios `.lock`: hay un `index.lock` del 31 de
+agosto y otro de hoy, y se commiteó con un índice temporal fuera del mount.
+Conviene borrarlos a mano (`rm .git/index.lock*`) o esto va a seguir estorbando.
+
 ## 2026-09-09 · El clic en un evento no debía abrir nada
 
 Adrian, viendo lo que se publicó ayer: *"I didn't mean that when you click an

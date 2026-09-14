@@ -31,6 +31,9 @@ window.VL = {
   "Chamma Ling":               [19.19367, -100.13174],
   "Casa Sadhana":              [19.16366, -100.12938],
   "Jardín Central":            [19.19367, -100.13157],
-  "Marina 33":                 [19.18600, -100.12852]
+  "Marina 33":                 [19.18600, -100.12852],
+  "Centro histórico":           [19.19367, -100.13174],
+  "Parroquia de San Francisco de Asís": [19.19367, -100.13157],
+  "Altitud 1700, Plaza Andaro, Avándaro": [19.16366, -100.12938]
 
 };
