@@ -149,4 +149,8 @@ no lo lee nadie y ahí se queda.
 
 El `blurb` del evento con `lead` puede ser opinionado y en la voz de Adrian; los demás son neutrales y factuales — sus amigos y desconocidos leen esta página. Sé honesto: una semana tranquila es una respuesta perfectamente válida, nunca inventes eventos ni infles la lista. Si un venue simplemente no publicó, dilo en `checked` en vez de desaparecerlo. Los títulos en español, concretos, sin adjetivos de relleno.
 
+**Un `repeat` no es una confirmación.** Los fijos —martes de martinis, game night del miércoles, brunch del domingo— se publican porque el venue los repite cada semana, no porque alguien los haya visto anunciados esa semana. **En semana de fiesta o puente eso se rompe:** el 15 de septiembre de 2026 el sitio traía "Martes de Martinis" en El Cuenco la noche del Grito, cuando el bar no abrió su fijo — nadie está en una barra del centro mientras Belinda toca gratis en el jardín. Lo cachó Adrian, no la revisión.
+
+Regla: **si un día de tu ventana cae en día festivo, víspera o puente, ningún `repeat` entra sin confirmación fresca de esa semana.** Si el venue no publicó, no lo publiques tú: mándalo a `checked` diciendo que no confirmaron. Vale más un día apagado que un plan que manda a alguien a un lugar cerrado. Aplica a 15 y 16 sep, 1 y 2 nov, 12 y 25 dic, Semana Santa, y cualquier lunes de puente.
+
 Solo lectura en sus cuentas — nunca mandes mensajes, DMs, comentarios ni follows.

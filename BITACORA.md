@@ -15,6 +15,38 @@ va hasta arriba.
 
 ---
 
+## 2026-09-14 · Un `repeat` no es una confirmación
+
+Adrian, viendo el tablero del martes: *"el Cuenco no tiene nada el martes, que
+es el día de la Independencia."* Tenía razón y el sitio estaba mintiendo.
+
+`martes de martinis` llevaba semanas publicándose con `repeat:"cada martes"`,
+que es lo correcto **una semana normal**. El 15 de septiembre no lo es: a las
+22:30 Belinda toca gratis en el Jardín Central y nadie está en una barra del
+centro. El Cuenco no abrió su fijo, y el sitio lo anunciaba igual — no porque
+alguien lo hubiera visto anunciado, sino porque la semana pasada existió.
+
+Ese es el fallo de fondo, y no es de esta entrada en particular: **los `repeat`
+se publican por inercia.** Se revisó El Cuenco tres veces en cuatro días, se
+anotó correctamente que no sacaron volante semanal, y aun así los fijos
+siguieron subiendo. "No publicaron volante" se leyó como "sigue igual que
+siempre", cuando en una semana de fiesta significa lo contrario.
+
+**Qué quedó.** Fuera `martinis0915`. El martes queda con cinco cosas, todas
+confirmadas. En `checked` se dice que El Cuenco no abre su fijo y quién lo
+confirmó. Y en `tarea-semanal.md` hay regla nueva: **en día festivo, víspera o
+puente, ningún `repeat` entra sin confirmación fresca de esa semana** — si el
+venue no publicó, va a `checked`, no al tablero.
+
+**Lo que queda abierto.** El `game night` del miércoles 16 tiene exactamente el
+mismo problema: es un `repeat`, el 16 es el feriado oficial, y El Cuenco
+tampoco ha publicado nada. Se deja por ahora en vez de borrarlo a ciegas —
+Adrian está en Valle y es mejor fuente que cualquier barrido. Si dice que
+tampoco, se va igual.
+
+Vale la pena anotar de dónde vino el error: un sitio de eventos que hereda
+fijos sin revisarlos falla justo en las semanas que más se consulta.
+
 ## 2026-09-13 · La tira deja de ser una semana y se vuelve una rueda
 
 Adrian, el mismo domingo: *"Right now the day it goes from Monday to Sunday is

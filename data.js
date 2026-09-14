@@ -9,7 +9,7 @@ window.VS = {
     updated: "2026-09-13T22:10:00-06:00",
     updatedText: "dom 13 sep, 22:10",
     next: "jueves 17 sep",
-    note: "El martes se lleva la semana y no está cerca: el Grito en el Jardín Central cierra con Belinda, gratis y sin boleto. Alrededor hay más de lo que parece —talleres desde mediodía, misa de la patria a las 18:30, cena en El Santuario y el Grito de Altitud 1700 en Avándaro—. Del desfile del miércoles sigue sin publicarse horario, y El Cuenco tampoco sacó volante semanal, así que de jueves en adelante va flaco hasta la corrida del 17."
+    note: "El martes se lleva la semana y no está cerca: el Grito en el Jardín Central cierra con Belinda, gratis y sin boleto. Alrededor hay más de lo que parece —talleres desde mediodía, misa de la patria a las 18:30, cena en El Santuario y el Grito de Altitud 1700 en Avándaro—. Del desfile del miércoles sigue sin publicarse horario, y El Cuenco no abre su fijo del martes ni sacó volante semanal, así que de jueves en adelante va flaco hasta la corrida del 17."
   },
 
   cats: {
@@ -110,11 +110,6 @@ window.VS = {
       blurb:"El Ayuntamiento pone mesas de dibujo, pinta caritas y elaboración de banderitas de papel y moños en el jardín, antes de que empiece la verbena.",
       links:[] },
 
-    { id:"martinis0915", date:"2026-09-15", s:1080, e:1260, time:"18:00 – 21:00", cat:"noche",
-      title:"Martes de Martinis", venue:"El Cuenco", price:"2x1", repeat:"cada martes",
-      blurb:"Martinis al 2x1 de seis a nueve, el fijo de los martes del Cuenco.",
-      links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] },
-
     { id:"misa0915", date:"2026-09-15", s:1110, e:1200, time:"18:30", cat:"cultura",
       title:"Misa de la Patria", venue:"Parroquia de San Francisco de Asís", price:"Entrada libre",
       blurb:"La misa por la Independencia en la parroquia del centro, a unos pasos del jardín, antes de que arranque la verbena.",
@@ -185,7 +180,7 @@ window.VS = {
     {cat:"musica", title:"La Mezca", when:"Jue–sáb, hasta las 2", blurb:"Mezcalería en Pagaza 316 que sí programa bandas en vivo, y de vez en cuando noche de stand-up."}
   ],
 
-  checked: "Repaso del dom 13 sep, ya con la semana patria encima. El Cuenco (sigue sin volante semanal; sus fijos de martes y miércoles corren igual) · Ayuntamiento y Turismo Valle de Bravo (confirman Grito 22:00 y Belinda 22:30; del desfile del 16 nada) · Altitud 1700 (su Grito del 15 ya sube al tablero, pero nunca publicaron hora) · Monkeys (nada nuevo después del puente del 11 y 12) · Marina 33 · Mestizo · Cinco Rodavento · Bar 7 · Surreal · Basilico · El Santuario Music · Museo de Arte Popular · La Pila Seca · R27 · Kuun · Doña Barra · eticket · grupo QUE TODO VALLE DE BRAVO SE ENTERE (búsqueda de 'desfile': puro proveedor de moños y arreglos, ningún evento)",
+  checked: "Repaso del dom 13 sep, ya con la semana patria encima. El Cuenco (sigue sin volante semanal y NO abre su fijo del martes 15 — la noche del Grito no hay martinis; lo confirmó Adrian, que está en Valle) · Ayuntamiento y Turismo Valle de Bravo (confirman Grito 22:00 y Belinda 22:30; del desfile del 16 nada) · Altitud 1700 (su Grito del 15 ya sube al tablero, pero nunca publicaron hora) · Monkeys (nada nuevo después del puente del 11 y 12) · Marina 33 · Mestizo · Cinco Rodavento · Bar 7 · Surreal · Basilico · El Santuario Music · Museo de Arte Popular · La Pila Seca · R27 · Kuun · Doña Barra · eticket · grupo QUE TODO VALLE DE BRAVO SE ENTERE (búsqueda de 'desfile': puro proveedor de moños y arreglos, ningún evento)",
 
   soon: "Esmeraldas bajo la luna, teatro para primeras infancias en Espacio Odisea, 24 y 25 sep 11:00 y 26 sep 13:00, entrada libre · Kirtan con Swami Yatidharmananda el 1 oct y satsang el 3 · Fiesta patronal de San Francisco 4 oct · Festival de Vela 9 oct · Oktoberfest en Skyline a fin de mes · Triatlón Valle de Bravo 24 oct · Festival de las Almas fin de oct a 2 nov."
 };
