@@ -15,6 +15,52 @@ va hasta arriba.
 
 ---
 
+## 2026-09-13 · La tira deja de ser una semana y se vuelve una rueda
+
+Adrian, el mismo domingo: *"Right now the day it goes from Monday to Sunday is
+static. Instead can we do it so that the first day on the widget list starts on
+the day that we are at right now? [...] It's kind of like a roulette."*
+
+Y tiene razón, y la evidencia estaba en la pantalla mientras lo pedía: ese
+domingo la tira enseñaba **seis días muertos y uno vivo**. Una rejilla clavada
+en lunes gasta la mitad de sus celdas en cosas que ya pasaron, y la pregunta
+que contesta esta página no es "¿cómo estuvo la semana?" sino "¿qué hay de aquí
+en adelante?".
+
+**El cambio es de una línea.** `semanaDe(f)` ya no retrocede al lunes; arranca
+en `f` y sigue seis días. Hoy queda siempre en `SEMANA[0]`.
+
+**Lo que se cae solo, gratis.** `porDefecto()` siempre devuelve hoy, así que la
+vista abre en hoy sin buscarlo. La ventana avanza cada medianoche en vez de una
+vez por semana, y el latido de 20 s ya la rearmaba. La clase `.pas` de la tira
+queda sin uso —ningún día es anterior a hoy— pero se deja en el CSS porque el
+calendario del mes sí la ocupa.
+
+**Lo que NO se tocó, a propósito.** El calendario de tres semanas sigue
+lunes→domingo: es un calendario y así se lee, y ahí es donde vive el pasado
+ahora que la tira no lo enseña. Ya calculaba su rango como `lunes(SEMANA[0]) − 7`
+más 21 días, y eso cubre `hoy+6` para cualquier día de la semana —el peor caso
+es lunes, `hoy+6 = lunes+6`, contra un techo de `lunes+13`—, así que no hizo
+falta tocarlo y ninguna celda de la ventana se queda sin ser pinchable.
+
+**El costo, dicho claro.** El hueco no desaparece, se muda al final: la tarea
+corre el jueves y cubre jueves→miércoles, así que un domingo los últimos tres
+días de la tira salen apagados, y peor conforme avanza la semana. Es el mismo
+trato que ya se había aceptado el 8 de septiembre para los días muertos del
+principio, volteado. Si algún día estorba de verdad, la salida sigue siendo
+mover la tarea, no volver a clavar la tira.
+
+**Probado** con el reloj congelado en los siete días de la semana y en tres
+cruces de mes (28 y 30 sep, 1 oct): la primera celda es siempre hoy, la última
+siempre hoy+6, cero días pasados en la tira, 21 celdas de calendario y ningún
+desbordamiento horizontal. `verify.js` pasa en claro y oscuro, teléfono y
+escritorio.
+
+Tercera forma de la ventana en once días (lunes→domingo, jueves→miércoles,
+lunes→domingo, rueda). Vale la pena decir por qué ésta no es otro tumbo: las
+tres anteriores discutían **dónde empezar la semana**, y ésta deja de tratarla
+como una semana.
+
 ## 2026-09-13 · Repaso de media semana, y la clona de la Mac mintiendo
 
 Adrian, un domingo en la noche: *"There must be a bunch of events for

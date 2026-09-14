@@ -4,11 +4,15 @@
 >
 > Si algo del prompt de la tarea del jueves contradice esta sección, **gana esta sección**.
 >
-> 0. **La rejilla de días es lunes→domingo, siempre, y la calcula la página
->    sola con la fecha de hoy.** No sale de `data.js`: el lunes se pasa sola a
->    la semana nueva sin esperar a nadie. La tarea sigue corriendo el jueves.
->    Un día sin eventos sale apagado y ya — eso es normal, no es una falla.
->    Cambió el 8 sep 2026 (antes era jueves→miércoles); ver la bitácora.
+> 0. **La tira de días es una ventana rodante que empieza HOY, y la calcula
+>    la página sola con la fecha del navegador.** No sale de `data.js`: hoy es
+>    siempre la primera celda y detrás van los seis días que siguen, así que
+>    avanza sola cada medianoche sin esperar a nadie. La tarea sigue corriendo
+>    el jueves, y por eso la **cola** de la tira se vacía conforme avanza la
+>    semana — un día sin eventos sale apagado y ya, eso es normal, no es una
+>    falla. El calendario del mes de abajo sí se queda lunes→domingo: es un
+>    calendario. Cambió el 13 sep 2026 (antes lunes→domingo, y antes de eso
+>    jueves→miércoles); ver la bitácora.
 > 0.5 **Se llama Valle, nunca "el pueblo".** En todo lo que lee la gente. La
 >    excepción es el código del diorama, donde "pueblo" es la mancha de casas.
 >    Regla completa en `tarea-semanal.md`. Petición de Adrian, 3 sep 2026.
@@ -59,27 +63,38 @@ así que la manzana correcta basta — la puerta exacta y la esquina se ven igua
 venue que no esté cae al Centro. `data.js` puede mandar `lugares: {...}` para algo
 puntual, y eso gana sobre `lugares.js`.
 
-## La semana que se ve es lunes → domingo, y la calcula la página
+## La tira empieza hoy y rueda, y la calcula la página
 
-Los siete cuadros de arriba son **el lunes→domingo que contiene hoy**, sacados de
-la fecha del navegador. No salen de `data.js`. Eso quiere decir tres cosas:
+Los siete cuadros de arriba son **hoy y los seis días que siguen**, sacados de la
+fecha del navegador. No salen de `data.js`. Domingo abre en domingo y cierra el
+sábado; martes abre en martes y cierra el lunes. Eso quiere decir cuatro cosas:
 
-1. **Se pasa sola.** El domingo a medianoche la rejilla salta a la semana
-   siguiente sin que corra nada. El latido de 20 s ya lo hacía para "hoy"; ahora
-   también para la semana.
-2. **Un día sin eventos sale apagado.** Es lo normal, no una falla. De lunes a
-   miércoles, hasta que corre la tarea del jueves, es probable que haya poco:
-   para eso están los 18 `always`.
-3. **`data.js` sólo pone los eventos.** Cada uno cae en su fecha; los que quedan
-   fuera de la semana visible simplemente no se pintan. `week.label` ya no manda
-   en el sello — el sello dice el rango de verdad de la rejilla.
+1. **Avanza sola, todos los días.** A medianoche la ventana entera recorre un
+   día sin que corra nada. El latido de 20 s ya lo hacía para "hoy"; ahora
+   también para la ventana. Nunca existe una "semana vencida".
+2. **Hoy es siempre `SEMANA[0]`.** La vista abre en hoy sin tener que buscarlo,
+   y la clase `.pas` de la tira ya no se usa: ningún día es anterior a hoy. Se
+   deja en el CSS porque el calendario del mes sí la ocupa.
+3. **La cola sale apagada, y más conforme avanza la semana.** La tarea corre el
+   jueves y cubre jueves→miércoles, así que un domingo los últimos tres días
+   salen vacíos. Es lo normal, no una falla: para eso están los 18 `always`.
+4. **`data.js` sólo pone los eventos.** Cada uno cae en su fecha; los que quedan
+   fuera de la ventana simplemente no se pintan. `week.label` ya no manda en el
+   sello — el sello dice el rango de verdad de la tira.
 
-**El calendario de tres semanas también es lunes→domingo**, como siempre.
+**El calendario de tres semanas sigue siendo lunes→domingo**, a propósito: es un
+calendario y así se lee. Por eso la ventana rodante casi siempre se resalta a
+caballo entre dos renglones. Sus tres semanas siempre alcanzan a cubrir hoy+6, y
+ahí es donde vive el pasado: la tira ya no lo enseña, el calendario sí, con
+`historial.js` detrás.
 
-Antes de esto la semana era jueves→miércoles para que la edición del jueves no
-abriera en días muertos. Se cambió el 8 sep 2026 a petición de Adrian: una semana
-tiene que leerse como una semana. El hueco de lunes a miércoles se acepta a
-cambio.
+Historia: hasta el 3 sep la semana fue lunes→domingo estática; del 3 al 8,
+jueves→miércoles, para que la edición del jueves no abriera en días muertos; del
+8 al 13, lunes→domingo otra vez. Se cambió a ventana rodante el 13 sep 2026 a
+petición de Adrian: con la rejilla clavada en lunes, un domingo enseñaba seis
+días muertos y un solo día útil. La pregunta que contesta la página es "¿qué hay
+de aquí en adelante?", y para eso el pasado no ocupa celda. El hueco se mudó del
+principio al final.
 
 ## Si los datos ya están viejos
 

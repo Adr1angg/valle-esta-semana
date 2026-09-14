@@ -759,31 +759,41 @@ vivo();
 /* ── tiles de día ── */
 var dias=$("#dias"),board=$("#board");
 
-/* ── qué semana se enseña ─────────────────────────────────────
-   Desde el 8 sep 2026: SIEMPRE el lunes→domingo que contiene hoy,
-   calculado de la fecha del navegador. No sale de data.js.
+/* ── qué días se enseñan ──────────────────────────────────────
+   Desde el 13 sep 2026 la tira es una ventana rodante: HOY SIEMPRE ES
+   LA PRIMERA CELDA, y detrás van los seis días que siguen. Domingo
+   abre en domingo y cierra el sábado; martes abre en martes y cierra
+   el lunes. Sale de la fecha del navegador, nunca de data.js.
 
-   Eso quiere decir que la rejilla se pasa sola el domingo a medianoche
-   —el latido de 20 s la rearma— y que ya no existe el estado de "semana
-   vencida": no se puede enseñar una semana que terminó. A cambio, de
-   lunes a miércoles la semana nueva llega casi vacía, porque la tarea
-   corre el jueves. Es a propósito y está hablado: un día sin eventos
-   sale apagado y los 18 `always` sostienen esos días.
+   Por qué se cambió: con la rejilla clavada en lunes→domingo, un
+   domingo enseñaba seis días muertos y un solo día útil. La pregunta
+   que contesta esta página es "¿qué hay de aquí en adelante?", y para
+   eso el pasado no ocupa celda. Petición de Adrian, 13 sep 2026.
 
-   Entre el 3 y el 8 de septiembre la semana fue jueves→miércoles, para
-   que la edición del jueves no abriera en días muertos. Se revirtió
-   porque una semana que empieza en jueves no se lee como una semana, y
-   la pregunta que contesta esta página es "¿qué hay el sábado?".
+   Consecuencias, todas queridas:
+   · La tira avanza sola cada medianoche —el latido de 20 s la rearma—,
+     no una vez por semana. Nunca hay una "semana vencida".
+   · `HOY` es siempre `SEMANA[0]`, así que la vista abre en hoy sin
+     tener que buscarlo.
+   · La cola queda vacía y se vacía más conforme avanza la semana: la
+     tarea corre el jueves y cubre jueves→miércoles, así que un domingo
+     los últimos tres días salen apagados. Es lo mismo que ya pasaba con
+     los días muertos del principio, movido al otro extremo; los 18
+     `always` sostienen esos días.
+   · La clase `.pas` de la tira ya no se usa (ningún día es anterior a
+     hoy). Se deja en el CSS: el calendario del mes sí la ocupa.
 
-   Lo publicado sigue a un clic en el calendario del mes, que deja
-   pinchables tanto la semana visible como la de data.js.              */
+   Historia: 3–8 sep fue jueves→miércoles, 8–13 sep lunes→domingo.
+
+   El pasado no desaparece: el calendario del mes sigue abajo con tres
+   semanas, y lo publicado y lo archivado siguen a un clic.            */
 var DOWC=["Dom","Lun","Mar","Mié","Jue","Vie","Sáb"];
 var MESC=["ene","feb","mar","abr","may","jun","jul","ago","sep","oct","nov","dic"];
 var MESL=["enero","febrero","marzo","abril","mayo","junio","julio","agosto",
           "septiembre","octubre","noviembre","diciembre"];
-function semanaDe(f){                      /* lunes→domingo que contiene f */
+function semanaDe(f){                      /* los 7 días que arrancan en f */
   var d=new Date(f+"T12:00:00");           /* mediodía: a salvo de husos y DST */
-  d.setDate(d.getDate()-((d.getDay()+6)%7));   /* 0=dom … 1=lun → retrocede al lunes */
+  /* sin retroceso: f es la primera celda, pase el día de la semana que sea */
   var out=[];
   for(var i=0;i<7;i++){
     out.push({date:iso(d), s:DOWC[d.getDay()], dn:d.getDate(), m:MESC[d.getMonth()]});
@@ -799,11 +809,11 @@ function etiqueta(a,b){
 }
 var SEMANA=[], alDia=true;
 function armaSemana(){
-  /* La rejilla se calcula de la fecha de hoy, no de data.js: siempre es
-     el lunes→domingo que contiene hoy, y por eso se pasa sola cada lunes
-     sin esperar a que corra la tarea. Los eventos que haya se acomodan
+  /* La tira se calcula de la fecha de hoy, no de data.js: son hoy y los
+     seis días que siguen, y por eso avanza sola cada medianoche sin
+     esperar a que corra la tarea. Los eventos que haya se acomodan
      encima por fecha; un día sin nada sale apagado y ya. `alDia` sólo
-     dice si lo publicado coincide con la semana que se está viendo. */
+     dice si lo publicado alcanza a cubrir el día de hoy. */
   SEMANA = semanaDe(HOY);
   alDia  = D.days.some(function(d){return d.date===HOY});
   $("#sem").textContent = etiqueta(SEMANA[0].date, SEMANA[6].date);
@@ -1000,7 +1010,7 @@ function latido(){
     var eraHoy = (sel===HOY), antes = SEMANA[0].date;
     HOY=f;
     armaSemana();
-    /* cruzar de domingo a lunes cambia la semana entera, no sólo el día */
+    /* cada medianoche la ventana entera recorre un día, no sólo el foco */
     if(SEMANA[0].date!==antes){ if(!elegido) sel=porDefecto(); pintaDias(); pintaCalendario(); }
     remarca(); vencida();
     /* si estabas parado en "hoy", te llevo al hoy nuevo; si elegiste
@@ -1029,7 +1039,7 @@ function vencida(){
   el.className="viejo"; el.hidden=true;
   var u=(D.week.updated||"").slice(0,10); if(!u) return;
   var cuantos=Math.round((new Date(HOY+"T12:00:00")-new Date(u+"T12:00:00"))/864e5);
-  /* La rejilla ya es la semana de verdad y se pasa sola cada lunes, así que
+  /* La tira ya es la semana de verdad y avanza sola cada día, así que
      nunca se enseña una semana vencida: eso dejó de ser un problema que
      tape un aviso. Lo que sí puede pasar es que la tarea del jueves se
      rompa y los eventos se queden viejos, y eso es lo que mide esto: la
@@ -1046,9 +1056,11 @@ function pintaCalendario(){
   var g=$("#rej"),h="",wk={};
   /* pinchables las dos: la semana que se enseña y la publicada. Son la
      misma salvo que la tarea del jueves se haya roto, y aun así lo
-     publicado tiene que seguir estando a un clic. La rejilla se queda
-     lunes→domingo a propósito: es un calendario, y la semana publicada
-     se resalta a caballo entre dos renglones. */
+     publicado tiene que seguir estando a un clic. Este calendario SÍ se
+     queda lunes→domingo a propósito —es un calendario, y así se lee—,
+     de modo que la ventana rodante de arriba casi siempre se resalta a
+     caballo entre dos renglones. Las tres semanas que pinta siempre
+     alcanzan a cubrir hoy+6. */
   SEMANA.forEach(function(d){wk[d.date]=1});
   D.days.forEach(function(d){wk[d.date]=1});
   /* data.js se reescribe cada jueves, así que las semanas pasadas
