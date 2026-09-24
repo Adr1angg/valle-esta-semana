@@ -6,8 +6,8 @@ window.VS = {
   week: {
     label: "24 – 30 septiembre 2026",
     start: "2026-09-24", end: "2026-09-30",
-    updated: "2026-09-24T13:15:00-06:00",
-    updatedText: "jue 24 sep, 13:15",
+    updated: "2026-09-24T12:15:00-06:00",
+    updatedText: "jue 24 sep, 12:15",
     next: "jueves 1 oct",
     note: "El sábado es el día: (Mami) Fera toca en El Cuenco a las nueve, y en la mañana cierra la temporada de Esmeraldas bajo la luna, teatro para bebés en Espacio Odisea. Lo demás son los fijos —Na-ha viernes y sábado, el Mercado El 100, el tianguis del domingo, la práctica en la stupa—. De lunes a miércoles sólo están los fijos del Cuenco: su volante de la semana sale en lunes y a la hora de este barrido todavía no existía."
   },
