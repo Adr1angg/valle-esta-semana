@@ -15,6 +15,47 @@ va hasta arriba.
 
 ---
 
+## 2026-09-24 · Tres lluvias: ligera, media y tormenta
+
+Adrian: *"it looks like it's raining a lot, even if it's raining just a
+little bit."* Tenía razón, por dos motivos que se sumaban:
+
+1. **Cualquier lluvia arrancaba en 0.30.** En `aplica()` la fórmula era
+   `max(.30, mm/2.2 + .30)`, así que una llovizna de 0.2 mm ya era un
+   tercio de tormenta.
+2. **La intensidad sólo bajaba el brillo.** Las 2600 gotas caían siempre;
+   `uRain` nada más las hacía más transparentes. Una llovizna se veía
+   como un aguacero apagado, no como una llovizna.
+
+**Qué quedó.**
+
+- El código WMO de Open-Meteo y los milímetros se traducen a tres tipos,
+  y gana el más fuerte de los dos: **ligera** (llovizna 51–57, 61, 80, o
+  menos de 1 mm/h) → 0.20 · **media** (63, 66, 81, o 1–4 mm/h) → 0.50 ·
+  **tormenta** (65, 67, 82, 95–99, o más de 4 mm/h) → 0.95.
+- El shader de las gotas ahora usa `uRain` para decidir **cuántas** caen
+  (unas 200 · unas 1000 · las 2600), **qué tan largas** y **qué tan
+  gruesas**. La llovizna además cae más lento.
+- La caída se acumula en JS (`caida`) en vez de usar el reloj: si la
+  velocidad dependiera de `uT` directo, al cambiar de lluvia las gotas
+  saltarían decenas de ciclos en un segundo.
+- **Rayos**, sólo con tormenta eléctrica (95–99): un destello cada 6–18 s,
+  a veces doble, que sube la luz ambiente del diorama un instante. Con
+  `prefers-reduced-motion` no hay destellos.
+- El botón **Llover** del panel ahora recorre ligera → media → tormenta →
+  como está afuera.
+
+**Ojo.** Se editó directo `index.html`. `_escena/datos/scene.js` ya estaba
+atrasado respecto a lo incrustado (no trae humedad ni amanecer), así que
+correr `build.js` hoy borraría más de lo que agrega. Si algún día se
+rearma la escena desde ahí, primero hay que portarle todo lo de
+`index.html`.
+
+**Probado** en una rama de vista previa de Cloudflare antes de publicar:
+las tres lluvias se ven distintas, el botón cicla bien y no hay errores.
+El destello del rayo no se alcanzó a capturar en pantalla (dura una
+fracción de segundo), pero el valor `rayo` sí llega a la escena.
+
 ## 2026-09-14 · Un `repeat` no es una confirmación
 
 Adrian, viendo el tablero del martes: *"el Cuenco no tiene nada el martes, que
