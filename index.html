@@ -1687,16 +1687,26 @@ if("IntersectionObserver" in window){
     'varying float vA;',
     'void main(){',
     '  float sem = aR.z;',
+    /* Tres lluvias con una sola perilla. Antes uRain sólo bajaba el
+       brillo: las 2600 gotas caían siempre, así que una llovizna se
+       veía como aguacero apagado. Ahora uRain decide CUÁNTAS gotas
+       caen, qué tan largas y qué tan gruesas: llovizna ~0.2 (unas
+       doscientas gotas cortas), lluvia ~0.5 (unas mil), tormenta ~1
+       (todas, largas). uT aquí no es el reloj sino la caída acumulada,
+       para que cambiar de velocidad no haga saltar las gotas. */
+    '  float dens = clamp(uRain*uRain*0.62 + uRain*0.38, 0.0, 1.0);',
+    '  float vis = 1.0 - smoothstep(dens - 0.05, dens, fract(sem*13.7 + 0.37));',
     '  float vel = 0.75 + fract(sem*7.31)*0.55;',
     '  float ph = fract(uT*vel*0.62 + sem);',
     '  float y = uTop - ph*uTop;',
     '  vec3 c = vec3(aR.x + (1.0-ph)*uWind*0.030, y, aR.y);',
     '  vec3 arr = normalize(vec3(uWind*0.10, 1.0, uWind*0.03));',
-    '  vec3 wp = c + uRight*(aQ.x*0.0024) + arr*(aQ.y*0.055);',
+    '  float largo = mix(0.018, 0.072, smoothstep(0.12, 1.0, uRain));',
+    '  vec3 wp = c + uRight*(aQ.x*mix(0.0016, 0.0027, uRain)) + arr*(aQ.y*largo);',
     '  vec4 cp = uVP * vec4(wp,1.0);',
     '  cp.xy += uOff * cp.w;',
     '  gl_Position = cp;',
-    '  vA = uRain * uDim * smoothstep(0.0,0.17,ph) * smoothstep(1.0,0.84,ph);',
+    '  vA = vis * (0.40 + 0.60*uRain) * uDim * smoothstep(0.0,0.17,ph) * smoothstep(1.0,0.84,ph);',
     '}'
   ].join('\n');
 
@@ -2033,7 +2043,13 @@ if("IntersectionObserver" in window){
   var foco = null, focoAmt = 0, focoTgt = 0, pines = [];
   var marco = { amt: 0, tgt: 0, ox: 0, oy: 0 };
   var man = { amt: 0, tgt: 0, az: 0, el: 0, dist: 0, tx: 0, tz: 0, listo: 0 };
-  var clima = { lluvia: 0, nubes: 0, viento: 0.30, humedad: 0.62 };
+  var clima = { lluvia: 0, nubes: 0, viento: 0.30, humedad: 0.62, rayo: 0 };
+  /* la caída de las gotas se acumula aquí: llovizna lenta, tormenta rápida */
+  var caida = 0;
+  /* rayos · sólo con tormenta (VALLE_CLIMA.rayo) y nunca con movimiento
+     reducido. Un destello cada 6–18 s, a veces doble. Suben la luz
+     ambiente del diorama un instante; no tocan el resto de la página. */
+  var rayo = { prox: 0, ini: -99, doble: false };
   var L = { sun: [0.4, 0.8, 0.4], warm: [1, .96, .86], sky: [.62, .66, .63], night: 0, alba: 0 };
 
   /* ── la hora que manda ───────────────────────────────────────
@@ -2194,6 +2210,17 @@ if("IntersectionObserver" in window){
     clima.nubes  += (tn - clima.nubes)  * eClima;
     clima.viento += (tv - clima.viento) * eClima;
     clima.humedad += (th - clima.humedad) * eClima;
+    var tr = c && c.rayo ? 1 : 0;
+    clima.rayo += (tr - clima.rayo) * eClima;
+    caida += dt * (0.50 + 0.65 * clima.lluvia);
+    var flash = 0;
+    if (clima.rayo > 0.5 && !reduce) {
+      if (!rayo.prox) rayo.prox = t + 3 + Math.random() * 6;
+      if (t >= rayo.prox) { rayo.ini = t; rayo.prox = t + 6 + Math.random() * 12; rayo.doble = Math.random() < 0.45; }
+      var dr = t - rayo.ini;
+      if (dr >= 0) flash = Math.exp(-dr * 9);
+      if (rayo.doble && dr > 0.22) flash = Math.max(flash, 0.7 * Math.exp(-(dr - 0.22) * 10));
+    } else rayo.prox = 0;
 
     var s = solActual();
     L.night += (s.night - L.night) * e;
@@ -2283,7 +2310,7 @@ if("IntersectionObserver" in window){
     gl.uniform3f(U.uTownC, cp[0], cp[1], cp[2]);
     /* con nubes el sol pega menos y el ambiente sube; con lluvia y de
        noche la bruma se contiene para que el pueblo no se borre */
-    gl.uniform1f(U.uAmb, P.amb * (1 + clima.nubes * 0.42));
+    gl.uniform1f(U.uAmb, P.amb * (1 + clima.nubes * 0.42) * (1 + flash * 1.5));
     gl.uniform1f(U.uFog, P.fog * (1 - estrecho * 0.42) * (1 - L.night * 0.30));
     gl.uniform1f(U.uDim, dim);
     gl.uniform3fv(U.uSun, sun);
@@ -2343,7 +2370,7 @@ if("IntersectionObserver" in window){
       gl.uniformMatrix4fv(UL.uVP, false, vp);
       gl.uniform2f(UL.uOff, ox, oy);
       gl.uniform3fv(UL.uRight, camR);
-      gl.uniform1f(UL.uT, t); gl.uniform1f(UL.uRain, clima.lluvia);
+      gl.uniform1f(UL.uT, caida); gl.uniform1f(UL.uRain, clima.lluvia);
       gl.uniform1f(UL.uWind, clima.viento); gl.uniform1f(UL.uTop, P.exag + 0.14);
       gl.uniform1f(UL.uDim, dim);
       gl.depthMask(false); gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE);
@@ -2456,7 +2483,7 @@ if("IntersectionObserver" in window){
     },
     marco: function (ox, oy, on) { marco.ox = ox; marco.oy = oy; marco.tgt = on ? 1 : 0; },
     activa: function () { return man.tgt > 0.5; },
-    estado: function () { return { noche: L.night, lluvia: clima.lluvia, dist: man.dist, prog: prog01 }; }
+    estado: function () { return { noche: L.night, lluvia: clima.lluvia, rayo: clima.rayo, dist: man.dist, prog: prog01 }; }
   };
 
   /* ── bucle a 30 fps, en pausa si la pestaña no se ve ───────────
@@ -2585,8 +2612,24 @@ function aplica(c){
   /* códigos WMO: 51–67 llovizna y lluvia, 80–82 chubascos,
      95–99 tormenta. 71–77 es nieve, que en Valle no pasa. */
   var llueve=(wc>=51&&wc<=67)||(wc>=80&&wc<=82)||(wc>=95&&wc<=99);
+  /* Tres lluvias, no una. Antes cualquier lluvia arrancaba en 0.30 y
+     una llovizna de 0.2 mm se veía como aguacero. Ahora:
+       ligera   · llovizna 51–57, lluvia ligera 61, chubasco ligero 80,
+                  o menos de 1 mm/h                          → 0.20
+       media    · lluvia 63, 66, chubasco 81, o 1–4 mm/h      → 0.50
+       tormenta · lluvia fuerte 65, 67, aguacero 82, tormenta
+                  eléctrica 95–99, o más de 4 mm/h            → 0.95
+     Gana lo que sea más fuerte entre el código y los milímetros.
+     Sólo 95–99 trae rayos. */
+  var tipo=0;
+  if(llueve){
+    tipo=(wc>=95||wc===65||wc===67||wc===82)?3:(wc===63||wc===66||wc===81)?2:1;
+    tipo=Math.max(tipo, mm>4?3:mm>=1?2:1);
+  }
   real={
-    lluvia: llueve?Math.max(.30,Math.min(1,mm/2.2+.30)):Math.min(.22,mm*.6),
+    lluvia: [Math.min(.12,mm*.4),.20,.50,.95][tipo],
+    tipo:   ["","ligera","media","tormenta"][tipo],
+    rayo:   wc>=95&&wc<=99,
     nubes:  Math.max(0,Math.min(1,(+c.cloud_cover||0)/100)),
     viento: Math.max(0,Math.min(1.6,(+c.wind_speed_10m||0)/26)),
     /* la humedad sólo la usa la niebla del amanecer del diorama */
@@ -2755,11 +2798,17 @@ function dormir(a,ms){
 
 /* ── 5 · el botón de lluvia ──────────────────────────────────── */
 var lb=$("#lluviaB");
+/* cada clic sube un escalón: ligera → media → tormenta → como está afuera */
+var PRUEBA=[null,
+  {lluvia:.20,nubes:.70,viento:.35,tipo:"ligera",   t:"Lluvia ligera"},
+  {lluvia:.50,nubes:.85,viento:.55,tipo:"media",    t:"Lluvia media"},
+  {lluvia:.95,nubes:.95,viento:.95,tipo:"tormenta", t:"Tormenta", rayo:true}], paso=0;
 lb.addEventListener("click",function(){
-  forzada=!forzada;
+  paso=(paso+1)%PRUEBA.length;
+  var q=PRUEBA[paso]; forzada=!!q;
   lb.setAttribute("aria-pressed",forzada?"true":"false");
-  lb.textContent=forzada?"Ya no llueve":"Llover";
-  window.VALLE_CLIMA = forzada ? {lluvia:.82,nubes:.88,viento:.8} : real;
+  lb.textContent=q?q.t:"Llover";
+  window.VALLE_CLIMA = q || real;
 });
 })();
 </script>
