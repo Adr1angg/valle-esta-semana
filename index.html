@@ -2562,7 +2562,6 @@ if("IntersectionObserver" in window){
   <div class="perillas">
     <label class="hr"><span class="mono" id="horaTxt">ahora</span>
       <input type="range" id="horaR" min="0" max="1435" step="5" aria-label="Hora del d&iacute;a en Valle"></label>
-    <button class="bt chip" type="button" id="lluviaB" aria-pressed="false">Llover</button>
     <button class="bt chip" type="button" id="ahoraB">Volver a ahora</button>
   </div>
 </div>
@@ -2587,7 +2586,7 @@ var R=document.documentElement, $=function(q){return document.querySelector(q)};
    rejilla de kilómetros, no una estación en el malecón. En un valle
    con lago y mil metros de desnivel a veces dirá que llueve cuando
    afuera está seco. Le atina casi siempre; no es una ventana.      */
-var LLAVE="valle-clima", VIDA=9e5, real=null, forzada=false;
+var LLAVE="valle-clima", VIDA=9e5, real=null;
 var URL="https://api.open-meteo.com/v1/forecast?latitude=19.1953&longitude=-100.1317"+
   "&current=temperature_2m,precipitation,weather_code,cloud_cover,wind_speed_10m,relative_humidity_2m"+
   "&timezone=America%2FMexico_City";
@@ -2638,7 +2637,7 @@ function aplica(c){
     kmh:    Math.round(+c.wind_speed_10m||0),
     txt:    texto(wc)
   };
-  if(!forzada) window.VALLE_CLIMA=real;
+  window.VALLE_CLIMA=real;
   var el=$("#clima");
   if(el){
     el.textContent=real.temp+"° · "+real.txt+(real.kmh>=16?" · "+real.kmh+" km/h":"");
@@ -2796,20 +2795,6 @@ function dormir(a,ms){
   })(performance.now());
 }
 
-/* ── 5 · el botón de lluvia ──────────────────────────────────── */
-var lb=$("#lluviaB");
-/* cada clic sube un escalón: ligera → media → tormenta → como está afuera */
-var PRUEBA=[null,
-  {lluvia:.20,nubes:.70,viento:.35,tipo:"ligera",   t:"Lluvia ligera"},
-  {lluvia:.50,nubes:.85,viento:.55,tipo:"media",    t:"Lluvia media"},
-  {lluvia:.95,nubes:.95,viento:.95,tipo:"tormenta", t:"Tormenta", rayo:true}], paso=0;
-lb.addEventListener("click",function(){
-  paso=(paso+1)%PRUEBA.length;
-  var q=PRUEBA[paso]; forzada=!!q;
-  lb.setAttribute("aria-pressed",forzada?"true":"false");
-  lb.textContent=q?q.t:"Llover";
-  window.VALLE_CLIMA = q || real;
-});
 })();
 </script>
 </body>

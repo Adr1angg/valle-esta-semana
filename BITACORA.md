@@ -42,8 +42,11 @@ little bit."* Tenía razón, por dos motivos que se sumaban:
 - **Rayos**, sólo con tormenta eléctrica (95–99): un destello cada 6–18 s,
   a veces doble, que sube la luz ambiente del diorama un instante. Con
   `prefers-reduced-motion` no hay destellos.
-- El botón **Llover** del panel ahora recorre ligera → media → tormenta →
-  como está afuera.
+- ~~El botón **Llover** del panel ahora recorre ligera → media → tormenta →
+  como está afuera.~~ **Quitado el mismo día** a petición de Adrian: *"There's
+  no need for a button that makes it rain. It should be automatic."* La lluvia
+  sale sólo del clima real (Open-Meteo, se vuelve a pedir cada 15 min). Para
+  probar, `window.VALLE_CLIMA` en la consola; está en el README.
 
 **Ojo.** Se editó directo `index.html`. `_escena/datos/scene.js` ya estaba
 atrasado respecto a lo incrustado (no trae humedad ni amanecer), así que

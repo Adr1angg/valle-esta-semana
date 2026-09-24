@@ -255,8 +255,11 @@ modelo sobre una rejilla de kilómetros, no una estación en el malecón. En un 
 con lago y mil metros de desnivel a veces dirá que llueve con el cielo seco. Le
 atina casi siempre; no es una ventana.
 
-Para probar sin esperar a que llueva: el botón **Llover** del panel del pie, o
-`window.VALLE_CLIMA = {lluvia:.8, nubes:.9, viento:.8}` en la consola.
+La lluvia es automática: sale sola del clima real, en tres tipos (ligera,
+media y tormenta con rayos). No hay botón para forzarla. Para probar sin
+esperar a que llueva, en la consola:
+`window.VALLE_CLIMA = {lluvia:.2}` (ligera) · `{lluvia:.5}` (media) ·
+`{lluvia:.95, nubes:.95, viento:.95, rayo:true}` (tormenta).
 
 ---
 
