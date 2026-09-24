@@ -4,12 +4,12 @@
    calcula index.html sola (ventana rodante desde hoy) y no sale de aqui.    */
 window.VS = {
   week: {
-    label: "17 – 23 septiembre 2026",
-    start: "2026-09-17", end: "2026-09-23",
-    updated: "2026-09-17T12:30:00-06:00",
-    updatedText: "jue 17 sep, 12:30",
-    next: "jueves 24 sep",
-    note: "Semana de resaca después del Grito, y se nota: lo único con nombre propio es la Noche Mexicana del viernes en El Cuenco, con son jarocho en vivo de Los Acociles. De ahí en adelante son los fijos —Na-ha viernes y sábado, el Mercado El 100, el tianguis del domingo, la práctica en la stupa— más los martes y miércoles del Cuenco. El Cuenco no sacó volante de agenda semanal esta vez, así que si aparece algo para el sábado será en las próximas horas."
+    label: "24 – 30 septiembre 2026",
+    start: "2026-09-24", end: "2026-09-30",
+    updated: "2026-09-24T13:15:00-06:00",
+    updatedText: "jue 24 sep, 13:15",
+    next: "jueves 1 oct",
+    note: "El sábado es el día: (Mami) Fera toca en El Cuenco a las nueve, y en la mañana cierra la temporada de Esmeraldas bajo la luna, teatro para bebés en Espacio Odisea. Lo demás son los fijos —Na-ha viernes y sábado, el Mercado El 100, el tianguis del domingo, la práctica en la stupa—. De lunes a miércoles sólo están los fijos del Cuenco: su volante de la semana sale en lunes y a la hora de este barrido todavía no existía."
   },
 
   cats: {
@@ -22,105 +22,125 @@ window.VS = {
   },
 
   days: [
-    {date:"2026-09-17", dow:"Jueves",    s:"Jue", dn:17, m:"sep"},
-    {date:"2026-09-18", dow:"Viernes",   s:"Vie", dn:18, m:"sep"},
-    {date:"2026-09-19", dow:"Sábado",    s:"Sáb", dn:19, m:"sep"},
-    {date:"2026-09-20", dow:"Domingo",   s:"Dom", dn:20, m:"sep"},
-    {date:"2026-09-21", dow:"Lunes",     s:"Lun", dn:21, m:"sep"},
-    {date:"2026-09-22", dow:"Martes",    s:"Mar", dn:22, m:"sep"},
-    {date:"2026-09-23", dow:"Miércoles", s:"Mié", dn:23, m:"sep"}
+    {date:"2026-09-24", dow:"Jueves",    s:"Jue", dn:24, m:"sep"},
+    {date:"2026-09-25", dow:"Viernes",   s:"Vie", dn:25, m:"sep"},
+    {date:"2026-09-26", dow:"Sábado",    s:"Sáb", dn:26, m:"sep"},
+    {date:"2026-09-27", dow:"Domingo",   s:"Dom", dn:27, m:"sep"},
+    {date:"2026-09-28", dow:"Lunes",     s:"Lun", dn:28, m:"sep"},
+    {date:"2026-09-29", dow:"Martes",    s:"Mar", dn:29, m:"sep"},
+    {date:"2026-09-30", dow:"Miércoles", s:"Mié", dn:30, m:"sep"}
   ],
 
   events: [
-    /* ── jueves 17 ── */
-    { id:"creciendo0917", date:"2026-09-17", s:630, e:750, time:"10:30 – 12:30", cat:"bienestar",
+    /* ── jueves 24 ── */
+    { id:"creciendo0924", date:"2026-09-24", s:630, e:750, time:"10:30 – 12:30", cat:"bienestar",
       title:"Creciendo Juntos", venue:"Espacio Odisea", price:"", repeat:"lunes y jueves",
       blurb:"Taller de estimulación temprana en la biblioteca comunitaria de Santa María: juegos y ejercicios para reforzar el vínculo entre madres, padres y bebés.",
       links:[{l:"Instagram", h:"https://www.instagram.com/espacioodiseavb/"}] },
 
-    /* ── viernes 18 ── */
-    { id:"mexicana0918", date:"2026-09-18", s:1200, e:1440, time:"20:00", cat:"musica", lead:true,
-      title:"Noche Mexicana con Los Acociles", venue:"El Cuenco", price:"Sin cover anunciado",
-      blurb:"Son jarocho en vivo, que en Valle no se oye casi nunca: Los Acociles con jarana y tarima en la barra de Pagaza. El Cuenco lo anunció como la continuación de la fiesta patria, así que cuenta con que se llene temprano.",
-      lineup:["Los Acociles"],
-      links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] },
+    { id:"esmeraldas0924", date:"2026-09-24", s:660, e:720, time:"11:00", cat:"cultura",
+      title:"Esmeraldas bajo la luna", venue:"Espacio Odisea", price:"Entrada libre", repeat:"24, 25 y 26 sep",
+      blurb:"Obra unipersonal de Jazmín González Cruz para bebés de seis meses a cuatro años, basada en el Diccionario de mitos de América: leyendas, cantos y sonidos prehispánicos que los niños tocan y exploran. Cupo muy limitado.",
+      links:[{l:"Instagram", h:"https://www.instagram.com/p/DdC2177lenS/"}] },
 
-    { id:"naha0918", date:"2026-09-18", s:1230, e:1350, time:"20:30 – 22:30", cat:"musica",
+    /* ── viernes 25 ── */
+    { id:"esmeraldas0925", date:"2026-09-25", s:660, e:720, time:"11:00", cat:"cultura",
+      title:"Esmeraldas bajo la luna", venue:"Espacio Odisea", price:"Entrada libre", repeat:"24, 25 y 26 sep",
+      blurb:"Obra unipersonal de Jazmín González Cruz para bebés de seis meses a cuatro años, basada en el Diccionario de mitos de América: leyendas, cantos y sonidos prehispánicos que los niños tocan y exploran. Cupo muy limitado.",
+      links:[{l:"Instagram", h:"https://www.instagram.com/p/DdC2177lenS/"}] },
+
+    { id:"naha0925", date:"2026-09-25", s:1230, e:1350, time:"20:30 – 22:30", cat:"musica",
       title:"Música en vivo en Na-ha", venue:"El Santuario, San Gaspar", price:"", repeat:"viernes y sábado",
       blurb:"El restaurante del Santuario programa música en vivo dos horas cada viernes y sábado, con el lago enfrente.",
       links:[{l:"Reservar", h:"https://www.opentable.com/r/restaurante-naha-valle-de-bravo"}] },
 
-    /* ── sábado 19 ── */
-    { id:"el100_0919", date:"2026-09-19", s:540, e:960, time:"09:00 – 16:00", cat:"mercado",
+    /* ── sábado 26 ── */
+    { id:"el100_0926", date:"2026-09-26", s:540, e:960, time:"09:00 – 16:00", cat:"mercado",
       title:"Mercado El 100", venue:"Del Salitre 104", price:"", repeat:"cada sábado",
       blurb:"Todo lo que se vende aquí se cultiva o se hace a menos de cien millas. Lácteos, verdura, fruta, pan. Frente al puerto municipal.",
       links:[] },
 
-    { id:"naha0919", date:"2026-09-19", s:1230, e:1350, time:"20:30 – 22:30", cat:"musica",
+    { id:"esmeraldas0926", date:"2026-09-26", s:780, e:840, time:"13:00", cat:"cultura",
+      title:"Esmeraldas bajo la luna", venue:"Espacio Odisea", price:"Entrada libre", repeat:"24, 25 y 26 sep",
+      blurb:"Última función: la obra de Jazmín González Cruz para bebés de seis meses a cuatro años, con un faldón que se vuelve agua, burbujas e instrumentos. Van acompañados de un adulto; cupo muy limitado.",
+      links:[{l:"Instagram", h:"https://www.instagram.com/p/DdC2177lenS/"}] },
+
+    { id:"mamifera0926", date:"2026-09-26", s:1260, e:1560, time:"21:00", cat:"noche", lead:true,
+      title:"(Mami) Fera en El Cuenco", venue:"El Cuenco", price:"Sin cover anunciado",
+      blurb:"El Cuenco lo anunció como “un acto nuevo” y el volante promete acid trance, vibras latinas y ritmos groovy. No es noche de house: es la apuesta rara del mes, y la única noche de DJ con nombre en Valle este fin.",
+      lineup:["(Mami) Fera"],
+      links:[{l:"Instagram", h:"https://www.instagram.com/p/DdmgRYOPp5l/"}] },
+
+    { id:"naha0926", date:"2026-09-26", s:1230, e:1350, time:"20:30 – 22:30", cat:"musica",
       title:"Música en vivo en Na-ha", venue:"El Santuario, San Gaspar", price:"", repeat:"viernes y sábado",
       blurb:"La segunda de las dos noches con música en vivo del restaurante del Santuario, de ocho y media a diez y media.",
       links:[{l:"Reservar", h:"https://www.opentable.com/r/restaurante-naha-valle-de-bravo"}] },
 
-    /* ── domingo 20 ── */
-    { id:"brunch0920", date:"2026-09-20", s:510, e:780, time:"08:30 – 13:00", cat:"mercado",
+    /* ── domingo 27 ── */
+    { id:"brunch0927", date:"2026-09-27", s:510, e:780, time:"08:30 – 13:00", cat:"mercado",
       title:"Brunch dominical en Na-ha", venue:"El Santuario, San Gaspar", price:"", repeat:"cada domingo",
       blurb:"Brunch de domingo en el restaurante del Santuario, sobre la orilla de San Gaspar. Se reserva por OpenTable.",
       links:[{l:"Reservar", h:"https://www.opentable.com/r/restaurante-naha-valle-de-bravo"}] },
 
-    { id:"tianguis0920", date:"2026-09-20", s:480, e:900, time:"Desde temprano", cat:"mercado",
+    { id:"tianguis0927", date:"2026-09-27", s:480, e:900, time:"Desde temprano", cat:"mercado",
       title:"Domingo de tianguis", venue:"Centro", price:"", repeat:"cada domingo",
       blurb:"El tianguis grande de la semana toma las calles del centro desde temprano: fruta y verdura de la región, ropa, plantas y comida hecha ahí mismo.",
       links:[] },
 
-    { id:"chamma0920", date:"2026-09-20", s:750, e:870, time:"12:30", cat:"bienestar",
+    { id:"chamma0927", date:"2026-09-27", s:750, e:870, time:"12:30", cat:"bienestar",
       title:"Meditación guiada en Chamma Ling", venue:"Chamma Ling", price:"Gratis", repeat:"cada domingo",
       blurb:"Práctica guiada de la tradición Bön al pie de la Gran Stupa, la más grande del hemisferio. Abierta a cualquiera, no hace falta experiencia previa.",
       links:[{l:"Ligmincha", h:"https://ligmincha.org/center-mexico-valledebravo/"}] },
 
-    /* ── lunes 21 ── */
-    { id:"creciendo0921", date:"2026-09-21", s:630, e:750, time:"10:30 – 12:30", cat:"bienestar",
+    /* ── lunes 28 ── */
+    { id:"creciendo0928", date:"2026-09-28", s:630, e:750, time:"10:30 – 12:30", cat:"bienestar",
       title:"Creciendo Juntos", venue:"Espacio Odisea", price:"", repeat:"lunes y jueves",
       blurb:"Taller de estimulación temprana en la biblioteca comunitaria de Santa María: juegos y ejercicios para reforzar el vínculo entre madres, padres y bebés.",
       links:[{l:"Instagram", h:"https://www.instagram.com/espacioodiseavb/"}] },
 
-    { id:"tianguisav0921", date:"2026-09-21", s:540, e:960, time:"Todo el día", cat:"mercado",
+    { id:"tianguisav0928", date:"2026-09-28", s:540, e:960, time:"Todo el día", cat:"mercado",
       title:"Tianguis de Avándaro", venue:"Avándaro", price:"", repeat:"cada lunes",
       blurb:"El tianguis de los lunes en Avándaro: verdura, quesos, flores y puestos de comida, más tranquilo que el del centro.",
       links:[] },
 
-    /* ── martes 22 ── */
-    { id:"martinis0922", date:"2026-09-22", s:1080, e:1260, time:"18:00 – 21:00", cat:"noche",
+    /* ── martes 29 ── */
+    { id:"martinis0929", date:"2026-09-29", s:1080, e:1260, time:"18:00 – 21:00", cat:"noche",
       title:"Martes de Martinis", venue:"El Cuenco", price:"2x1 en martinis", repeat:"cada martes",
-      blurb:"Tres horas de martinis al dos por uno en la barra de Pagaza, el fijo de los martes del Cuenco.",
+      blurb:"Tres horas de martinis al dos por uno en El Cuenco, su fijo de los martes.",
       links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] },
 
-    /* ── miércoles 23 ── */
-    { id:"gamenight0923", date:"2026-09-23", s:1110, e:1290, time:"18:30", cat:"noche",
+    /* ── miércoles 30 ── */
+    { id:"gamenight0930", date:"2026-09-30", s:1110, e:1290, time:"18:30", cat:"noche",
       title:"Game Night", venue:"El Cuenco", price:"Sin cover", repeat:"cada miércoles",
-      blurb:"Juegos de mesa, dominó y billar en el Cuenco, el fijo de los miércoles.",
+      blurb:"Juegos de mesa, dominó y billar en El Cuenco, el fijo de los miércoles.",
       links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] }
   ],
 
   cdmx: [
-    { id:"funk0918", date:"2026-09-18", time:"23:00", title:"Gabbs + Sami Masmoudi + Vane Vepe",
-      venue:"Fünk", price:"$300 – 600", genre:"house · minimal",
-      blurb:"Noche de casa en el sótano de Insurgentes Sur, de once a seis. House y minimal sin invitado de fuera, que es cuando Fünk suele salir mejor. 18+.",
-      link:"https://ra.co/events/2517152" },
+    { id:"knocks0925", date:"2026-09-25", time:"21:00", title:"The Knocks",
+      venue:"Foro Niebla, Doctores", price:"$850", genre:"house · nu-disco",
+      blurb:"El dúo de Nueva York que vive entre house de pista y pop de disco, solos toda la noche en Foro Niebla, de nueve a tres. 18+.",
+      link:"https://ra.co/events/2449801" },
 
-    { id:"ratedr0919", date:"2026-09-19", time:"23:00", title:"Rated R: Rebolledo + Cabizbajo + Baby Mango",
-      venue:"Fünk", price:"$300 – 700", genre:"house · cosmic",
-      blurb:"Rebolledo toca lento y raro —cosmic, italo, house pesado— y es de los pocos selectores mexicanos que sostiene siete horas sin repetirse. De once a seis, 18+.",
-      link:"https://ra.co/events/2520307" },
+    { id:"melchior0925", date:"2026-09-25", time:"23:00", title:"Thomas Melchior + Xwnia Wölf + Rodrigo P",
+      venue:"Fünk", price:"$300 – 700", genre:"house · minimal",
+      blurb:"Thomas Melchior, uno de los arquitectos del microhouse de los dosmiles, en el sótano de Insurgentes Sur de once a seis. 18+.",
+      link:"https://ra.co/events/2520007" },
 
-    { id:"yuyu0919", date:"2026-09-19", time:"23:00", title:"PWR takeover con Jen Cardini",
-      venue:"YuYu Cine Club", price:"Boleto por RA", genre:"dark disco · indie dance",
-      blurb:"Jen Cardini, fundadora de Correspondant, en el cine club de Doctores junto a Mystery Affair. Dark disco, house y cosas con guitarra, de once a cinco. RA lo marcó como Pick.",
-      link:"https://ra.co/events/2515938" },
+    { id:"discoexpress0925", date:"2026-09-25", time:"20:00", title:"The Disco Express",
+      venue:"Departamento, Álvaro Obregón 154", price:"Sólo en puerta", genre:"disco · house",
+      blurb:"El sello de disco londinense cierra su verano en la azotea de Departamento, en la Roma, con Nico Raibak, Hously y Disco Feelings. Boletos sólo en taquilla: llega temprano.",
+      link:"https://ra.co/events/2539963" },
 
-    { id:"sundaysunday0920", date:"2026-09-20", time:"15:00", title:"Sunday Sunday",
-      venue:"Sunday Sunday, Tabaqueros 16", price:"Boleto por RA", genre:"house · italo disco",
-      blurb:"Jennifer Loveless encabeza la terraza del Centro, con Villaseñor, Danesholme y Las Reinotas. De tres de la tarde a una de la mañana.",
-      link:"https://ra.co/events/2539320" }
+    { id:"binh0926", date:"2026-09-26", time:"17:00", title:"Saturday Saturday x Calypso Cvlt: Binh b2b Leo Leal",
+      venue:"Sunday Sunday, Tabaqueros 16", price:"Boleto por RA", genre:"house · minimal",
+      blurb:"Binh, el berlinés de los sets largos y finos, en b2b con Leo Leal en la terraza del Centro, de cinco a una. El Sunday Sunday del domingo ya está agotado; éste no.",
+      link:"https://ra.co/events/2535394" },
+
+    { id:"soul0927", date:"2026-09-27", time:"17:00", title:"Domingo de Soul",
+      venue:"Maison Artemisia, Tonalá 23", price:"$150", genre:"soul · funk · R&B",
+      blurb:"Soul, funk, R&B viejo y hip hop de la vieja escuela con Dizam, The Bradley Way y Driplomat, más tarot y tatuajes flash. Domingo de cinco a doce en la Roma. 20+.",
+      link:"https://ra.co/events/2539986" }
   ],
 
   always: [
@@ -144,7 +164,7 @@ window.VS = {
     {cat:"musica", title:"La Mezca", when:"Jue–sáb, hasta las 2", blurb:"Mezcalería en Pagaza 316 que sí programa bandas en vivo, y de vez en cuando noche de stand-up."}
   ],
 
-  checked: "Barrido del jue 17 sep, la semana después del Grito. El Cuenco (sí publicó la Noche Mexicana del viernes, pero no sacó volante de agenda semanal; martes y miércoles quedan por sus fijos) · El Santuario y Na-ha (nada con fecha nueva; siguen los fijos de viernes, sábado y el brunch del domingo) · Espacio Odisea (su último post es de horarios del puente; el teatro Esmeraldas bajo la luna es hasta el 24) · Turismo Valle de Bravo y Ayuntamiento (nada después del Grito) · Marina 33 · Altitud 1700 · Mestizo · Monkeys · Cinco Rodavento · Museo de Arte Popular · Rancho Avándaro · Cervecería Nevado · Yoga Sana · Gaspart Studio (la escuela está suspendida por la mudanza a El Rizal) · El Santuario Music · Surreal · Basilico · Fullpass · eticket (sin eventos en Valle) · Ligmincha (su calendario dice 'no events'; la práctica del domingo sigue en pie) · grupo QUE TODO VALLE DE BRAVO SE ENTERE: no se pudo revisar esta semana, Facebook dejó de permitir la búsqueda dentro del grupo sin sesión iniciada.",
+  checked: "Barrido del jue 24 sep. El Cuenco (sin volante de agenda semanal todavía; publicó el sábado con (Mami) Fera, martes y miércoles quedan por sus fijos) · Espacio Odisea (Esmeraldas bajo la luna confirmada; la función de cine del viernes 18 no se ha anunciado para esta semana) · El Santuario y Na-ha (sin fecha nueva; siguen los fijos) · Turismo Valle de Bravo (nada después del Grito) · Marina 33 (sólo promo de 2x1 en la carta los jueves) · Cinco Rodavento (brunch de sábado y domingo abierto a todos, sin sunset party) · Altitud 1700 (cerró el miércoles, reabre el jueves) · Mestizo · Monkeys · R27 (sin fechas) · Museo de Arte Popular · Surreal · Fullpass · eticket (sin eventos en Valle) · grupo QUE TODO VALLE DE BRAVO SE ENTERE (buscado con en vivo, este viernes, este sábado, taller, evento, festival y fiesta patronal: sólo anuncios, noticias y excursiones).",
 
-  soon: "Esmeraldas bajo la luna, teatro para primeras infancias en Espacio Odisea, 24 y 25 sep 11:00 y 26 sep 13:00, entrada libre · Kirtan con Swami Yatidharmananda el 1 oct y satsang el 3 · Fiesta patronal de San Francisco 4 oct · Festival de Vela 9 oct · Oktoberfest en Skyline a fin de mes · Triatlón Valle de Bravo 24 oct · Festival de las Almas fin de oct a 2 nov."
+  soon: "Kirtan con Swami Yatidharmananda el 1 oct y satsang el 3 · Fiesta patronal de San Francisco 4 oct · Festival de Vela 9 oct · Gran Fondo Adolfo Lagos, ciclismo, 11 oct · Oktoberfest en Skyline a fin de mes · Triatlón Valle de Bravo 24 oct · Festival de las Almas fin de oct a 2 nov."
 };

@@ -54,5 +54,17 @@ window.VH={events:[
   {d:"2026-09-15",t:"Misa de la Patria",c:"cultura",v:"Parroquia de San Francisco de Asís",h:"18:30"},
   {d:"2026-09-15",t:"Talleres patrios en el Jardín Central",c:"cultura",v:"Jardín Central",h:"12:00"},
   {d:"2026-09-16",t:"Desfile cívico del 16 de septiembre",c:"cultura",v:"Centro histórico",h:"Horario sin publicar"},
-  {d:"2026-09-16",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
+  {d:"2026-09-16",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"},
+  {d:"2026-09-17",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-09-18",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-09-18",t:"Noche Mexicana con Los Acociles",c:"musica",v:"El Cuenco",h:"20:00"},
+  {d:"2026-09-19",t:"Mercado El 100",c:"mercado",v:"Del Salitre 104",h:"09:00 – 16:00"},
+  {d:"2026-09-19",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-09-20",t:"Brunch dominical en Na-ha",c:"mercado",v:"El Santuario, San Gaspar",h:"08:30 – 13:00"},
+  {d:"2026-09-20",t:"Domingo de tianguis",c:"mercado",v:"Centro",h:"Desde temprano"},
+  {d:"2026-09-20",t:"Meditación guiada en Chamma Ling",c:"bienestar",v:"Chamma Ling",h:"12:30"},
+  {d:"2026-09-21",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-09-21",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
+  {d:"2026-09-22",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
+  {d:"2026-09-23",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
 ]};
