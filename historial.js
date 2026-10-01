@@ -66,5 +66,20 @@ window.VH={events:[
   {d:"2026-09-21",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
   {d:"2026-09-21",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
   {d:"2026-09-22",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
-  {d:"2026-09-23",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
+  {d:"2026-09-23",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"},
+  {d:"2026-09-24",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-09-24",t:"Esmeraldas bajo la luna",c:"cultura",v:"Espacio Odisea",h:"11:00"},
+  {d:"2026-09-25",t:"Esmeraldas bajo la luna",c:"cultura",v:"Espacio Odisea",h:"11:00"},
+  {d:"2026-09-25",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-09-26",t:"(Mami) Fera en El Cuenco",c:"noche",v:"El Cuenco",h:"21:00"},
+  {d:"2026-09-26",t:"Esmeraldas bajo la luna",c:"cultura",v:"Espacio Odisea",h:"13:00"},
+  {d:"2026-09-26",t:"Mercado El 100",c:"mercado",v:"Del Salitre 104",h:"09:00 – 16:00"},
+  {d:"2026-09-26",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-09-27",t:"Brunch dominical en Na-ha",c:"mercado",v:"El Santuario, San Gaspar",h:"08:30 – 13:00"},
+  {d:"2026-09-27",t:"Domingo de tianguis",c:"mercado",v:"Centro",h:"Desde temprano"},
+  {d:"2026-09-27",t:"Meditación guiada en Chamma Ling",c:"bienestar",v:"Chamma Ling",h:"12:30"},
+  {d:"2026-09-28",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-09-28",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
+  {d:"2026-09-29",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
+  {d:"2026-09-30",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
 ]};
