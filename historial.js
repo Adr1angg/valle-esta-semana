@@ -81,5 +81,21 @@ window.VH={events:[
   {d:"2026-09-28",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
   {d:"2026-09-28",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
   {d:"2026-09-29",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
-  {d:"2026-09-30",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
+  {d:"2026-09-30",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"},
+  {d:"2026-10-01",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-10-01",t:"Ivy Talamás y Jero Zoe en Colección de Mezcales",c:"musica",v:"El Cuenco",h:"18:00"},
+  {d:"2026-10-01",t:"México vs Perú en Marina 33",c:"noche",v:"Marina 33",h:"19:00"},
+  {d:"2026-10-02",t:"DJ Pesto en Colección de Mezcales",c:"noche",v:"El Cuenco",h:"18:00"},
+  {d:"2026-10-02",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-10-03",t:"DJ Nat · Vinyl Night en Colección de Mezcales",c:"noche",v:"El Cuenco",h:"18:00"},
+  {d:"2026-10-03",t:"DJezmo + Erick R4ndom en Marina 33",c:"noche",v:"Marina 33",h:"16:00"},
+  {d:"2026-10-03",t:"Mercado El 100",c:"mercado",v:"Del Salitre 104",h:"09:00 – 16:00"},
+  {d:"2026-10-03",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-10-04",t:"Brunch dominical en Na-ha",c:"mercado",v:"El Santuario, San Gaspar",h:"08:30 – 13:00"},
+  {d:"2026-10-04",t:"Domingo de tianguis",c:"mercado",v:"Centro",h:"Desde temprano"},
+  {d:"2026-10-04",t:"Meditación guiada en Chamma Ling",c:"bienestar",v:"Chamma Ling",h:"12:30"},
+  {d:"2026-10-05",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-10-05",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
+  {d:"2026-10-06",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
+  {d:"2026-10-07",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
 ]};
