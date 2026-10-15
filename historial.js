@@ -97,5 +97,19 @@ window.VH={events:[
   {d:"2026-10-05",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
   {d:"2026-10-05",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
   {d:"2026-10-06",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
-  {d:"2026-10-07",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
+  {d:"2026-10-07",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"},
+  {d:"2026-10-08",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-10-08",t:"Danilø · DJ set open format",c:"noche",v:"El Cuenco",h:"22:00"},
+  {d:"2026-10-08",t:"Gabriel en vivo",c:"musica",v:"El Cuenco",h:"20:30"},
+  {d:"2026-10-09",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-10-09",t:"Noche de Salsa en vivo con Vladimir",c:"musica",v:"El Cuenco",h:"20:00"},
+  {d:"2026-10-10",t:"Mercado El 100",c:"mercado",v:"Del Salitre 104",h:"09:00 – 16:00"},
+  {d:"2026-10-10",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-10-11",t:"Brunch dominical en Na-ha",c:"mercado",v:"El Santuario, San Gaspar",h:"08:30 – 13:00"},
+  {d:"2026-10-11",t:"Domingo de tianguis",c:"mercado",v:"Centro",h:"Desde temprano"},
+  {d:"2026-10-11",t:"Meditación guiada en Chamma Ling",c:"bienestar",v:"Chamma Ling",h:"12:30"},
+  {d:"2026-10-12",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-10-12",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
+  {d:"2026-10-13",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
+  {d:"2026-10-14",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
 ]};
