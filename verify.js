@@ -1,11 +1,11 @@
 /* Chequeo antes de publicar:  node verify.js
-   Necesita Playwright. Si no está en la Mac, sube index.html, cdmx.html,
+   Necesita Playwright. Si no está en la Mac, sube index.html, lugares.html, lugares.js,
    data.js, historial.js y este archivo al contenedor y córrelo ahí
    (Chromium en /opt/pw-browsers/chromium, PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1;
    nunca corras `playwright install`).                                      */
 const {chromium}=require('playwright');
 const fs=require('fs'), path=require('path');
-const P=['index.html','cdmx.html','lugares.html'];
+const P=['index.html','lugares.html'];
 
 /* la ruta del binario cambia entre maquinas: se prueban varias */
 function chrome(){

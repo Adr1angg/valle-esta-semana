@@ -58,16 +58,17 @@ El token está en **`.gh_token`** dentro de la carpeta del proyecto. Es un PAT d
 
 ## El trabajo: SOLO se edita `data.js`
 
-**`index.html` y `cdmx.html` son plantillas. NO se tocan. NO rediseñes nada.** Ahí vive el diorama 3D del lago y todo el diseño. Todo el contenido de la semana vive en `data.js`. Lee el `README.md` del repo antes de empezar — ahí está el contrato completo del esquema. En resumen:
+**`index.html` es plantilla. NO se toca. NO rediseñes nada.** Ahí vive el diorama 3D del lago y todo el diseño. Todo el contenido de la semana vive en `data.js`. Lee el `README.md` del repo antes de empezar — ahí está el contrato completo del esquema. En resumen:
 
-- `week` — `label` (rango legible), `start`/`end` (**jueves de hoy** y **miércoles siguiente**, ISO), `updated` (ISO con -06:00), `updatedText`, `next` (el jueves siguiente, que es `end`+1), `note` (una o dos frases honestas de cómo viene la semana).
+- `week` — `label` (rango legible), `start`/`end` (**jueves de hoy** y **miércoles siguiente**, ISO), `updated` (ISO con -06:00), `updatedText`, `next` (el jueves siguiente, que es `end`+1), `note` (una o dos frases honestas de cómo viene la semana; desde el 21 oct 2026 ya no sale en la página, se escribe como registro).
 - `days` — siempre 7, **jueves→miércoles**, con `date` · `dow` · `s` · `dn` · `m`.
 - Los últimos tres días (lun–mié) casi siempre vienen flacos: El Cuenco publica su volante los lunes, así que a la hora de la corrida todavía no existe. Poner lo recurrente y decirlo en `note` es la respuesta correcta; no inventes para rellenar.
 - `events` — solo Valle. `id` único y estable, `date` (tiene que existir en `days`), `s`/`e` en **minutos desde medianoche** (19:00 = 1140; si cruza medianoche, `e` pasa de 1440 — 2:00 am = 1560), `time` como se lee, `cat` (una de: `noche` `musica` `bienestar` `mercado` `cultura` `aire`), `title`, `venue`, `price` (`""` si no hay), `blurb` de una frase específica con nombres, y opcionales `repeat`, `lineup`, `links` (0–2, `{l,h}`).
+- **`repeat` sólo en fijos de verdad** (desde el 21 oct 2026). Pasado `week.end`, la página proyecta sola los eventos con `repeat` que ya salieron en otra semana, marcados "sin confirmar", a los días que nombra el texto ("cada martes", "viernes y sábado"). Un festival de "jueves y viernes" que no vuelve **no** lleva `repeat`. Dentro de tu semana manda lo que publiques: si quitas un fijo por un festivo, no aparece.
 - **`lead: true` en UN SOLO evento de la semana** — es el widget grande y oscuro con la cinta coral. El plan del fin de semana. Si de verdad no hay nada que destaque, no pongas `lead` en ninguno.
-- `cdmx` — **CDMX nunca va en `events`.** Va aquí y sale en su propia página: `{id, date, time, title, venue, price, genre, blurb, link}`.
-- `always` — **hoy son 18, agrupados por categoría** (aire libre, mercados, cultura, bienestar, noche). Déjalos salvo que algo haya cambiado de verdad: son los que sostienen una semana floja. La rejilla es `auto-fill`, no hay número fijo. En el sitio salen dentro de un acordeón que arranca cerrado.
-- `checked` — venues revisados sin novedad. `soon` — lo que viene en semanas próximas.
+- `cdmx` — **ya no se usa** (21 oct 2026: se borró la página de CDMX). Déjalo como `cdmx: []` y no busques en RA. CDMX nunca va en `events`.
+- `always` — **hoy son 18, agrupados por categoría** (aire libre, mercados, cultura, bienestar, noche). Déjalos salvo que algo haya cambiado de verdad: son los que sostienen una semana floja. La rejilla es `auto-fill`, no hay número fijo. En el sitio salen dentro de un acordeón que arranca cerrado, y los que nombran días en su `when` ("A diario", "Jue–dom", "Lun y mié") salen además en "También abierto" debajo del tablero. Si agregas uno, escribe el `when` nombrando días.
+- `checked` — venues revisados sin novedad (registro; ya no sale en la página). `soon` — lo que viene en semanas próximas (registro; ya no sale en la página).
 - `cats` no se toca.
 
 **Los lugares del mapa.** Al tocar un día, el diorama se acerca al lugar del evento y planta un pin. Las coordenadas viven en **`lugares.js`**, que es la memoria del proyecto — así no se repite la misma búsqueda cada semana:
@@ -78,7 +79,7 @@ window.VL = { "Nombre exacto del venue": [19.1938, -100.1322] };
 
 El nombre tiene que coincidir con el campo `venue` de `data.js`. También se puede mandar algo puntual desde `data.js` con `lugares: {...}`, que gana sobre `lugares.js`, pero lo normal es guardarlo en `lugares.js`.
 
-Un día sin eventos se muestra solo (tile apagado + "Nada programado"). No hay que hacer nada especial.
+Un día sin eventos se muestra solo (tile apagado + "Nada programado"), salvo los fijos que la página proyecta sola. No hay que hacer nada especial.
 
 Después de editar, valida que el archivo parsea:
 ```
@@ -87,7 +88,7 @@ cd "$HOME/vs" && node -e "global.window={};require('./data.js');console.log(wind
 
 ## Verifica antes de publicar
 
-`node verify.js` necesita Playwright. Revisa desbordes, errores de página, que existan los widgets de evento, los siete tiles, las 21 celdas del calendario y los permanentes, que la escena 3D haya arrancado, y que no haya ligas internas rotas. Si Playwright no está en la Mac, sube `index.html`, `cdmx.html`, `data.js`, `historial.js`, `lugares.js` y `verify.js` al contenedor en la nube y córrelo ahí (Chromium en `/opt/pw-browsers/chromium`, `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`; **nunca** corras `playwright install`). Tiene que reportar `todo pasa` en 390px y 1280px, claro y oscuro.
+`node verify.js` necesita Playwright. Revisa desbordes, errores de página, que existan los widgets de evento, los siete tiles, las 21 celdas del calendario y los permanentes, que la escena 3D haya arrancado, y que no haya ligas internas rotas. Si Playwright no está en la Mac, sube `index.html`, `lugares.html`, `data.js`, `historial.js`, `lugares.js` y `verify.js` al contenedor en la nube y córrelo ahí (Chromium en `/opt/pw-browsers/chromium`, `PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1`; **nunca** corras `playwright install`). Tiene que reportar `todo pasa` en 390px y 1280px, claro y oscuro.
 
 ## Publica
 
@@ -125,9 +126,9 @@ Noche y música en vivo; mercados y comida; aire libre y deporte (parapente en E
 
 **Callejones sin salida:** @theweekendview (cerró), @bravognp (liga muerta), @exs.bar (vacía), @corazondequetzal (persona equivocada — usa la página de Facebook), @barcentral.oficial (bar brasileño).
 
-**Ciudad de México:** ra.co/events/mx/mexicocity — consulta **UN DÍA A LA VEZ** con `?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD`; la vista por defecto colapsa a un día y esconde sábado y domingo en silencio. Sale un interstitial de "Verifying the device..." al primer load — espéralo, nunca intentes un CAPTCHA. Saca las URLs con `javascript_tool`: `[...new Set([...document.querySelectorAll('a[href*="/events/2"]')].map(a=>a.textContent.trim()+' :: '+a.href))]`, luego abre cada evento prometedor y lee `document.body.innerText.slice(0,800)` para hora exacta, precio, género y line-up. Verifica siempre la hora desde la página del evento. Las etiquetas de género de RA engañan (archivó un show de UK garage de Pangaea como "techno/house") — juzga por quién es el artista realmente. Revisa también Fünk, Sunday Sunday y @yuyucineclub directo.
+**Ciudad de México — YA NO (21 oct 2026).** La página de CDMX se borró; sáltate esta fuente. Lo de abajo queda sólo por si vuelve: ra.co/events/mx/mexicocity — consulta **UN DÍA A LA VEZ** con `?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD`; la vista por defecto colapsa a un día y esconde sábado y domingo en silencio. Sale un interstitial de "Verifying the device..." al primer load — espéralo, nunca intentes un CAPTCHA. Saca las URLs con `javascript_tool`: `[...new Set([...document.querySelectorAll('a[href*="/events/2"]')].map(a=>a.textContent.trim()+' :: '+a.href))]`, luego abre cada evento prometedor y lee `document.body.innerText.slice(0,800)` para hora exacta, precio, género y line-up. Verifica siempre la hora desde la página del evento. Las etiquetas de género de RA engañan (archivó un show de UK garage de Pangaea como "techno/house") — juzga por quién es el artista realmente. Revisa también Fünk, Sunday Sunday y @yuyucineclub directo.
 
-**El gusto de Adrian, para el `lead` y para `cdmx`:** house, UK garage, electrónica (Fred again.., Overmono, FISHER, TSHA, Jamie xx, DJ Seinfeld), más selectores de soul, disco y boogie. Sáltate techno puro, hardstyle y relleno de festival salvo que el nombre sea un standout.
+**El gusto de Adrian, para el `lead`:** house, UK garage, electrónica (Fred again.., Overmono, FISHER, TSHA, Jamie xx, DJ Seinfeld), más selectores de soul, disco y boogie. Sáltate techno puro, hardstyle y relleno de festival salvo que el nombre sea un standout.
 
 **Técnica:** `browser_batch` para navegar + capturar varios perfiles por viaje. La API de Instagram `/api/v1/users/web_profile_info/` está muerta (400, schema borrado); la técnica que sí funciona — leer el `alt` de las miniaturas, que transcribe el texto del volante — está documentada arriba de todo en `sources.md`. Los perfiles a veces salen en blanco al primer load; espera 3–4s y vuelve a capturar.
 
@@ -152,5 +153,7 @@ El `blurb` del evento con `lead` puede ser opinionado y en la voz de Adrian; los
 **Un `repeat` no es una confirmación.** Los fijos —martes de martinis, game night del miércoles, brunch del domingo— se publican porque el venue los repite cada semana, no porque alguien los haya visto anunciados esa semana. **En semana de fiesta o puente eso se rompe:** el 15 de septiembre de 2026 el sitio traía "Martes de Martinis" en El Cuenco la noche del Grito, cuando el bar no abrió su fijo — nadie está en una barra del centro mientras Belinda toca gratis en el jardín. Lo cachó Adrian, no la revisión.
 
 Regla: **si un día de tu ventana cae en día festivo, víspera o puente, ningún `repeat` entra sin confirmación fresca de esa semana.** Si el venue no publicó, no lo publiques tú: mándalo a `checked` diciendo que no confirmaron. Vale más un día apagado que un plan que manda a alguien a un lugar cerrado. Aplica a 15 y 16 sep, 1 y 2 nov, 12 y 25 dic, Semana Santa, y cualquier lunes de puente.
+
+**Y también a los 7 días que siguen a tu `week.end`**, porque ahí la página proyecta sola los fijos (ver `repeat` arriba). Si alguno de esos días es festivo, víspera o puente, ponlo en `sinFijos` (fechas ISO): `sinFijos: ["2026-11-16"]`. Si no hay ninguno, `sinFijos: []`.
 
 Solo lectura en sus cuentas — nunca mandes mensajes, DMs, comentarios ni follows.

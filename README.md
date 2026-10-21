@@ -13,6 +13,18 @@
 >    falla. El calendario del mes de abajo sí se queda lunes→domingo: es un
 >    calendario. Cambió el 13 sep 2026 (antes lunes→domingo, y antes de eso
 >    jueves→miércoles); ver la bitácora.
+> 0.2 **Los `repeat` se proyectan solos (21 oct 2026).** Pasado `week.end`, un
+>    evento con `repeat` que **ya salió en una semana anterior** (`historial.js`)
+>    aparece en la tira, el tablero y el calendario, punteado y con "suele haber ·
+>    sin confirmar". Así que **`repeat` va sólo en fijos de verdad**: los dos días
+>    de un festival no lo llevan. Dentro de la semana publicada manda `data.js`,
+>    así que quitar un fijo por un festivo sigue funcionando. **Para los festivos
+>    que caen DESPUÉS de `week.end`** (los 7 días siguientes), ponlos en
+>    `sinFijos: ["2026-11-02"]` y ahí no se proyecta nada.
+> 0.3 **CDMX ya no existe** (21 oct 2026, petición de Adrian). Se borró
+>    `cdmx.html`, la tarjeta y la liga de la barra. No hace falta buscar en RA ni
+>    llenar `cdmx`; si viene, se ignora. `note` y `checked` tampoco salen ya en la
+>    página: se siguen escribiendo como registro del barrido.
 > 0.5 **Se llama Valle, nunca "el pueblo".** En todo lo que lee la gente. La
 >    excepción es el código del diorama, donde "pueblo" es la mancha de casas.
 >    Regla completa en `tarea-semanal.md`. Petición de Adrian, 3 sep 2026.
@@ -75,9 +87,12 @@ sábado; martes abre en martes y cierra el lunes. Eso quiere decir cuatro cosas:
 2. **Hoy es siempre `SEMANA[0]`.** La vista abre en hoy sin tener que buscarlo,
    y la clase `.pas` de la tira ya no se usa: ningún día es anterior a hoy. Se
    deja en el CSS porque el calendario del mes sí la ocupa.
-3. **La cola sale apagada, y más conforme avanza la semana.** La tarea corre el
-   jueves y cubre jueves→miércoles, así que un domingo los últimos tres días
-   salen vacíos. Es lo normal, no una falla: para eso están los 18 `always`.
+3. **La cola ya no sale apagada.** La tarea corre el jueves y cubre
+   jueves→miércoles, así que pasado el miércoles no hay nada publicado. Ahí la
+   página proyecta los fijos (`repeat` que ya salieron en otra semana), punteados
+   y "sin confirmar". Debajo del tablero, **"También abierto"** lista los
+   `always` que abren el día elegido, leídos de su `when` ("A diario",
+   "Jue–dom", "Lun y mié"); los que no nombran días no se adivinan.
 4. **`data.js` sólo pone los eventos.** Cada uno cae en su fecha; los que quedan
    fuera de la ventana simplemente no se pintan. `week.label` ya no manda en el
    sello — el sello dice el rango de verdad de la tira.
@@ -104,7 +119,7 @@ días, se saltó una edición completa y la página lo dice.
 
 ## Lo único que cambia cada semana: `data.js`
 
-**`index.html` y `cdmx.html` son plantillas. No se tocan en la actualización semanal.**
+**`index.html` es plantilla. No se toca en la actualización semanal.**
 Todo el contenido vive en `data.js`. La tarea del jueves reescribe ese archivo y ya.
 
 ```js
@@ -116,7 +131,7 @@ window.VS = {
     updated:     "2026-08-27T15:04:00-06:00",
     updatedText: "jue 27 ago, 15:04",
     next:        "jueves 3 sep",
-    note:        "Una o dos frases honestas sobre cómo viene la semana."
+    note:        "Una o dos frases honestas sobre cómo viene la semana." // registro · ya no sale en la página
   },
 
   cats: { … },   // no cambia — noche · musica · bienestar · mercado · cultura · aire
@@ -136,16 +151,16 @@ window.VS = {
     title:  "Fiesta Hongosto",
     venue:  "El Cuenco",
     price:  "Sin cover anunciado", // "" si no hay
-    repeat: "cada sábado",         // opcional
+    repeat: "cada sábado",         // opcional · SÓLO fijos de verdad: se proyecta a la semana siguiente
     blurb:  "Una frase específica. Nombres, no adjetivos.",
     lineup: ["Samu","ESGO","Yisus"],           // opcional
     links:  [{l:"Instagram", h:"https://…"}]   // 0–2
   }],
 
-  cdmx: [{ id, date, time, title, venue, price, genre, blurb, link }],  // solo DJs
   always: [{ cat, title, when, blurb }],                                // lo permanente
-  checked: "Venue · Venue · Venue",   // revisados sin novedad
-  soon:    "Lo que viene en semanas próximas"
+  checked: "Venue · Venue · Venue",   // revisados sin novedad · registro, ya no sale
+  soon:    "Lo que viene en semanas próximas",  // registro · ya no sale en la página
+  sinFijos: ["2026-11-02"]  // opcional · festivos después de week.end: ahí no se proyectan fijos
 };
 ```
 
@@ -154,7 +169,6 @@ Reglas que la plantilla da por hechas:
 - `s` y `e` en minutos. Si algo cruza medianoche, `e` pasa de 1440 (2:00 am = 1560).
 - **Un solo `lead`.** Es el widget grande y oscuro con la cinta coral.
 - Un día sin eventos se muestra solo (tile apagado + "Nada programado"). No hay que hacer nada.
-- CDMX **nunca** va en `events` — va en `cdmx` y sale en su propia página.
 - Los `always` (hoy 18, agrupados por categoría) se quedan salvo que algo haya cambiado de
   verdad. Sostienen las semanas flojas y son el catálogo de lo que siempre está abierto:
   aire libre, mercados, cultura, bienestar, noche. Se pueden agregar más — la rejilla es
@@ -217,7 +231,7 @@ de cámara, y al amanecer se acuesta niebla sobre el lago según la humedad real
 **La luna también es de verdad** —su fase y su lugar en el cielo— y vive en un
 `<div>` detrás del lienzo, no en WebGL: `window.VALLE_LUNA`.
 
-**Dentro del recuadro de las fuentes hay una línea** —"Explora el mapa"— que abre el
+**Al pie hay una línea** —"Explora el mapa"— que abre el
 diorama **a pantalla completa**. Y es el mismo diorama: no se monta un segundo mapa, se le
 sube el `z-index` a la escena que ya vive fija detrás de la página y se tapa el sitio con un
 velo del color del fondo. Arrastrar gira, la rueda o el pellizco acercan, y una barra de
@@ -285,7 +299,7 @@ La página crece sola cada jueves. Entre más semanas pasen, más sirve.
 Tabla `valle_visitas` en el mismo Supabase que las sugerencias, con la misma
 llave publicable y la misma regla: **anon sólo puede INSERT**, nunca leer. Se
 manda una fila al abrir la página y una por cada clic que importa (día, evento,
-mapa, siempre, CDMX, sugerencia enviada).
+mapa, siempre, sugerencia enviada; CDMX hasta el 21 oct 2026).
 
 Lo que **no** se guarda, a propósito: IP, user-agent, cookies, ni nada que dure
 más que la pestaña. La "sesión" es un número al azar en `sessionStorage` que
@@ -307,7 +321,6 @@ select * from valle_uso_evento;   -- qué eventos se tocaron más
 | archivo | qué es |
 |---|---|
 | `index.html` | el sitio · plantilla, no se edita cada semana |
-| `cdmx.html` | página aparte de DJs en CDMX · plantilla |
 | `data.js` | **lo único que cambia cada semana** |
 | `historial.js` | eventos de semanas pasadas · **sólo crece, nunca se reescribe** |
 | `lugares.js` | dónde cae cada venue en el diorama · se le agregan los nuevos |

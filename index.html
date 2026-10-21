@@ -67,6 +67,9 @@
   --ground:oklch(22% .038 168);--card:oklch(26% .04 165);--ink:oklch(94% .03 130)}}
 
 *{box-sizing:border-box}
+/* [hidden] tiene que ganar siempre: el aviso de datos viejos tenía
+   display:inline-flex y se pintaba vacío, como un punto suelto. */
+[hidden]{display:none!important}
 html{overflow-x:clip;scroll-behavior:smooth}
 body{margin:0;background:var(--ground);color:var(--ink);overflow-x:clip;
   font-family:Manrope,system-ui,sans-serif;font-size:16px;line-height:1.55;
@@ -232,6 +235,12 @@ h1{margin:0;font-family:Fraunces,Georgia,serif;
   font-size:clamp(46px,10.5vw,124px);line-height:.86;letter-spacing:-.038em;text-wrap:balance}
 h1 span{display:block;color:var(--olive)}
 .baja{margin:clamp(16px,2.6vw,26px) 0 0;max-width:32ch;font-size:clamp(16px,2vw,20px);color:var(--mid)}
+/* el diorama pasa por detrás del texto del hero, verde sobre verde:
+   un halo del color del fondo lo despega sin taparlo con una caja */
+.baja,.act,.lug{text-shadow:0 0 2px var(--ground),0 0 4px var(--ground),0 0 8px var(--ground),
+  0 0 14px var(--ground),0 0 22px var(--ground)}
+.fila{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:22px}
+.fila .sello{margin-top:0}
 .sello{display:inline-flex;align-items:center;gap:10px;margin-top:22px;padding:9px 16px;border-radius:99px;
   background:var(--lima);color:oklch(28% .06 130);font-weight:600;font-size:12.5px;letter-spacing:.02em;
   box-shadow:var(--sh)}
@@ -278,7 +287,7 @@ h1 span{display:block;color:var(--olive)}
 .board{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.5vw,16px);
   margin-top:clamp(14px,2.2vw,22px);min-height:260px}
 .ww{position:relative;grid-column:span 3;padding:clamp(18px,2.4vw,28px);border-radius:var(--r);
-  background:oklch(from var(--card) l c h / .60);backdrop-filter:blur(17px) saturate(1.3);
+  background:oklch(from var(--card) l c h / .88);backdrop-filter:blur(17px) saturate(1.3);
   -webkit-backdrop-filter:blur(17px) saturate(1.3);
   border:1px solid oklch(from var(--lift) l c h / .55);box-shadow:var(--sh);overflow:hidden;isolation:isolate;
   display:flex;flex-direction:column;
@@ -305,7 +314,11 @@ h1 span{display:block;color:var(--olive)}
 .ww .halo{position:absolute;inset:0;z-index:-1;opacity:.9;pointer-events:none;
   background:radial-gradient(120% 130% at 100% 0%, var(--kc) 0, transparent 58%)}
 .ww .hora{font-family:"IBM Plex Mono",monospace;font-size:12.5px;letter-spacing:.08em;color:var(--olive)}
-.ww .rep{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--soft);margin-left:8px}
+.ww .rep{font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--soft);margin-left:8px;white-space:nowrap}
+/* lo proyectado: se repite cada semana pero nadie lo ha anunciado */
+.ww.proj{background:oklch(from var(--card) l c h / .74);border:1px dashed var(--line);box-shadow:none}
+.ww.proj .halo{opacity:.35}
+.ww .rep.sc{color:var(--acc);font-weight:600}
 .ww h3{margin:10px 0 0;font-family:Fraunces,serif;font-variation-settings:'opsz' 72,'wght' 560,'SOFT' 80,'WONK' 1;
   font-size:clamp(22px,2.9vw,34px);line-height:1.04;letter-spacing:-.026em}
 .ww.full h3{font-size:clamp(28px,5vw,58px)}
@@ -329,7 +342,7 @@ h1 span{display:block;color:var(--olive)}
 .ir{display:inline-flex;align-items:center;gap:5px;padding:6px 13px;border-radius:99px;font-size:11.5px;
   text-decoration:none;font-weight:600;background:var(--ink);color:var(--ground);transition:.32s var(--e)}
 .ir:hover{background:var(--acc);color:var(--acc-ink);transform:translateY(-2px)}
-.ww.destacado{background:oklch(from var(--ink) l c h / .80);color:var(--ground);border-color:transparent}
+.ww.destacado{background:oklch(from var(--ink) l c h / .92);color:var(--ground);border-color:transparent}
 .ww.destacado p{color:oklch(from var(--ground) l c h / .8)}
 .ww.destacado .hora{color:var(--lima)}
 .ww.destacado .et{border-color:oklch(from var(--ground) l c h / .28);color:oklch(from var(--ground) l c h / .82);background:transparent}
@@ -349,6 +362,26 @@ h1 span{display:block;color:var(--olive)}
 .nada b{display:block;font-family:Fraunces,serif;font-variation-settings:'wght' 520,'SOFT' 90;
   font-size:clamp(24px,4vw,34px);color:var(--mid);margin-bottom:8px}
 .nada a{color:var(--acc);font-weight:600}
+/* lo de siempre que abre el día elegido, debajo del tablero */
+.tambien{margin-top:clamp(10px,1.5vw,16px);padding:16px 18px;border-radius:var(--r2);
+  background:oklch(from var(--card) l c h / .88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border:1px solid var(--hair);box-shadow:var(--sh)}
+.tambien b{display:block;margin-bottom:10px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--soft);font-weight:600}
+.tambien .lista{display:flex;flex-wrap:wrap;gap:6px}
+.tambien a{display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:99px;font-size:12.5px;
+  text-decoration:none;color:var(--mid);border:1px solid var(--line);background:oklch(from var(--ground) l c h / .55);
+  transition:.28s var(--e)}
+.tambien a i{width:7px;height:7px;border-radius:50%;background:var(--kc)}
+.tambien a:hover{color:var(--ink);border-color:var(--acc)}
+/* en el celular, una sola fila que se desliza */
+@media(max-width:760px){
+  .tambien{padding:14px 0 14px 16px}
+  .tambien .lista{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-right:16px;
+    -webkit-mask-image:linear-gradient(90deg,#000 85%,transparent);mask-image:linear-gradient(90deg,#000 85%,transparent)}
+  .tambien .lista::-webkit-scrollbar{display:none}
+  .tambien a{white-space:nowrap;flex:none}
+}
 
 /* ═══════════ sección ═══════════ */
 .sec{padding:clamp(44px,7vw,88px) 0}
@@ -421,31 +454,18 @@ h1 span{display:block;color:var(--olive)}
 .mn .cu{display:block;margin-top:13px;font-family:"IBM Plex Mono",monospace;font-size:10px;
   letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
 
-/* ═══════════ cdmx ═══════════ */
-.cdmx{display:block;text-decoration:none;padding:clamp(26px,4vw,50px);border-radius:var(--r);
-  background:var(--ink);color:var(--ground);position:relative;overflow:hidden;box-shadow:var(--sh2);
-  transition:transform .5s var(--e)}
-.cdmx::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(110% 140% at 96% 100%, oklch(from var(--acc) l c h/.4) 0, transparent 58%)}
-.cdmx:hover{transform:translateY(-5px)}
-.cdmx>*{position:relative;z-index:1}
-.cdmx .lb{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;opacity:.72}
-.cdmx h3{margin:.3em 0 0;font-family:Fraunces,serif;font-variation-settings:'opsz' 100,'wght' 560,'SOFT' 90,'WONK' 1;
-  font-size:clamp(28px,5.2vw,58px);line-height:.98;letter-spacing:-.03em}
-.cdmx p{margin:.55em 0 0;max-width:42ch;font-size:14.5px;opacity:.84}
-.cdmx .fl{display:inline-flex;align-items:center;gap:8px;margin-top:20px;font-size:13px;font-weight:600}
-.cdmx .fl svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;transition:transform .4s var(--e)}
-.cdmx:hover .fl svg{transform:translateX(7px)}
+/* ═══════════ lugares ═══════════ */
+.lug{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font-size:13px;color:var(--mid);
+  text-decoration:none;padding:8px 2px}
+.lug:hover{color:var(--acc)}
+.lug svg{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.9;transition:transform .4s var(--e)}
+.lug:hover svg{transform:translateX(5px)}
 
 /* ═══════════ pie ═══════════ */
 footer{padding:clamp(38px,6vw,76px) 0 64px}
 .fw{padding:clamp(22px,3vw,34px);border-radius:var(--r);background:var(--sunk);box-shadow:var(--in);border:1px solid var(--line)}
-.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:28px}
 footer h4{margin:0 0 8px;font-family:Fraunces,serif;font-variation-settings:'wght' 560;font-size:18px}
-footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
-.fino{color:var(--soft);font-size:11.5px;margin-top:22px;line-height:1.75}
-.fino a{color:var(--mid)}
-.comp{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+footer p{margin:0 0 10px;color:var(--mid);font-size:14px;max-width:62ch}
 /* sugerencias del público */
 .sug{margin-top:16px;border-top:1px solid var(--hair);padding-top:14px}
 .sug summary{cursor:pointer;list-style:none;font-size:13px;font-weight:600;color:var(--ink);
@@ -506,7 +526,6 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
   <span class="marca"><svg viewBox="0 0 24 24"><path d="M3 16l5-6 4 4 3-5 6 7"/><circle cx="17" cy="6" r="2.2"/></svg> Esta semana en Valle</span>
   <span class="vivo oc"><i></i><span id="vivo">—</span></span>
   <span class="dr">
-    <a class="px" href="cdmx.html">CDMX<span class="oc"> · DJs</span> ↗</a>
     <span class="px mono oc" id="clima" hidden></span>
     <span class="px mono oc" id="reloj">—</span>
   </span>
@@ -515,20 +534,25 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
 <header><div class="w">
   <h1>Esta semana<span>en Valle</span></h1>
   <p class="baja">Los eventos de esta semana en Valle de Bravo. Se actualiza solo cada jueves.</p>
-  <div><span class="sello" id="sem"></span></div>
+  <div class="fila">
+    <span class="sello" id="sem"></span>
+    <a class="bt" id="wa" href="#" target="_blank" rel="noopener">Mandar por WhatsApp</a>
+    <button class="bt" id="cpy" type="button">Copiar liga</button>
+  </div>
   <p class="act mono">Actualizado <span id="upd"></span> · próxima edición <span id="nx"></span></p>
   <p class="viejo" id="viejo" hidden></p>
 
   <div class="dias" id="dias" role="tablist" aria-label="Día"></div>
   <div class="board" id="board"></div>
+  <div id="tambien"></div>
 </div></header>
 
 <main>
   <section class="sec" id="calendario"><div class="w">
-    <div class="sh"><h2>Agosto</h2><span class="n">Toca un día</span></div>
+    <div class="sh"><h2 id="calh">Calendario</h2><span class="n">Toca un día</span></div>
     <div class="cal rv">
       <div class="calin">
-        <div class="calhd"><b id="calmes">Agosto 2026</b><span class="lg" id="lg"></span></div>
+        <div class="calhd"><b id="calmes"></b><span class="lg" id="lg"></span></div>
         <div class="rej" id="rej"></div>
       </div>
     </div>
@@ -545,57 +569,31 @@ footer p{margin:0 0 10px;color:var(--mid);font-size:14px}
       </summary>
       <div class="mini rv" id="mini"></div>
     </details>
+    <a class="lug" href="lugares.html">Todos los lugares de Valle — lo que hay en cada uno y lo que suele haber
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
   </div></section>
 
-  <section class="sec"><div class="w">
-    <p class="fino rv" style="margin:0 0 clamp(16px,2.4vw,26px)">
-      ¿Buscas un lugar en particular y no un día?
-      <a href="lugares.html">Todos los lugares de Valle</a> — lo que hay en cada uno y lo que suele haber.</p>
-    <a class="cdmx rv" href="cdmx.html">
-      <span class="lb">Si vale el viaje</span>
-      <h3>Ciudad de México</h3>
-      <p id="cdxp"></p>
-      <span class="fl">Ver la página <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
-    </a>
-  </div></section>
 </main>
 
 <footer><div class="w"><div class="fw">
-  <div class="fg">
-    <div>
-      <h4>Cómo funciona</h4>
-      <p>Se reconstruye sola cada jueves a mediodía, siempre en la misma dirección. Los colores siguen al reloj del lago.</p>
-      <div class="comp">
-        <a class="bt" id="wa" href="#" target="_blank" rel="noopener">WhatsApp</a>
-        <button class="bt" id="cpy" type="button">Copiar liga</button>
-      </div>
-      <details class="sug" id="sugerir">
-        <summary>¿Tienes un lugar o un evento? Mándalo</summary>
-        <form id="sugf">
-          <label>Tu nombre
-            <input name="nombre" required maxlength="120" autocomplete="name"></label>
-          <label>El lugar o el evento
-            <input name="lugar" required maxlength="160"></label>
-          <label>Dónde te contacto
-            <input name="contacto" maxlength="200" placeholder="WhatsApp, Instagram o correo"></label>
-          <label>Cuéntame
-            <textarea name="mensaje" rows="3" maxlength="1200" placeholder="Qué es, cuándo y dónde."></textarea></label>
-          <input class="trampa" name="sitio" tabindex="-1" autocomplete="off" aria-hidden="true">
-          <button class="bt env" type="submit">Mandar</button>
-          <p class="estado" id="sugm" role="status"></p>
-        </form>
-      </details>
-    </div>
-    <div>
-      <h4>Semana tranquila</h4>
-      <p id="nota"></p>
-      <p class="fino" style="margin-top:12px">Se viene: <span id="pronto"></span></p>
-    </div>
-  </div>
-  <p class="fino">Revisado y sin novedad: <span id="chk"></span>.<br>
-    Fuentes: <a href="https://www.instagram.com/elcuencovalle/" target="_blank" rel="noopener">@elcuencovalle</a> ·
-    <a href="https://ra.co/events/mx/mexicocity" target="_blank" rel="noopener">Resident Advisor</a> ·
-    <a href="https://ligmincha.org/center-mexico-valledebravo/" target="_blank" rel="noopener">Ligmincha</a>.</p>
+  <h4>Cómo funciona</h4>
+  <p>Se reconstruye sola cada jueves a mediodía con lo que publican los lugares de Valle. Lo punteado, “sin confirmar”, se repite cada semana pero todavía nadie lo anunció. Los colores siguen al reloj del lago.</p>
+  <details class="sug" id="sugerir">
+    <summary>¿Tienes un lugar o un evento? Mándalo</summary>
+    <form id="sugf">
+      <label>Tu nombre
+        <input name="nombre" required maxlength="120" autocomplete="name"></label>
+      <label>El lugar o el evento
+        <input name="lugar" required maxlength="160"></label>
+      <label>Dónde te contacto
+        <input name="contacto" maxlength="200" placeholder="WhatsApp, Instagram o correo"></label>
+      <label>Cuéntame
+        <textarea name="mensaje" rows="3" maxlength="1200" placeholder="Qué es, cuándo y dónde."></textarea></label>
+      <input class="trampa" name="sitio" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="bt env" type="submit">Mandar</button>
+      <p class="estado" id="sugm" role="status"></p>
+    </form>
+  </details>
   <button class="verMapa" type="button" id="verMapa">Explora el mapa
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 14v6h6M20 10V4h-6M20 4l-8 8M4 20l8-8"/></svg>
   </button>
@@ -740,12 +738,85 @@ setInterval(function(){setT()},6e4);
 if(OSC){ try{OSC.addEventListener("change",setT)}catch(e){OSC.addListener&&OSC.addListener(setT)} }
 
 $("#sem").textContent=D.week.label; $("#upd").textContent=D.week.updatedText; $("#nx").textContent=D.week.next;
-$("#nota").textContent=D.week.note; $("#pronto").textContent=D.soon; $("#chk").textContent=D.checked;
-$("#cdxp").textContent=D.cdmx.length+" sets que sí justifican manejar dos horas y media este fin. Página aparte, solo DJs.";
+
+function fecha(f){return new Date(f+"T12:00:00")}          /* mediodía: a salvo de husos */
+
+/* ── qué días de la semana dice un texto ──────────────────────────
+   Lee lo que ya escribe la tarea del jueves, sin pedirle campos nuevos:
+   "cada domingo", "jueves y viernes", "Jue–dom · desde las 13:00",
+   "Mar cerrado · resto de la semana", "A diario", "Fines de semana".
+   Devuelve siete 0/1 en el orden de getDay(), o null si el texto no
+   nombra ningún día ("Horario variable") — y entonces no se adivina. */
+var DN={dom:0,domingo:0,domingos:0,lun:1,lunes:1,mar:2,martes:2,mie:3,miercoles:3,
+        jue:4,jueves:4,vie:5,viernes:5,sab:6,sabado:6,sabados:6};
+var DRX="(dom|domingos?|lun|lunes|mar|martes|mie|miercoles|jue|jueves|vie|viernes|sab|sabados?)";
+function diasDe(txt){
+  var t=String(txt||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  var o=[0,0,0,0,0,0,0], hay=false, m;
+  if(/a diario|todos los dias|con luz de dia/.test(t)) return [1,1,1,1,1,1,1];
+  if(/fin(es)? de semana/.test(t)){ o[0]=o[6]=1; hay=true; }
+  var rr=new RegExp("\\b"+DRX+"\\s*[–-]\\s*"+DRX+"\\b","g");
+  while((m=rr.exec(t))){ for(var i=DN[m[1]];;i=(i+1)%7){ o[i]=1; if(i===DN[m[2]]) break; } hay=true; }
+  t=t.replace(rr," ");
+  var cer=new RegExp("\\b"+DRX+"\\s+cerrado").exec(t);
+  if(cer){ o=[1,1,1,1,1,1,1]; o[DN[cer[1]]]=0; return o; }
+  var rs=new RegExp("\\b"+DRX+"\\b","g");
+  while((m=rs.exec(t))){ o[DN[m[1]]]=1; hay=true; }
+  return hay?o:null;
+}
+
+/* ── lo que se repite, hacia adelante ─────────────────────────────
+   data.js cubre jueves→miércoles y la tira enseña hoy+6, así que de
+   jueves a miércoles la cola salía apagada aunque el martes de martinis
+   sea cada martes. Ahora los fijos (`repeat`) se proyectan, pero SÓLO
+   pasado `week.end`: dentro de lo publicado manda la tarea del jueves,
+   que a veces los quita a propósito (el Grito, festivos). Salen
+   punteados y con "suele haber · sin confirmar", porque un repeat no
+   es una confirmación.
+   Y sólo si ya salió en una semana anterior (historial.js): "jueves y
+   viernes" puede ser un fijo o los dos días de un festival, y el texto
+   no lo distingue. Haber vuelto otra semana sí.
+   `sinFijos` en data.js (fechas ISO) apaga la proyección esos días: los
+   festivos y puentes que caen después de `week.end`, donde un fijo no
+   se da por hecho. */
+var FIN=(D.week&&D.week.end)||"", INI=(D.week&&D.week.start)||"", FIJOS={}, YA={};
+var SIN=D.sinFijos||[];
+((window.VH&&window.VH.events)||[]).forEach(function(h){ if(h.d<INI) YA[h.t]=1; });
+D.events.forEach(function(e){
+  var w=e.repeat&&YA[e.title]&&diasDe(e.repeat); if(!w) return;
+  var x=FIJOS[e.title]||(FIJOS[e.title]={e:e,w:w,por:{}});
+  if(x.e.date<e.date) x.e=e;
+  /* el del mismo día de la semana, si lo hay: el sábado de Na-ha dice
+     "la segunda de las dos noches" y no le queda al viernes */
+  x.por[fecha(e.date).getDay()]=e;
+});
+function eventosDe(f){
+  var L=D.events.filter(function(e){return e.date===f});
+  if(f>FIN&&SIN.indexOf(f)<0){
+    var dw=fecha(f).getDay();
+    Object.keys(FIJOS).forEach(function(k){
+      var x=FIJOS[k], e=x.por[dw]||x.e;
+      if(x.w[dw]) L.push(Object.assign({},e,{date:f,id:e.id+"-"+f,proj:true,lead:false}));
+    });
+  }
+  return L.sort(function(a,b){return a.s-b.s});
+}
+/* Lo de siempre que abre el día elegido, en una fila de nombres. Los
+   que no dicen qué días abren ("Horario variable") no se adivinan: se
+   quedan sólo en el catálogo de Siempre. */
+function tambien(f){
+  var dw=fecha(f).getDay();
+  var L=D.always.filter(function(a){var w=diasDe(a.when); return w&&w[dw]});
+  if(!L.length) return "";
+  return '<div class="tambien"><b>También abierto '+(f===HOY?"hoy":"ese día")+'</b><div class="lista">'+
+    L.map(function(a){return '<a href="#siempre" style="--kc:'+KC[a.cat]+'"><i></i>'+E(a.title)+'</a>'}).join("")+
+    '</div></div>';
+}
+
 $("#lg").innerHTML=Object.keys(C).map(function(k){return '<i style="--kc:'+KC[k]+'">'+C[k].label+'</i>'}).join("");
 
 function vivo(){
-  var t=D.events.filter(function(e){return e.date===HOY}).sort(function(a,b){return a.s-b.s});
+  var t=eventosDe(HOY);
   var lv=t.filter(function(e){return MIN>=e.s&&MIN<e.e})[0], nx=t.filter(function(e){return e.s>MIN})[0];
   var x;
   if(lv) x="Ahora: "+lv.title;
@@ -828,7 +899,7 @@ var sel=porDefecto();
 function pintaDias(){
   dias.innerHTML="";
   SEMANA.forEach(function(d){
-    var ev=D.events.filter(function(e){return e.date===d.date});
+    var ev=eventosDe(d.date);
     var b=document.createElement("button");
     b.type="button"; b.dataset.date=d.date; b.setAttribute("role","tab");
     b.className="dia"+(ev.length?"":" vac")+(d.date===HOY?" hoy":"")+(d.date<HOY?" pas":"");
@@ -853,11 +924,12 @@ function spans(n,leadIdx){
   return out;
 }
 function render(date){
-  var L=D.events.filter(function(e){return e.date===date}).sort(function(a,b){return a.s-b.s});
+  var L=eventosDe(date);
+  $("#tambien").innerHTML=tambien(date);
   if(!L.length){
     board.innerHTML='<div class="nada"><b>Nada programado</b>'+
-      (alDia?'':'La última edición cubre '+E(D.week.label)+' y sigue en el calendario de abajo. ')+
-      'Baja a <a href="#siempre">Siempre</a> — el lago no cierra.</div>';
+      (date>FIN?'Todavía no hay nada publicado para ese día; la edición del jueves lo trae. ':'')+
+      'Lo de siempre sigue abierto.</div>';
     return;
   }
   var li=-1; L.forEach(function(e,i){if(e.lead)li=i});
@@ -865,10 +937,10 @@ function render(date){
   var sp=spans(L.length,li);
   board.innerHTML=L.map(function(e,i){
     var links=(e.links||[]).map(function(l){return '<a class="ir" href="'+l.h+'" target="_blank" rel="noopener">'+l.l+' ↗</a>'}).join("");
-    return '<article class="ww '+sp[i]+(e.lead?" destacado":"")+'" id="ev-'+e.id+'" style="--kc:'+KC[e.cat]+';--i:'+i+'">'+
+    return '<article class="ww '+sp[i]+(e.lead?" destacado":"")+(e.proj?" proj":"")+'" id="ev-'+e.id+'" style="--kc:'+KC[e.cat]+';--i:'+i+'">'+
       '<span class="halo" style="--kc:oklch(from '+KC[e.cat]+' l c h / .3)"></span>'+
       (e.lead?'<span class="cinta">Lo del fin</span>':'')+
-      '<div><span class="hora">'+E(e.time)+'</span>'+(e.repeat?'<span class="rep">'+E(e.repeat)+'</span>':'')+'</div>'+
+      '<div><span class="hora">'+E(e.time)+'</span>'+(e.proj?'<span class="rep sc">suele haber · sin confirmar</span>':(e.repeat?'<span class="rep">'+E(e.repeat)+'</span>':''))+'</div>'+
       '<h3>'+E(e.title)+'</h3><p>'+E(e.blurb)+'</p>'+
       (e.lineup?'<div class="cartel">'+e.lineup.map(function(x){return '<span>'+E(x)+'</span>'}).join("")+'</div>':'')+
       '<div class="pie"><span class="et k" style="--kc:'+KC[e.cat]+'">'+ic(e.cat)+E(C[e.cat].label)+'</span>'+
@@ -971,8 +1043,8 @@ function pick(date,porClic){
 function focoDelDia(date){
   if(!window.VALLE_FOCO) return;
   var visto={},pts=[];
-  D.events.forEach(function(e){
-    if(e.date!==date||visto[e.venue])return;
+  eventosDe(date).forEach(function(e){
+    if(visto[e.venue])return;
     visto[e.venue]=1;
     var p=punto(e.venue);
     pts.push({lat:p[0],lon:p[1],label:e.venue});
@@ -1072,8 +1144,10 @@ function pintaCalendario(){
   ini.setDate(ini.getDate()-7);                      /* una semana antes */
   var fin=new Date(ini); fin.setDate(ini.getDate()+20);
   var cm=$("#calmes");
+  var may=function(t){return t.charAt(0).toUpperCase()+t.slice(1)};
+  /* el título de la sección es el mes de hoy; decía "Agosto" fijo */
+  $("#calh").textContent=may(MESL[fecha(HOY).getMonth()]);
   if(cm){
-    var may=function(t){return t.charAt(0).toUpperCase()+t.slice(1)};
     cm.textContent = (ini.getMonth()===fin.getMonth()
       ? may(MESL[fin.getMonth()])
       : may(MESL[ini.getMonth()])+" – "+MESL[fin.getMonth()])+" "+fin.getFullYear();
@@ -1082,7 +1156,7 @@ function pintaCalendario(){
     var cur=new Date(ini); cur.setDate(ini.getDate()+k);
     var ds=cur.getFullYear()+"-"+String(cur.getMonth()+1).padStart(2,"0")+"-"+String(cur.getDate()).padStart(2,"0");
     var ev = wk[ds]
-      ? D.events.filter(function(e){return e.date===ds})
+      ? eventosDe(ds)
       : HIST.filter(function(e){return e.d===ds})
              .map(function(e){return {title:e.t, cat:e.c}});
     var cls="cd"+(ds===HOY?" hoy":"")+(ds<HOY?" pas":"")+(ds===sel?" sel":"");
@@ -1194,7 +1268,6 @@ if("IntersectionObserver" in window){
   };
   /* la visita se cuenta cuando ya se vio algo, no al primer byte */
   setTimeout(function(){ window.VALLE_MIDE("visita", null) }, 2200);
-  var cd=$(".cdmx"); if(cd) cd.addEventListener("click",function(){ window.VALLE_MIDE("cdmx",null) });
   var det=document.querySelector("#siempre details");
   if(det) det.addEventListener("toggle",function(){ if(det.open) window.VALLE_MIDE("siempre",null) });
 })();
@@ -2040,7 +2113,7 @@ if("IntersectionObserver" in window){
 
   var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   var pal = {}, prog01 = 0, target01 = 0, t0 = performance.now(), tPrev = t0, cuadros = 0, llamadas = 0;
-  var foco = null, focoAmt = 0, focoTgt = 0, pines = [];
+  var foco = null, focoAmt = 0, focoTgt = 0, focoProg = 0, pines = [];
   var marco = { amt: 0, tgt: 0, ox: 0, oy: 0 };
   var man = { amt: 0, tgt: 0, az: 0, el: 0, dist: 0, tx: 0, tz: 0, listo: 0 };
   var clima = { lluvia: 0, nubes: 0, viento: 0.30, humedad: 0.62, rayo: 0 };
@@ -2243,7 +2316,10 @@ if("IntersectionObserver" in window){
     var azA = P.az + prog01 * P.azScroll * (1 - 0.72 * focoAmt) + (reduce ? 0 : Math.sin(t * 0.055) * 0.045);
     var elA = P.el + prog01 * 0.14;
     var dA  = (P.dist + prog01 * 1.1 * (1 - 0.7 * focoAmt)) * fit;
-    if (prog01 > 0.92 && !man.tgt) focoTgt = 0;     /* sólo hasta el fondo se suelta */
+    /* sólo hasta el fondo se suelta, y sólo si el foco se tomó arriba:
+       si se toma ya abajo, soltarlo en el cuadro siguiente sería no
+       enfocar nunca */
+    if (prog01 > 0.92 && focoProg < 0.92 && !man.tgt) focoTgt = 0;
     focoAmt += (focoTgt - focoAmt) * (1 - Math.pow(0.002, dt / 1.1));
     if (focoAmt < 0.004 && focoTgt === 0 && pines.length) { limpiaPines(); host.classList.remove('con-foco'); }
     /* Cuánto se acerca el foco. Elegir un día usa la fuerza suave de
@@ -2270,7 +2346,10 @@ if("IntersectionObserver" in window){
                tg[1] + Math.sin(el) * d,
                tg[2] + Math.cos(az) * Math.cos(el) * d];
     var vp = mmul(persp(P.fov, asp, 0.1, 40), look(eye, tg, [0, 1, 0]));
-    var oxA = P.offX * (1 - estrecho), oyA = P.offY + (-0.36 - P.offY) * estrecho;
+    /* en pantalla ancha el diorama arranca corrido a la derecha, fuera
+       de la columna del título, y vuelve al centro conforme se baja */
+    var ancho = Math.min(1, Math.max(0, (asp - 1.15) / 0.6));
+    var oxA = P.offX * (1 - estrecho) + 0.30 * ancho * (1 - prog01), oyA = P.offY + (-0.36 - P.offY) * estrecho;
     var ox = oxA + (marco.ox - oxA) * marco.amt;
     var oy = oyA + (marco.oy - oyA) * marco.amt;
 
@@ -2427,6 +2506,7 @@ if("IntersectionObserver" in window){
      de elegir un día, que es un empujoncito y nada más. */
   window.VALLE_FOCO = function (pts, cerca) {
     limpiaPines();
+    focoProg = target01;
     focoZt = cerca ? 0.50 : 0.22;
     focoPt = cerca ? 0.94 : 0.62;
     if (!pts || !pts.length) { focoTgt = 0; foco = null; return; }

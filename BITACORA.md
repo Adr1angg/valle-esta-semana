@@ -15,6 +15,58 @@ va hasta arriba.
 
 ---
 
+## 2026-10-21 · Los días vacíos se llenan, el mes se escribe solo, CDMX se va
+
+Adrian: *"Right now, I don't really use it… there's a lot of everything in
+here."* Se probó una versión que cambiaba la tira y el calendario por una
+agenda que se leía bajando. No gustó: *"I like the calendar view. This
+scrolling, I don't love it."* Se quedó el diseño de siempre, con estos
+cambios:
+
+- **El calendario decía "Agosto" en octubre.** El título estaba escrito a
+  mano. Ahora es el mes de hoy y se rearma a medianoche.
+- **Los fijos se proyectan.** Un miércoles la tira enseñaba seis de siete
+  días con "—": `data.js` cubre jueves→miércoles y pasado eso no había nada.
+  Ahora, sólo pasado `week.end`, los eventos con `repeat` que **ya salieron en
+  una semana anterior** (`historial.js`) aparecen en la tira, el tablero y el
+  calendario, punteados y con "suele haber · sin confirmar". Sin la condición
+  del historial, el taller de Cruce de Miradas ("jueves y viernes", festival
+  de una vez) se proyectaba como si fuera de cada semana. Dentro de la semana
+  publicada manda `data.js`: quitar un fijo por un festivo sigue funcionando.
+  Si un fijo tiene texto distinto según el día (Na-ha viernes y sábado), se
+  usa el del mismo día de la semana.
+- **"También abierto"** debajo del tablero: los `always` que abren el día
+  elegido, leídos de su `when` tal como ya se escribe. Los que no nombran días
+  no se adivinan. En el celular es una fila que se desliza.
+- **Fuera CDMX** (petición de Adrian): `cdmx.html`, la tarjeta y la liga de
+  la barra. La tarea ya no tiene que buscar en RA.
+- **Fuera "Semana tranquila"** del pie, y con ella "Se viene", "Revisado y
+  sin novedad" y las fuentes. `note` y `checked` se siguen escribiendo como
+  registro.
+- **WhatsApp y copiar liga** se mudaron del pie a junto al sello.
+- **El punto suelto bajo el sello** era el aviso de datos viejos:
+  `display:inline-flex` le ganaba a `hidden`. Ahora `[hidden]` gana siempre.
+- **Texto legible sobre el diorama:** un halo del color del fondo detrás del
+  texto del hero y de la liga de lugares (era verde sobre verde), y tarjetas
+  casi opacas (.88 en vez de .60).
+- **En pantalla ancha el diorama arranca corrido a la derecha**, fuera de la
+  columna del título, y vuelve al centro al bajar.
+- **El foco del diorama ya no se suelta solo** cuando se toma con la página
+  bajada (pasado 0.92 de scroll se soltaba en el cuadro siguiente).
+
+- **`sinFijos`** en `data.js`: fechas ISO donde no se proyecta ningún fijo.
+  La regla de festivos de la tarea sólo cubría su propia semana; la
+  proyección llega hasta 6 días después de `week.end`, y ahí un festivo (el
+  2 nov, un lunes de puente) mandaría a alguien a un lugar cerrado.
+  Antes de publicar se revisó que cada fijo proyectado tuviera historia: los
+  diez llevan de 5 a 13 semanas en `historial.js`; el taller de Cruce de
+  Miradas, ninguna, y no se proyecta.
+
+`verify.js` ya no revisa `cdmx.html`. **Probado** en el panel del navegador
+de escritorio y de celular: sin errores, la tira con algo en los siete días,
+21 celdas en el calendario, CDMX fuera. `verify.js` no se corrió: Playwright
+no está en la Mac.
+
 ## 2026-09-24 · Tres lluvias: ligera, media y tormenta
 
 Adrian: *"it looks like it's raining a lot, even if it's raining just a
