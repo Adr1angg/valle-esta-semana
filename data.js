@@ -38,7 +38,7 @@ window.VS = {
       links:[{l:"Instagram", h:"https://www.instagram.com/espacioodiseavb/p/DeSxdb_Gf2a/"}] },
 
     { id:"reconocernos1015", date:"2026-10-15", s:660, e:1140, time:"11:00 – 19:00", cat:"cultura",
-      title:"Taller Re-conocernos y atelier Una ciudad imaginada", venue:"Espacio Odisea", price:"", repeat:"jueves y viernes",
+      title:"Taller Re-conocernos y atelier Una ciudad imaginada", venue:"Espacio Odisea", price:"",
       blurb:"Laboratorios creativos abiertos de corrido durante el festival Cruce de Miradas: diseño urbano, expresión plástica y convivencia a partir de imaginar la ciudad en colectivo.",
       links:[{l:"Instagram", h:"https://www.instagram.com/espacioodiseavb/p/DeSxdb_Gf2a/"}] },
 
@@ -49,7 +49,7 @@ window.VS = {
       links:[{l:"Instagram", h:"https://www.instagram.com/espacioodiseavb/p/DeSxdb_Gf2a/"}] },
 
     { id:"reconocernos1016", date:"2026-10-16", s:660, e:1140, time:"11:00 – 19:00", cat:"cultura",
-      title:"Taller Re-conocernos y atelier Una ciudad imaginada", venue:"Espacio Odisea", price:"", repeat:"jueves y viernes",
+      title:"Taller Re-conocernos y atelier Una ciudad imaginada", venue:"Espacio Odisea", price:"",
       blurb:"Segundo día de los laboratorios creativos del festival Cruce de Miradas, abiertos de once a siete.",
       links:[{l:"Instagram", h:"https://www.instagram.com/espacioodiseavb/p/DeSxdb_Gf2a/"}] },
 
@@ -120,17 +120,9 @@ window.VS = {
       links:[{l:"Instagram", h:"https://www.instagram.com/elcuencovalle/"}] }
   ],
 
-  cdmx: [
-    { id:"yuyu1017", date:"2026-10-17", time:"23:00", title:"Yu Yu Cine Club: DJ Assault + Teen Flirt + Marea Marea",
-      venue:"YuYu Cine Club, Doctores", price:"Boleto por RA", genre:"electrónica · ghetto house",
-      blurb:"DJ Assault, leyenda de Detroit del ghetto house y el booty bass, en la sala de la Doctores, de once de la noche a cinco de la mañana.",
-      link:"https://ra.co/events/2532676" },
+  cdmx: [],
 
-    { id:"sunday1018", date:"2026-10-18", time:"15:00", title:"Sunday Sunday: Oro Negro + James Axon + Groovy Kds + Eternaut",
-      venue:"Sunday Sunday, Tabaqueros 16", price:"Boleto por RA", genre:"house · italo disco",
-      blurb:"La terraza dominguera del Centro, de tres de la tarde a una de la mañana, con house e italo disco en domingo.",
-      link:"https://ra.co/events/2560765" }
-  ],
+  sinFijos: [],
 
   always: [
     {cat:"aire", title:"Parapente en El Peñón y Divisadero", when:"A diario, según el clima", blurb:"Por lo que Valle es famoso. Vuelos tándem y escuela con Alas del Hombre, Flumen y Skyrides. Septiembre sigue siendo temporada de lluvias: habla antes de subir."},
