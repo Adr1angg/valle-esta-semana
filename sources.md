@@ -79,6 +79,7 @@ La API `/api/v1/users/web_profile_info/` **ya no sirve** (400, schema borrado).
 
 | Fuente | Dónde | Notas |
 |---|---|---|
+| **La Canica** | C. 5 de Mayo 103, Santa María Ahuacatlán (volantes vistos en el café Mundano, 21 oct 2026) | Salón de talleres. Abiertos a quien llegue: **Yoga Vinyasa-Yin sáb 10:00** ($200 suelta), **Hatha Yoga mar y jue 9–10:30** (prueba gratis), **Modèle Vivant Drink & Draw último martes del mes 19:00** ($100–150), **Vipassana 3.er jueves 17:30** (donativo). Cursos de inscripción mensual (cerámica, teatro, D&D): fuera. Lunes de Hielo y Laboratorio de Sueños: por confirmar. Sin handle confirmado: buscar. |
 | Casa Sadhana | Marina Nacional 129 (verificar) | Kirtan y satsang recurrentes. Organizador "Sadhana Now" en Eventbrite y AllEvents. |
 | Chamma Ling / Gran Stupa Bön | [ligmincha.org](https://ligmincha.org/center-mexico-valledebravo/) | Domingos 12:30, gratis. Abierto a diario 10–17. |
 | Temazcal Ma Luisa | 726 26 96 296 | **Lun y mié 16:30, sáb 18:00.** Horario fijo, raro y útil. |
