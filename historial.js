@@ -111,5 +111,22 @@ window.VH={events:[
   {d:"2026-10-12",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
   {d:"2026-10-12",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
   {d:"2026-10-13",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
-  {d:"2026-10-14",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
+  {d:"2026-10-14",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"},
+  {d:"2026-10-15",t:"Francisco Barrios «El Mastuerzo» en acústico",c:"musica",v:"Espacio Odisea",h:"20:00"},
+  {d:"2026-10-15",t:"Presentación de Valle Lee Contigo",c:"cultura",v:"Espacio Odisea",h:"11:00"},
+  {d:"2026-10-15",t:"Taller Re-conocernos y atelier Una ciudad imaginada",c:"cultura",v:"Espacio Odisea",h:"11:00 – 19:00"},
+  {d:"2026-10-16",t:"Cine Odisea: El ser querido",c:"cultura",v:"Espacio Odisea",h:"19:00"},
+  {d:"2026-10-16",t:"Karaoke en El Cuenco",c:"noche",v:"El Cuenco",h:"21:00"},
+  {d:"2026-10-16",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-10-16",t:"Taller Re-conocernos y atelier Una ciudad imaginada",c:"cultura",v:"Espacio Odisea",h:"11:00 – 19:00"},
+  {d:"2026-10-17",t:"DJ Mateo · Rhythm Culture",c:"noche",v:"El Cuenco",h:"21:00"},
+  {d:"2026-10-17",t:"Mercado El 100",c:"mercado",v:"Del Salitre 104",h:"09:00 – 16:00"},
+  {d:"2026-10-17",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-10-18",t:"Brunch dominical en Na-ha",c:"mercado",v:"El Santuario, San Gaspar",h:"08:30 – 13:00"},
+  {d:"2026-10-18",t:"Domingo de tianguis",c:"mercado",v:"Centro",h:"Desde temprano"},
+  {d:"2026-10-18",t:"Meditación guiada en Chamma Ling",c:"bienestar",v:"Chamma Ling",h:"12:30"},
+  {d:"2026-10-19",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-10-19",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
+  {d:"2026-10-20",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
+  {d:"2026-10-21",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
 ]};
