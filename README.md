@@ -48,6 +48,13 @@
 >    cualquier commit que no venga de la tarea del jueves** — en una sesión habría borrado
 >    tres. Corregido el 31 ago 2026.)
 
+> 7. **Facebook cuenta (23 oct 2026, petición de Adrian).** Además de Instagram, cada
+>    jueves lee las páginas oficiales y la búsqueda de eventos de Facebook: ver la
+>    sección **FACEBOOK** de `sources.md` y el paso **2b** de `tarea-semanal.md`
+>    (Ayuntamiento de Valle de Bravo, Festival de las Almas Valle de Bravo —24.ª
+>    edición 30 oct–7 nov—, `facebook.com/search/events/`). Los volantes son imágenes:
+>    ábrelos desde Photos y lee el screenshot. Nunca leas el sidebar de Messenger.
+
 
 Sitio público de una sola página con lo que pasa cada semana en Valle de Bravo.
 Vive en **https://valle-esta-semana.pages.dev** (Cloudflare Pages conectado a
