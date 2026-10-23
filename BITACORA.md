@@ -15,6 +15,14 @@ va hasta arriba.
 
 ---
 
+## 2026-10-23 · El barrido del jueves ahora lee las páginas oficiales de Facebook
+
+Adrian: *"On Facebook there is a page for the Festival de las Almas… there is way more events that you're not looking at. Add more pages, check everywhere more."*
+
+El barrido del 22 oct se quedó en Instagram y en el grupo de compraventa. Al abrir Facebook de verdad salieron tres cosas que se habían perdido: la **Orquesta Sinfónica Orpheus** (sáb 24, 6:30 pm, Jardín Central), el **horario del Triatlón** (cierres 7–14 h, salida 9 am) y que el **Festival de las Almas es del 30 oct al 7 nov**, no "fin de oct a 2 nov". También: el tianguis del domingo está en calle Independencia. `sources.md` tiene ahora la sección de Facebook con páginas, trucos (clic en vez de `href`, leer volantes desde Photos, no leer el sidebar de Messenger) y pendientes; la tarea del jueves gana un paso 2b. Sin cambios al diseño.
+
+---
+
 ## 2026-10-21 · Los días vacíos se llenan, el mes se escribe solo, CDMX se va
 
 Adrian: *"Right now, I don't really use it… there's a lot of everything in

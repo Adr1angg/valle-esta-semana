@@ -157,3 +157,7 @@ Regla: **si un día de tu ventana cae en día festivo, víspera o puente, ningú
 **Y también a los 7 días que siguen a tu `week.end`**, porque ahí la página proyecta sola los fijos (ver `repeat` arriba). Si alguno de esos días es festivo, víspera o puente, ponlo en `sinFijos` (fechas ISO): `sinFijos: ["2026-11-16"]`. Si no hay ninguno, `sinFijos: []`.
 
 Solo lectura en sus cuentas — nunca mandes mensajes, DMs, comentarios ni follows.
+
+## 2b. Facebook — páginas oficiales y búsqueda de eventos (añadido 23 oct 2026)
+
+Además de Instagram y del grupo, cada jueves lee en Chrome: (1) **Ayuntamiento de Valle de Bravo** (`facebook.com/ayuntamientovdb`, pestañas Posts y Photos: conciertos, cierres viales con horas de carreras, reubicaciones del tianguis); (2) **Festival de las Almas Valle de Bravo** (`profile.php?id=100063463926712`; 24.ª edición 30 oct–7 nov 2026, desde ~27 oct buscar el programa por días); (3) la **búsqueda de eventos** `facebook.com/search/events/?q=` con `Valle de Bravo`, `Avándaro`, `Valle de Bravo música`, `... taller`, `... fiesta`, y abre cada candidato para ver hora y organizador (retiros, travesías de CDMX y cursos de salones: fuera); (4) las páginas pendientes de `sources.md`. Los volantes son imágenes: ábrelos desde Photos y lee el screenshot. Lee sólo `[role=main]`; el sidebar trae los chats privados de Adrian y no se usa. Lo oficial (municipio, el festival, el venue) vale como confirmación; lo demás es pista.

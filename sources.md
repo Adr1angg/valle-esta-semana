@@ -127,6 +127,30 @@ La API `/api/v1/users/web_profile_info/` **ya no sirve** (400, schema borrado).
 | Panadería San Simón · Benicio Casa de Pan · Almatierra · Pájaro Café · Dosis · Garden de Walo | Panaderías y cafés con público de brunch |
 | Ruta de la cecina: La Michoacana · La Herencia · Sucursal del Cielo · El Mesón | A diario |
 
+
+---
+
+## FACEBOOK — páginas y eventos (investigado el 23 oct 2026)
+
+**Lección:** el barrido del 22 oct casi no tocó Facebook y se perdió un concierto, el horario del Triatlón y la fecha real del Festival de las Almas. En Facebook **las páginas oficiales y la búsqueda de *eventos*** rinden; el grupo de compraventa no. Todo esto se lee con Chrome (la sesión de Adrian ya está abierta).
+
+**Cómo encontrar una página:** `facebook.com/search/pages/?q=<nombre> Valle de Bravo`, y haz clic en el resultado desde la lista (los `href` de `profile.php?id=` salen bloqueados al leerlos con JS; el clic sí funciona). Los volantes salen como imágenes sin `alt` útil: **abre la foto desde la pestaña Photos y lee el screenshot**, no el texto.
+
+**Cuidado con el sidebar de Messenger:** una lectura de `a[role=link]` sobre toda la página trae los chats privados de Adrian. Limítate a `[role=main]` y nunca copies ni uses nada de ahí.
+
+| Página | Qué da | Estado |
+|---|---|---|
+| **Ayuntamiento de Valle de Bravo** · `facebook.com/ayuntamientovdb` · 34K | Conciertos y actos cívicos con volante (Orquesta Orpheus 24 oct, Jardín Central), **avisos de cierres viales** (dan hora de carreras y desfiles) y reubicaciones (el tianguis dominical está en calle Independencia). **Léela cada jueves**, pestañas Posts y Photos. | ✅ la mejor página que no habíamos revisado |
+| **Festival de las Almas Valle de Bravo** · `profile.php?id=100063463926712` · 8.2K | La página real del festival. **XXIV edición: 30 oct–7 nov 2026, entrada libre**; programa por días sin publicar al 23 oct (la gente lo pedía en los comentarios). Revisar cada día desde ~27 oct. | ✅ |
+| `facebook.com/festivaldelasalmas` | Es el festival de la UAQ en Querétaro, no el de Valle. No sirve. | ☠️ |
+| Turismo Valle de Bravo (Dirección de Turismo Municipal) · 56K | Página oficial de turismo, pendiente de leer a fondo. | ⚠️ pendiente |
+| Club Náutico Avándaro · 2K | Regatas y aniversario. Pendiente. | ⚠️ pendiente |
+| Valle de Bravo (medio, 41K) · Lo Más Popular de Valle de Bravo (262K) · Somos Valle de Bravo (4.8K) | Medios y guías locales; sin revisar. Sólo pistas. | ⚠️ pendiente |
+
+**Búsqueda de eventos:** `facebook.com/search/events/?q=<palabra>`. Probadas el 23 oct: `Valle de Bravo`, `Avándaro`, `Valle de Bravo música`, `... taller`, `... fiesta`. Trae el Triatlón y el Festival de las Almas, pero también retiros y travesías que salen de CDMX, bodas y cursos de salones de eventos (todo eso **fuera**). Aun así, cada jueves corre al menos estas cinco y pasa lo que salga por el filtro de admisión; el detalle de un evento (hora, organizador) se lee abriéndolo.
+
+**Pendientes de investigar (próxima corrida con tiempo):** páginas de Facebook de El Cuenco, La Mezca, Marina 33, Skyline, Rancho Los Grillos / Sunset Musik, Cervecería Nevado, Casa de Cultura Pagaza, Museo de Arte Popular, Club Peñón, Cinema Valle; `ra.co`, Fullpass y Boletia por eventos sueltos en Valle.
+
 ---
 
 ## ☠️ Callejones sin salida — no gastes checks
