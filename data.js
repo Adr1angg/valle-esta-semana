@@ -4,12 +4,12 @@
    calcula index.html sola (ventana rodante desde hoy) y no sale de aqui.    */
 window.VS = {
   week: {
-    label: "22 – 28 octubre 2026",
-    start: "2026-10-22", end: "2026-10-28",
-    updated: "2026-10-23T14:20:00-06:00",
-    updatedText: "vie 23 oct, 14:20",
-    next: "jueves 29 oct",
-    note: "El sábado 24 junta tres cosas: el Triatlón (9 am, con cierres viales de 7 a 14 h en San Gaspar), la Orquesta Sinfónica Orpheus en el Jardín Central a las 6:30 pm, y Na-ha con música en vivo. El Cuenco no ha sacado volante desde el 13 de octubre, así que no hay line-up de fin de semana que confirmar. El resto son los fijos: Mercado El 100, tianguis (ahora en la calle Independencia), meditación en Chamma Ling, Martes de Martinis, Game Night y el Modèle Vivant de La Canica el martes 27. El Festival de las Almas arranca el 30 de octubre."
+    label: "29 octubre – 4 noviembre 2026",
+    start: "2026-10-29", end: "2026-11-04",
+    updated: "2026-10-29T18:50:00-06:00",
+    updatedText: "jue 29 oct, 18:50",
+    next: "jueves 5 nov",
+    note: "Viernes 30 de octubre arranca el fin de semana de Día de Muertos: Halloween Familiar en El Cuenco desde las 11:30, taller, desfile y concurso de altares flotantes del municipio, y el sábado 31 Jhylee y Serch BR en Marina 33 y el Desfile Metamorfosis a las 6:30 pm. Falta lo grande sin horario publicado: el Oktoberfest de Pablo's Adventure en Acatitlán (31 oct y 1 nov, entrada libre, con cerveza, comida, música en vivo, bazar y concurso de saltos MTB) y el Festival de las Almas (Ximena Sariñana el 30, Lagos el 31, Majo Aguilar el 1, Edgar Oceransky el 2, Orquesta Canela el 3, Enjambre el 4), sin sede ni hora en lo que se alcanzó a leer. El jueves 29 hay concierto de rock y pop en El Cuenco, sin hora publicada. De lunes a miércoles quedan los fijos."
   },
 
   cats: {
@@ -22,43 +22,53 @@ window.VS = {
   },
 
   days: [
-    {date:"2026-10-22", dow:"Jueves", s:"Jue", dn:22, m:"oct"},
-    {date:"2026-10-23", dow:"Viernes", s:"Vie", dn:23, m:"oct"},
-    {date:"2026-10-24", dow:"Sábado", s:"Sáb", dn:24, m:"oct"},
-    {date:"2026-10-25", dow:"Domingo", s:"Dom", dn:25, m:"oct"},
-    {date:"2026-10-26", dow:"Lunes", s:"Lun", dn:26, m:"oct"},
-    {date:"2026-10-27", dow:"Martes", s:"Mar", dn:27, m:"oct"},
-    {date:"2026-10-28", dow:"Miércoles", s:"Mié", dn:28, m:"oct"}
+    {date:"2026-10-29", dow:"Jueves", s:"Jue", dn:29, m:"oct"},
+    {date:"2026-10-30", dow:"Viernes", s:"Vie", dn:30, m:"oct"},
+    {date:"2026-10-31", dow:"Sábado", s:"Sáb", dn:31, m:"oct"},
+    {date:"2026-11-01", dow:"Domingo", s:"Dom", dn:1, m:"nov"},
+    {date:"2026-11-02", dow:"Lunes", s:"Lun", dn:2, m:"nov"},
+    {date:"2026-11-03", dow:"Martes", s:"Mar", dn:3, m:"nov"},
+    {date:"2026-11-04", dow:"Miércoles", s:"Mié", dn:4, m:"nov"}
   ],
 
   events: [
-    {id:"creciendo1022",date:"2026-10-22",s:630,e:750,time:"10:30 – 12:30",cat:"bienestar",title:"Creciendo Juntos",venue:"Espacio Odisea",price:"",repeat:"lunes y jueves",blurb:"Taller de estimulación temprana en la biblioteca comunitaria de Santa María para madres, padres y bebés.",links:[{l:"Instagram",h:"https://www.instagram.com/espacioodiseavb/"}]},
+    {"id": "creciendo1029", "date": "2026-10-29", "s": 630, "e": 750, "time": "10:30 – 12:30", "cat": "bienestar", "title": "Creciendo Juntos", "venue": "Espacio Odisea", "price": "", "blurb": "Taller de estimulación temprana en la biblioteca comunitaria de Santa María para madres, padres y bebés.", "repeat": "lunes y jueves", "links": [{"l": "Instagram", "h": "https://www.instagram.com/espacioodiseavb/"}]},
 
-    {id:"naha1023",date:"2026-10-23",s:1230,e:1350,time:"20:30 – 22:30",cat:"musica",title:"Música en vivo en Na-ha",venue:"El Santuario, San Gaspar",price:"",repeat:"viernes y sábado",blurb:"El restaurante del Santuario programa música en vivo dos horas cada viernes y sábado, con el lago enfrente.",links:[{l:"Reservar",h:"https://www.opentable.com/r/restaurante-naha-valle-de-bravo"}]},
+    {"id": "manualidades1029", "date": "2026-10-29", "s": 780, "e": 1020, "time": "13:00 – 17:00", "cat": "cultura", "title": "Taller de manualidades de Día de Muertos", "venue": "Jardín Central", "price": "Gratis", "blurb": "Taller del programa de Día de Muertos del municipio, en el kiosco del Jardín Central.", "links": [{"l": "Programa del municipio", "h": "https://www.facebook.com/ayuntamientovdb"}]},
 
-    {id:"el100_1024",date:"2026-10-24",s:540,e:960,time:"09:00 – 16:00",cat:"mercado",title:"Mercado El 100",venue:"Del Salitre 104",price:"",repeat:"cada sábado",blurb:"Lácteos, verdura, fruta y pan de productores locales, frente al puerto municipal.",links:[]},
+    {"id": "poesia1029", "date": "2026-10-29", "s": 990, "e": 1080, "time": "16:30", "cat": "cultura", "title": "Poesía de Día de Muertos", "venue": "Espacio Odisea", "price": "Entrada libre", "blurb": "El colectivo Letras Vivas lleva una lectura de poesía alusiva al Día de Muertos a la biblioteca comunitaria de Santa María.", "links": [{"l": "Instagram", "h": "https://www.instagram.com/espacioodiseavb/"}]},
 
-    {id:"triatlon1024",date:"2026-10-24",s:540,e:840,time:"09:00",cat:"aire",title:"Triatlón Valle de Bravo (asdeporte)",venue:"San Gaspar del Lago",price:"",blurb:"Carrera de triatlón con salida y meta en San Gaspar del Lago; el municipio cierra a la circulación San Gaspar, El Simulador y El Arco de 7:00 a 14:00. Para verla, mejor llegar temprano.",links:[{l:"Aviso del municipio",h:"https://www.facebook.com/ayuntamientovdb"}]},
+    {"id": "halloween1030", "date": "2026-10-30", "s": 690, "e": 1260, "time": "Desde 11:30 · karaoke 19:00", "cat": "cultura", "title": "Halloween Familiar", "venue": "El Cuenco", "price": "", "blurb": "Abren a las 11:30 con menú sin alcohol; pintacaritas a las 3, cuento con Rosita Pardo a las 4:15, salida por la calaverita por las calles del centro y karaoke con Titi Bernal a las 7.", "links": [{"l": "Instagram", "h": "https://www.instagram.com/elcuencovalle/"}], "lead": true},
 
-    {id:"orpheus1024",date:"2026-10-24",s:1110,e:1200,time:"18:30",cat:"musica",title:"Orquesta Sinfónica Orpheus",venue:"Jardín Central",price:"",blurb:"Concierto de la Orquesta Sinfónica Orpheus en el Jardín Central, dentro de las actividades de Día de Muertos que anuncia el municipio.",links:[{l:"Ayuntamiento",h:"https://www.facebook.com/ayuntamientovdb"}]},
+    {"id": "pan1030", "date": "2026-10-30", "s": 660, "e": 780, "time": "11:00", "cat": "cultura", "title": "Taller de pan de muerto", "venue": "Villa de Colorines", "price": "Gratis", "blurb": "Taller del municipio en la delegación de Villa de Colorines; cada participante lleva sus propios utensilios (lista en el cartel del Ayuntamiento).", "links": [{"l": "Ayuntamiento", "h": "https://www.facebook.com/ayuntamientovdb"}]},
 
-    {id:"naha1024",date:"2026-10-24",s:1230,e:1350,time:"20:30 – 22:30",cat:"musica",title:"Música en vivo en Na-ha",venue:"El Santuario, San Gaspar",price:"",repeat:"viernes y sábado",blurb:"La segunda de las dos noches con música en vivo del restaurante del Santuario.",links:[{l:"Reservar",h:"https://www.opentable.com/r/restaurante-naha-valle-de-bravo"}]},
+    {"id": "desfileCol1030", "date": "2026-10-30", "s": 1140, "e": 1260, "time": "19:00", "cat": "cultura", "title": "Desfile Metamorfosis entre la vida y la muerte", "venue": "Villa de Colorines", "price": "Gratis", "blurb": "Desfile de Día de Muertos de la Glorieta de Colorines a la Delegación, según el programa del municipio.", "links": [{"l": "Ayuntamiento", "h": "https://www.facebook.com/ayuntamientovdb"}]},
 
-    {id:"brunch1025",date:"2026-10-25",s:510,e:780,time:"08:30 – 13:00",cat:"mercado",title:"Brunch dominical en Na-ha",venue:"El Santuario, San Gaspar",price:"",repeat:"cada domingo",blurb:"Brunch de domingo en el restaurante del Santuario, sobre la orilla de San Gaspar. Se reserva por OpenTable.",links:[{l:"Reservar",h:"https://www.opentable.com/r/restaurante-naha-valle-de-bravo"}]},
+    {"id": "altar1030", "date": "2026-10-30", "s": 1140, "e": 1260, "time": "19:00", "cat": "cultura", "title": "Concurso de embarcaciones Altar Flotante", "venue": "Embarcadero Municipal", "price": "Gratis", "blurb": "Concurso de altares flotantes en el Embarcadero Municipal, dentro del programa de Día de Muertos.", "links": [{"l": "Ayuntamiento", "h": "https://www.facebook.com/ayuntamientovdb"}]},
 
-    {id:"tianguis1025",date:"2026-10-25",s:480,e:900,time:"Desde temprano",cat:"mercado",title:"Domingo de tianguis",venue:"Centro",price:"",repeat:"cada domingo",blurb:"El tianguis grande de la semana toma las calles del centro: fruta y verdura de la región, ropa, plantas y comida hecha ahí mismo. Por las obras de la calle Panorámica, el municipio lo reubicó temporalmente en la calle Independencia, junto a la parroquia, hasta nuevo aviso.",links:[]},
+    {"id": "naha1030", "date": "2026-10-30", "s": 1230, "e": 1350, "time": "20:30 – 22:30", "cat": "musica", "title": "Música en vivo en Na-ha", "venue": "El Santuario, San Gaspar", "price": "", "blurb": "El restaurante del Santuario programa música en vivo dos horas cada viernes y sábado, con el lago enfrente.", "repeat": "viernes y sábado", "links": [{"l": "Reservar", "h": "https://www.opentable.com/r/restaurante-naha-valle-de-bravo"}]},
 
-    {id:"chamma1025",date:"2026-10-25",s:750,e:870,time:"12:30",cat:"bienestar",title:"Meditación guiada en Chamma Ling",venue:"Chamma Ling",price:"Gratis",repeat:"cada domingo",blurb:"Práctica guiada de la tradición Bön al pie de la Gran Stupa, la más grande del hemisferio. Abierta a cualquiera.",links:[{l:"Ligmincha",h:"https://ligmincha.org/center-mexico-valledebravo/"}]},
+    {"id": "el100_1031", "date": "2026-10-31", "s": 540, "e": 960, "time": "09:00 – 16:00", "cat": "mercado", "title": "Mercado El 100", "venue": "Del Salitre 104", "price": "", "blurb": "Lácteos, verdura, fruta y pan de productores locales, frente al puerto municipal.", "repeat": "cada sábado", "links": []},
 
-    {id:"creciendo1026",date:"2026-10-26",s:630,e:750,time:"10:30 – 12:30",cat:"bienestar",title:"Creciendo Juntos",venue:"Espacio Odisea",price:"",repeat:"lunes y jueves",blurb:"Taller de estimulación temprana en la biblioteca comunitaria de Santa María para madres, padres y bebés.",links:[{l:"Instagram",h:"https://www.instagram.com/espacioodiseavb/"}]},
+    {"id": "marina1031", "date": "2026-10-31", "s": 900, "e": 1200, "time": "15:00 en adelante", "cat": "noche", "title": "Jhylee y Serch BR en Marina 33", "venue": "Marina 33", "price": "", "blurb": "Dos DJs en una misma cabina: Jhylee abre de 3 a 5 pm y Serch BR toca el set principal de las 5 en adelante, con coctelería y vista al lago.", "links": [{"l": "Instagram", "h": "https://www.instagram.com/marina33terraza/"}]},
 
-    {id:"tianguisav1026",date:"2026-10-26",s:540,e:960,time:"Todo el día",cat:"mercado",title:"Tianguis de Avándaro",venue:"Avándaro",price:"",repeat:"cada lunes",blurb:"El tianguis de los lunes en Avándaro: verdura, quesos, flores y comida, más tranquilo que el del centro.",links:[]},
+    {"id": "desfile1031", "date": "2026-10-31", "s": 1110, "e": 1200, "time": "18:30", "cat": "cultura", "title": "Desfile Metamorfosis entre la vida y la muerte", "venue": "Jardín Central", "price": "Gratis", "blurb": "Sale de la Plazoleta Joaquín Arcadio Pagaza y termina en el Jardín Central, según el programa de Día de Muertos del municipio.", "links": [{"l": "Ayuntamiento", "h": "https://www.facebook.com/ayuntamientovdb"}]},
 
-    {id:"martinis1027",date:"2026-10-27",s:1080,e:1260,time:"18:00 – 21:00",cat:"noche",title:"Martes de Martinis",venue:"El Cuenco",price:"2x1 en martinis",repeat:"cada martes",blurb:"Tres horas de martinis al dos por uno en El Cuenco.",links:[{l:"Instagram",h:"https://www.instagram.com/elcuencovalle/"}]},
+    {"id": "naha1031", "date": "2026-10-31", "s": 1230, "e": 1350, "time": "20:30 – 22:30", "cat": "musica", "title": "Música en vivo en Na-ha", "venue": "El Santuario, San Gaspar", "price": "", "blurb": "La segunda de las dos noches con música en vivo del restaurante del Santuario.", "repeat": "viernes y sábado", "links": [{"l": "Reservar", "h": "https://www.opentable.com/r/restaurante-naha-valle-de-bravo"}]},
 
-    {id:"drinkdraw1027",date:"2026-10-27",s:1140,e:1260,time:"19:00",cat:"cultura",title:"Modèle Vivant · Drink & Draw",venue:"La Canica",price:"$100–150",blurb:"Dibujo con modelo vivo y una copa en La Canica, el último martes de cada mes. Según el volante del salón; se lleva material propio.",links:[]},
+    {"id": "brunch1101", "date": "2026-11-01", "s": 510, "e": 780, "time": "08:30 – 13:00", "cat": "mercado", "title": "Brunch dominical en Na-ha", "venue": "El Santuario, San Gaspar", "price": "", "blurb": "Brunch de domingo en el restaurante del Santuario, sobre la orilla de San Gaspar. Se reserva por OpenTable.", "repeat": "cada domingo", "links": [{"l": "Reservar", "h": "https://www.opentable.com/r/restaurante-naha-valle-de-bravo"}]},
 
-    {id:"gamenight1028",date:"2026-10-28",s:1110,e:1290,time:"18:30",cat:"noche",title:"Game Night",venue:"El Cuenco",price:"Sin cover",repeat:"cada miércoles",blurb:"Juegos de mesa, dominó y billar en El Cuenco.",links:[{l:"Instagram",h:"https://www.instagram.com/elcuencovalle/"}]}
+    {"id": "tianguis1101", "date": "2026-11-01", "s": 480, "e": 900, "time": "Desde temprano", "cat": "mercado", "title": "Domingo de tianguis", "venue": "Centro", "price": "", "blurb": "El tianguis grande de la semana: fruta y verdura de la región, ropa, plantas y comida hecha ahí mismo. Por las obras, el municipio lo reubicó en la calle Independencia, junto a la parroquia, hasta nuevo aviso.", "repeat": "cada domingo", "links": []},
+
+    {"id": "chamma1101", "date": "2026-11-01", "s": 750, "e": 870, "time": "12:30", "cat": "bienestar", "title": "Meditación guiada en Chamma Ling", "venue": "Chamma Ling", "price": "Gratis", "blurb": "Práctica guiada de la tradición Bön al pie de la Gran Stupa, la más grande del hemisferio. Abierta a cualquiera.", "repeat": "cada domingo", "links": [{"l": "Ligmincha", "h": "https://ligmincha.org/center-mexico-valledebravo/"}]},
+
+    {"id": "creciendo1102", "date": "2026-11-02", "s": 630, "e": 750, "time": "10:30 – 12:30", "cat": "bienestar", "title": "Creciendo Juntos", "venue": "Espacio Odisea", "price": "", "blurb": "Taller de estimulación temprana en la biblioteca comunitaria de Santa María para madres, padres y bebés.", "repeat": "lunes y jueves", "links": [{"l": "Instagram", "h": "https://www.instagram.com/espacioodiseavb/"}]},
+
+    {"id": "tianguisav1102", "date": "2026-11-02", "s": 540, "e": 960, "time": "Todo el día", "cat": "mercado", "title": "Tianguis de Avándaro", "venue": "Avándaro", "price": "", "blurb": "El tianguis de los lunes en Avándaro: verdura, quesos, flores y comida, más tranquilo que el del centro.", "repeat": "cada lunes", "links": []},
+
+    {"id": "martinis1103", "date": "2026-11-03", "s": 1080, "e": 1260, "time": "18:00 – 21:00", "cat": "noche", "title": "Martes de Martinis", "venue": "El Cuenco", "price": "2x1 en martinis", "blurb": "Tres horas de martinis al dos por uno en El Cuenco.", "repeat": "cada martes", "links": [{"l": "Instagram", "h": "https://www.instagram.com/elcuencovalle/"}]},
+
+    {"id": "gamenight1104", "date": "2026-11-04", "s": 1110, "e": 1290, "time": "18:30", "cat": "noche", "title": "Game Night", "venue": "El Cuenco", "price": "Sin cover", "blurb": "Juegos de mesa, dominó y billar en El Cuenco.", "repeat": "cada miércoles", "links": [{"l": "Instagram", "h": "https://www.instagram.com/elcuencovalle/"}]}
   ],
 
   cdmx: [],
@@ -88,7 +98,7 @@ window.VS = {
     {cat:"musica", title:"La Mezca", when:"Jue–sáb, hasta las 2", blurb:"Mezcalería en Pagaza 316 que sí programa bandas en vivo, y de vez en cuando noche de stand-up."}
   ],
 
-  checked: "Barrido ampliado del vie 23 oct. Facebook: Ayuntamiento de Valle de Bravo (Orquesta Orpheus, cierres del Triatlón, tianguis reubicado), Festival de las Almas Valle de Bravo (24.ª edición 30 oct–7 nov, programa sin publicar), búsqueda de eventos de Facebook (Triatlón 9 am; el resto talleres de salón de eventos y retiros de CDMX, fuera) · Instagram de El Cuenco (último volante 13 oct), Espacio Odisea, Marina 33 (Canelo vs Mbilli 31 oct), Turismo, Santuario, Cinco Rodavento, Mestizo, Monkeys, Surreal, Nevado (sin fechas de esta semana) · eticket (sin eventos) · grupo QUE TODO VALLE DE BRAVO SE ENTERE (ruido) · fmv.mx, tritour.org y Casa Sadhana (no revisados).",
+  checked: "Barrido del jue 29 oct. Instagram: El Cuenco (Halloween Familiar vie 30; Carlos Gágaro jue 29 sin hora; sin volante semanal nuevo), Oktoberfest Valle de Bravo (31 oct–1 nov, Pablo's Adventure, sin horarios ni line-up de música), Marina 33 (sáb 31), Espacio Odisea (poesía jue 29; taller de velas 7 nov, de pago, fuera), Turismo y Cultura · Facebook: Ayuntamiento de Valle de Bravo (programa de Día de Muertos), Festival de las Almas Valle de Bravo (cartelera 30 oct–7 nov sin sede ni hora; el sitio festivaldelasalmas.com sigue en la edición 2025) · eticket (sin eventos) · no revisados esta vez: grupo de Facebook, Santuario, Mestizo, Cinco Rodavento, Surreal, Casa Sadhana, fmv.mx, tritour.org.",
 
-  soon: "Oktoberfest en Skyline a fin de mes (sin fecha) · Canelo vs Mbilli en pantalla en Marina 33, sáb 31 oct · Mëhill en Valle de Bravo, sáb 31 oct 21:00, Rancho Los Grillos, con Mario Z, Örak B2B Paolo, Alan Zamudio y Jair (Sunset Musik; boletos por WhatsApp 726 221 6371 y en Legend Dragon Gym) · XXIV Festival de las Almas, 30 oct al 7 nov, entrada libre (programa por días aún sin publicar al 23 oct) · Meditación Vipassana en La Canica, jue 19 nov 17:30, donativo voluntario · Club Peñón Open 14–19 dic."
+  soon: "Oktoberfest en Pablo's Adventure, Acatitlán, sáb 31 oct y dom 1 nov, entrada libre, con Tutto Fritti, Faena, 42° y El Cuenco como expositores; horario por confirmar en @oktoberfest.vdb · XXIV Festival de las Almas, 30 oct al 7 nov, entrada libre: Ximena Sariñana (30), Lagos (31), Majo Aguilar (1 nov), Edgar Oceransky (2), Orquesta Canela (3), Enjambre (4), Orquesta Filarmónica del Estado de México (5), Sonora Dinamita (6) y Alejandra Guzmán (7), sede y horas sin publicar · Taller de velas artesanales en Espacio Odisea, sáb 7 nov 10–16 h, $2,000 con reserva · Meditación Vipassana en La Canica, jue 19 nov 17:30, donativo · Club Peñón Open 14–19 dic."
 };

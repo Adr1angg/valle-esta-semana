@@ -37,6 +37,8 @@ window.VL = {
   "Marina 33":                 [19.18600, -100.12852],
   "Centro histórico":           [19.19367, -100.13174],
   "Parroquia de San Francisco de Asís": [19.19367, -100.13157],
+  "Villa de Colorines":        [19.1830, -100.1740],
+  "Embarcadero Municipal":     [19.1903, -100.1306],
   "Altitud 1700, Plaza Andaro, Avándaro": [19.16366, -100.12938]
 
 };

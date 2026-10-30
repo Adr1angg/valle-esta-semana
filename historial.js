@@ -128,5 +128,19 @@ window.VH={events:[
   {d:"2026-10-19",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
   {d:"2026-10-19",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
   {d:"2026-10-20",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
-  {d:"2026-10-21",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
+  {d:"2026-10-21",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"},
+  {d:"2026-10-22",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-10-23",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-10-24",t:"Mercado El 100",c:"mercado",v:"Del Salitre 104",h:"09:00 – 16:00"},
+  {d:"2026-10-24",t:"Música en vivo en Na-ha",c:"musica",v:"El Santuario, San Gaspar",h:"20:30 – 22:30"},
+  {d:"2026-10-24",t:"Orquesta Sinfónica Orpheus",c:"musica",v:"Jardín Central",h:"18:30"},
+  {d:"2026-10-24",t:"Triatlón Valle de Bravo (asdeporte)",c:"aire",v:"San Gaspar del Lago",h:"09:00"},
+  {d:"2026-10-25",t:"Brunch dominical en Na-ha",c:"mercado",v:"El Santuario, San Gaspar",h:"08:30 – 13:00"},
+  {d:"2026-10-25",t:"Domingo de tianguis",c:"mercado",v:"Centro",h:"Desde temprano"},
+  {d:"2026-10-25",t:"Meditación guiada en Chamma Ling",c:"bienestar",v:"Chamma Ling",h:"12:30"},
+  {d:"2026-10-26",t:"Creciendo Juntos",c:"bienestar",v:"Espacio Odisea",h:"10:30 – 12:30"},
+  {d:"2026-10-26",t:"Tianguis de Avándaro",c:"mercado",v:"Avándaro",h:"Todo el día"},
+  {d:"2026-10-27",t:"Martes de Martinis",c:"noche",v:"El Cuenco",h:"18:00 – 21:00"},
+  {d:"2026-10-27",t:"Modèle Vivant · Drink & Draw",c:"cultura",v:"La Canica",h:"19:00"},
+  {d:"2026-10-28",t:"Game Night",c:"noche",v:"El Cuenco",h:"18:30"}
 ]};
