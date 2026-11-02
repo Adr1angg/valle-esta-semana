@@ -32,6 +32,7 @@ window.VL = {
   "San Gaspar del Lago":       [19.23770, -100.15292],
   "Chamma Ling":               [19.19367, -100.13174],
   "La Canica":                [19.18865, -100.12802],
+  "Rancho Flor y Canto":      [19.20740, -100.09598],   /* Los Tapiales, Acatitlán: el sitio no da calle; punto del pueblo */
   "Casa Sadhana":              [19.16366, -100.12938],
   "Jardín Central":            [19.19367, -100.13157],
   "Marina 33":                 [19.18600, -100.12852],

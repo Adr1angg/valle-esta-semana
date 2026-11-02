@@ -68,7 +68,11 @@ window.VS = {
 
     {"id": "martinis1103", "date": "2026-11-03", "s": 1080, "e": 1260, "time": "18:00 – 21:00", "cat": "noche", "title": "Martes de Martinis", "venue": "El Cuenco", "price": "2x1 en martinis", "blurb": "Tres horas de martinis al dos por uno en El Cuenco.", "repeat": "cada martes", "links": [{"l": "Instagram", "h": "https://www.instagram.com/elcuencovalle/"}]},
 
-    {"id": "gamenight1104", "date": "2026-11-04", "s": 1110, "e": 1290, "time": "18:30", "cat": "noche", "title": "Game Night", "venue": "El Cuenco", "price": "Sin cover", "blurb": "Juegos de mesa, dominó y billar en El Cuenco.", "repeat": "cada miércoles", "links": [{"l": "Instagram", "h": "https://www.instagram.com/elcuencovalle/"}]}
+    {"id": "gamenight1104", "date": "2026-11-04", "s": 1110, "e": 1290, "time": "18:30", "cat": "noche", "title": "Game Night", "venue": "El Cuenco", "price": "Sin cover", "blurb": "Juegos de mesa, dominó y billar en El Cuenco.", "repeat": "cada miércoles", "links": [{"l": "Instagram", "h": "https://www.instagram.com/elcuencovalle/"}]},
+
+    {"id": "labsuenos1103", "date": "2026-11-03", "s": 660, "e": 780, "time": "11:00 – 13:00", "cat": "cultura", "title": "Laboratorio de Sueños", "venue": "La Canica", "price": "", "blurb": "Sólo se sabe lo que dice su volante en La Canica: presencial todos los martes de 11 a 13, a cargo de @fdezaln. No dice de qué se trata ni cuánto cuesta; informes al 55 7944 2541.", "repeat": "cada martes", "links": []},
+
+    {"id": "dnd1103", "date": "2026-11-03", "s": 960, "e": 1080, "time": "16:00 – 18:00", "cat": "cultura", "title": "Dungeons & Dragons para adultos", "venue": "La Canica", "price": "$350 la sesión", "blurb": "Introducción a D&D con Azul Herrera en La Canica, Santa María: una historia colaborativa para quien nunca ha jugado. $1,200 al mes o $350 la sesión suelta; informes al 722 455 6079.", "repeat": "cada martes", "links": []}
   ],
 
   cdmx: [],
@@ -92,6 +96,8 @@ window.VS = {
     {cat:"bienestar", title:"Temazcal con Ma Luisa", when:"Lun y mié 16:30 · sáb 18:00", blurb:"Temazcal tradicional con horario fijo, sin tener que armar grupo. Reserva por teléfono."},
     {cat:"bienestar", title:"Yoga Vinyasa-Yin en La Canica", when:"Sáb 10:00 · 75 min", blurb:"Clase de yoga con enfoque restaurativo con Maxime Scagnetti en La Canica, Santa María. $200 la clase suelta o $700 por cuatro; se lleva tapete."},
     {cat:"bienestar", title:"Hatha Yoga en La Canica", when:"Mar y jue 9:00–10:30", blurb:"Clase de hatha yoga en La Canica, Santa María, con primera clase de prueba gratuita. Se lleva tapete; informes por WhatsApp en el volante."},
+    {cat:"cultura", title:"Taller de cerámica en La Canica", when:"Mar–jue · con reserva", blurb:"Trabajo manual mar y jue 16–18 y mié y jue 11–13, desde 12 años: $500 la sesión suelta o $1,600 por cuatro, más quema y esmalte. Torno en clase individual con horario a elegir. Reserva con Ana Sofía al 722 437 1769."},
+    {cat:"bienestar", title:"Lunes de Hielo en Rancho Flor y Canto", when:"Lun 11:30–14:00", blurb:"Práctica con hielo guiada por Silvia García, con certificación en termogénesis, en el rancho de caballos de Acatitlán. El volante no trae precio ni el rancho lo anuncia en su sitio; informes al 55 4370 6107."},
     {cat:"bienestar", title:"Spa de Rodavento", when:"A diario, con cita", blurb:"Circuito de agua y tratamientos en el bosque, camino a Los Saucos. Abierto a quien no se hospeda."},
     {cat:"noche", title:"Mestizo", when:"Desde las 16:00 · +18", blurb:"Rooftop de mezcal en Pagaza 321 con DJ residente todos los fines. Bellakeo, no deep house."},
     {cat:"noche", title:"Marina 33", when:"Jue–dom · desde las 13:00", blurb:"Rooftop con cabina y vista al lago en Santa María. DJ en vivo los fines y promos de jueves a domingo."},
