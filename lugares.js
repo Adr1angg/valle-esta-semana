@@ -40,6 +40,7 @@ window.VL = {
   "Parroquia de San Francisco de Asís": [19.19367, -100.13157],
   "Villa de Colorines":        [19.1830, -100.1740],
   "Embarcadero Municipal":     [19.1903, -100.1306],
+  "Alameda Bicentenario, La Velaría": [19.1915, -100.1312],  /* aproximado: junto al Embarcadero */
   "Altitud 1700, Plaza Andaro, Avándaro": [19.16366, -100.12938]
 
 };
