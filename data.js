@@ -4,10 +4,10 @@ window.VS = {
   "label": "5 – 11 noviembre 2026",
   "start": "2026-11-05",
   "end": "2026-11-11",
-  "updated": "2026-11-05T12:05:00-06:00",
-  "updatedText": "jue 5 nov, 12:05",
+  "updated": "2026-11-06T12:00:00-06:00",
+  "updatedText": "vie 6 nov, 12:00",
   "next": "jueves 12 nov",
-  "note": "Hoy jueves cierra fuerte el Festival de las Almas: la tarde en La Velaría y a las 7 el concierto sinfónico de la OSEM con Metamorfeame, gratis. El Cuenco hace noche acústica de Jack Savoretti a las 7:30. El resto de la semana el festival sigue (Sonora Dinamita el viernes 6 y Alejandra Guzmán el sábado 7 según lo anunciado), pero su cartelera por horas todavía no sale; el Encuentro de Bibliotecas de Espacio Odisea corre hasta el viernes. Sábado, domingo y de lunes a miércoles quedan los fijos."
+  "note": "Último fin de semana del Festival de las Almas, todo gratis: viernes Sonora Dinamita a las 9 en La Velaría y sábado la clausura con Alejandra Guzmán a las 9, con tardes de bandas, talleres en La Estrella y ofrendas, libros y teatro en el Museo Pagaza. De lunes a miércoles quedan los fijos."
  },
  "cats": {
   "noche": {
@@ -196,8 +196,7 @@ window.VS = {
      "l": "Festival de las Almas",
      "h": "https://www.facebook.com/profile.php?id=100063463926712"
     }
-   ],
-   "lead": true
+   ]
   },
   {
    "id": "naha1106",
@@ -419,6 +418,169 @@ window.VS = {
      "h": "https://www.instagram.com/elcuencovalle/"
     }
    ]
+  },
+  {
+   "id": "almas1106a",
+   "date": "2026-11-06",
+   "s": 780,
+   "e": 1260,
+   "time": "13:00 – 21:00",
+   "cat": "musica",
+   "title": "Festival de las Almas: la tarde en La Velaría",
+   "venue": "Alameda Bicentenario, La Velaría",
+   "price": "Entrada libre",
+   "blurb": "Danza folclórica de la Compañía Metztli a la 1, el dúo Voz entre Cuerdas con el Coro Polifónico del Estado de México a las 4 y Xocolatín Jazz a las 6.",
+   "links": [
+    {
+     "l": "Festival de las Almas",
+     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+    }
+   ]
+  },
+  {
+   "id": "almas1106b",
+   "date": "2026-11-06",
+   "s": 1260,
+   "e": 1380,
+   "time": "21:00",
+   "cat": "musica",
+   "title": "Sonora Dinamita",
+   "venue": "Alameda Bicentenario, La Velaría",
+   "price": "Entrada libre",
+   "blurb": "La Sonora Dinamita de Lucho Argaín es el plato fuerte del viernes del Festival de las Almas: cumbia gratis frente al lago.",
+   "links": [
+    {
+     "l": "Festival de las Almas",
+     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+    }
+   ]
+  },
+  {
+   "id": "estrella1106",
+   "date": "2026-11-06",
+   "s": 660,
+   "e": 1080,
+   "time": "11:00 – 18:00",
+   "cat": "cultura",
+   "title": "Talleres de Día de Muertos",
+   "venue": "La Estrella",
+   "price": "Gratis",
+   "blurb": "Talleres de Día de Muertos de 11 a 5 y, a las 5, el taller Plasmando Tradiciones, dentro del Festival de las Almas.",
+   "links": [
+    {
+     "l": "Festival de las Almas",
+     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+    }
+   ]
+  },
+  {
+   "id": "pagaza1106a",
+   "date": "2026-11-06",
+   "s": 720,
+   "e": 1020,
+   "time": "12:00 y 16:00",
+   "cat": "cultura",
+   "title": "Dos libros: Ritos y prácticas funerarias · Sabores y saberes",
+   "venue": "Museo Joaquín Arcadio Pagaza",
+   "price": "Entrada libre",
+   "blurb": "Presentación de Ritos y prácticas funerarias al mediodía y de Sabores y saberes a las 4, en la casa de cultura de Valle.",
+   "links": [
+    {
+     "l": "Festival de las Almas",
+     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+    }
+   ]
+  },
+  {
+   "id": "pagaza1106b",
+   "date": "2026-11-06",
+   "s": 1200,
+   "e": 1290,
+   "time": "20:00",
+   "cat": "cultura",
+   "title": "Recorrido de ofrendas",
+   "venue": "Museo Joaquín Arcadio Pagaza",
+   "price": "Entrada libre",
+   "blurb": "Recorrido nocturno por las ofrendas del Festival de las Almas en la casa de cultura de Valle.",
+   "links": [
+    {
+     "l": "Festival de las Almas",
+     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+    }
+   ]
+  },
+  {
+   "id": "almas1107a",
+   "date": "2026-11-07",
+   "s": 840,
+   "e": 1020,
+   "time": "14:00 – 17:00",
+   "cat": "musica",
+   "title": "Festival de las Almas: la tarde en La Velaría",
+   "venue": "Alameda Bicentenario, La Velaría",
+   "price": "Entrada libre",
+   "blurb": "La Banda Filarmónica Infantil y Juvenil de Donato Guerra a las 2 y el rock de La Calle de los Locos, de Villa de Colorines, a las 3:30.",
+   "links": [
+    {
+     "l": "Festival de las Almas",
+     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+    }
+   ]
+  },
+  {
+   "id": "almas1107b",
+   "date": "2026-11-07",
+   "s": 1260,
+   "e": 1380,
+   "time": "21:00",
+   "cat": "musica",
+   "title": "Alejandra Guzmán cierra el Festival de las Almas",
+   "venue": "Alameda Bicentenario, La Velaría",
+   "price": "Entrada libre",
+   "blurb": "La gran clausura: Alejandra Guzmán, gratis, en La Velaría. Es lo más grande que pasa en Valle en todo el año sin pagar boleto, así que llega con tiempo; antes, la tarde de bandas desde las 2.",
+   "links": [
+    {
+     "l": "Festival de las Almas",
+     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+    }
+   ],
+   "lead": true
+  },
+  {
+   "id": "estrella1107",
+   "date": "2026-11-07",
+   "s": 660,
+   "e": 1020,
+   "time": "11:00 – 17:00",
+   "cat": "cultura",
+   "title": "Talleres de Día de Muertos",
+   "venue": "La Estrella",
+   "price": "Gratis",
+   "blurb": "Último día de los talleres de Día de Muertos del Festival de las Almas.",
+   "links": [
+    {
+     "l": "Festival de las Almas",
+     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+    }
+   ]
+  },
+  {
+   "id": "pagaza1107",
+   "date": "2026-11-07",
+   "s": 960,
+   "e": 1260,
+   "time": "16:00 y 19:00",
+   "cat": "cultura",
+   "title": "La camaradería y obra de teatro de Día de Muertos",
+   "venue": "Museo Joaquín Arcadio Pagaza",
+   "price": "Entrada libre",
+   "blurb": "La camaradería a las 4 y una obra de teatro de Día de Muertos a las 7, en la casa de cultura de Valle, para cerrar el festival.",
+   "links": [
+    {
+     "l": "Festival de las Almas",
+     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+    }
+   ]
   }
  ],
  "cdmx": [],
@@ -557,6 +719,6 @@ window.VS = {
    "blurb": "Mezcalería en Pagaza 316 que sí programa bandas en vivo, y de vez en cuando noche de stand-up."
   }
  ],
- "checked": "Barrido del jue 5 nov. Instagram: El Cuenco (jueves acústico 5 nov; sin volante semanal nuevo para el fin de semana), Marina 33 (último post lun 2 nov, sin agenda), Espacio Odisea (Poesía Dadá jue 5; Quinto Encuentro de Bibliotecas 4–6 nov con programa de los días 5 y 6 sin leer; Pasantía Perú–México hasta el 12 nov, con actividades virtuales o en asilo y TEC que no son de público), Turismo Valle de Bravo (sin agenda nueva) · Facebook: Festival de las Almas (cartelera del jueves 5; viernes 6 y sábado 7 aún sin publicar), Ayuntamiento (nada nuevo desde el 1 nov), página de El Cuenco, búsquedas del grupo sin resultados · eticket (sin eventos). No se alcanzó a revisar: Mestizo, Doña Barra, R27, Rancho Avándaro, Club Náutico, fmv.mx (primer jueves, pendiente) ni tritour.org (pide cuenta).",
- "soon": "XXIV Festival de las Almas, hasta el sábado 7 nov, entrada libre: Sonora Dinamita (vie 6) y Alejandra Guzmán (sáb 7), sede y horas sin publicar al 5 nov · Quinto Encuentro de Bibliotecas Comunitarias y Populares en Espacio Odisea, 4–6 nov, programa del 5 y 6 en el perfil @espacioodiseavb · Pasantía Perú–México en Odisea: encuentro virtual lun 9 nov 4 pm, lectura en el asilo mié 11, tendedero literario en el TEC jue 12 · Meditación Vipassana en La Canica jue 19 nov 17:30 · Club Peñón Open 14–19 dic · Monarca Paragliding Open 10–16 ene 2027"
+ "checked": "Barrido del jue 5 nov. Instagram: El Cuenco (jueves acústico 5 nov; sin volante semanal nuevo para el fin de semana), Marina 33 (último post lun 2 nov, sin agenda), Espacio Odisea (Poesía Dadá jue 5; Quinto Encuentro de Bibliotecas 4–6 nov con programa de los días 5 y 6 sin leer; Pasantía Perú–México hasta el 12 nov, con actividades virtuales o en asilo y TEC que no son de público), Turismo Valle de Bravo (sin agenda nueva) · Facebook: Festival de las Almas (cartelera del jueves 5; viernes 6 y sábado 7 aún sin publicar), Ayuntamiento (nada nuevo desde el 1 nov), página de El Cuenco, búsquedas del grupo sin resultados · eticket (sin eventos). No se alcanzó a revisar: Mestizo, Doña Barra, R27, Rancho Avándaro, Club Náutico, fmv.mx (primer jueves, pendiente) ni tritour.org (pide cuenta). · Corrección del vie 6 nov: se agregó la cartelera completa del Festival de las Almas del 6 y 7 nov (página de Facebook del festival, publicada el mismo viernes).",
+ "soon": "Quinto Encuentro de Bibliotecas Comunitarias y Populares en Espacio Odisea, 4–6 nov, programa del 5 y 6 en el perfil @espacioodiseavb · Pasantía Perú–México en Odisea: encuentro virtual lun 9 nov 4 pm, lectura en el asilo mié 11, tendedero literario en el TEC jue 12 · Meditación Vipassana en La Canica jue 19 nov 17:30 · Club Peñón Open 14–19 dic · Monarca Paragliding Open 10–16 ene 2027"
 };

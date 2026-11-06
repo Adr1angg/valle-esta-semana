@@ -40,7 +40,9 @@ window.VL = {
   "Parroquia de San Francisco de Asís": [19.19367, -100.13157],
   "Villa de Colorines":        [19.1830, -100.1740],
   "Embarcadero Municipal":     [19.1903, -100.1306],
-  "Alameda Bicentenario, La Velaría": [19.1915, -100.1312],  /* aproximado: junto al Embarcadero */
+  "Alameda Bicentenario, La Velaría": [19.1915, -100.1312],
+  "Museo Joaquín Arcadio Pagaza": [19.1934, -100.1320],  /* casa de cultura, Pagaza 201 */
+  "La Estrella":               [19.19367, -100.13174],   /* sede del Festival de las Almas sin ubicar: cae al Centro */  /* aproximado: junto al Embarcadero */
   "Altitud 1700, Plaza Andaro, Avándaro": [19.16366, -100.12938]
 
 };
