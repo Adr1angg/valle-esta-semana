@@ -1,13 +1,13 @@
 /* Valle Esta Semana — contenido de la semana. Lo unico que cambia cada jueves. */
 window.VS = {
  "week": {
-  "label": "5 – 11 noviembre 2026",
-  "start": "2026-11-05",
-  "end": "2026-11-11",
-  "updated": "2026-11-06T12:00:00-06:00",
-  "updatedText": "vie 6 nov, 12:00",
-  "next": "jueves 12 nov",
-  "note": "Último fin de semana del Festival de las Almas, todo gratis: viernes Sonora Dinamita a las 9 en La Velaría y sábado la clausura con Alejandra Guzmán a las 9, con tardes de bandas, talleres en La Estrella y ofrendas, libros y teatro en el Museo Pagaza. De lunes a miércoles quedan los fijos."
+  "label": "12 – 18 noviembre 2026",
+  "start": "2026-11-12",
+  "end": "2026-11-18",
+  "updated": "2026-11-12T12:11:00-06:00",
+  "updatedText": "jue 12 nov, 12:11",
+  "next": "jueves 19 nov",
+  "note": "Primera semana después del Festival de las Almas, y viene de puente: el lunes 16 es festivo por el Día de la Revolución. Lo fuerte es el regreso de la Jam Session del viernes en El Cuenco, la Mini Granja gratis en La Velaría de viernes a domingo y un DJ set el sábado en Marina 33; de lunes a miércoles van los fijos, porque El Cuenco todavía no publica su volante semanal."
  },
  "cats": {
   "noche": {
@@ -43,544 +43,457 @@ window.VS = {
  },
  "days": [
   {
-   "date": "2026-11-05",
+   "date": "2026-11-12",
    "dow": "Jueves",
    "s": "Jue",
-   "dn": 5,
+   "dn": 12,
    "m": "nov"
   },
   {
-   "date": "2026-11-06",
+   "date": "2026-11-13",
    "dow": "Viernes",
    "s": "Vie",
-   "dn": 6,
+   "dn": 13,
    "m": "nov"
   },
   {
-   "date": "2026-11-07",
+   "date": "2026-11-14",
    "dow": "Sábado",
    "s": "Sáb",
-   "dn": 7,
+   "dn": 14,
    "m": "nov"
   },
   {
-   "date": "2026-11-08",
+   "date": "2026-11-15",
    "dow": "Domingo",
    "s": "Dom",
-   "dn": 8,
+   "dn": 15,
    "m": "nov"
   },
   {
-   "date": "2026-11-09",
+   "date": "2026-11-16",
    "dow": "Lunes",
    "s": "Lun",
-   "dn": 9,
+   "dn": 16,
    "m": "nov"
   },
   {
-   "date": "2026-11-10",
+   "date": "2026-11-17",
    "dow": "Martes",
    "s": "Mar",
-   "dn": 10,
+   "dn": 17,
    "m": "nov"
   },
   {
-   "date": "2026-11-11",
+   "date": "2026-11-18",
    "dow": "Miércoles",
    "s": "Mié",
-   "dn": 11,
+   "dn": 18,
    "m": "nov"
   }
  ],
  "events": [
   {
-   "id": "creciendo1105",
-   "date": "2026-11-05",
+   "price": "",
+   "links": [
+    {
+     "l": "Instagram",
+     "h": "https://www.instagram.com/espacioodiseavb/"
+    }
+   ],
+   "id": "creciendo1112",
+   "date": "2026-11-12",
    "s": 630,
    "e": 750,
    "time": "10:30 – 12:30",
    "cat": "bienestar",
    "title": "Creciendo Juntos",
    "venue": "Espacio Odisea",
-   "price": "",
    "blurb": "Taller de estimulación temprana en la biblioteca comunitaria de Santa María para madres, padres y bebés.",
-   "repeat": "lunes y jueves",
-   "links": [
-    {
-     "l": "Instagram",
-     "h": "https://www.instagram.com/espacioodiseavb/"
-    }
-   ]
+   "repeat": "lunes y jueves"
   },
   {
-   "id": "velaria1105a",
-   "date": "2026-11-05",
-   "s": 780,
-   "e": 1050,
-   "time": "13:00 – 17:30",
-   "cat": "musica",
-   "title": "Festival de las Almas: la tarde en La Velaría",
-   "venue": "Alameda Bicentenario, La Velaría",
-   "price": "Entrada libre",
-   "blurb": "Aliento Dual a la 1, la obra Reyna, La Queca Bravo a las 2 y el show de recuerdo al rock de la Banda OESTE a las 4, antes del concierto sinfónico.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ]
-  },
-  {
-   "id": "poesia1105",
-   "date": "2026-11-05",
-   "s": 960,
-   "e": 1080,
-   "time": "16:00",
-   "cat": "cultura",
-   "title": "Poesía Dadá con Marian Manga",
-   "venue": "Espacio Odisea",
-   "price": "",
-   "blurb": "Taller con Marian Manga (@warmi_lunar, de Cusco) para escribir poemas de sólo cinco palabras a partir del libro objeto de Carlos Oquendo de Amat; no pide experiencia.",
-   "links": [
-    {
-     "l": "Instagram",
-     "h": "https://www.instagram.com/espacioodiseavb/"
-    }
-   ]
-  },
-  {
-   "id": "dndninos1105",
-   "date": "2026-11-05",
+   "price": "$350 la sesión",
+   "links": [],
+   "id": "dndninos1112",
+   "date": "2026-11-12",
    "s": 960,
    "e": 1080,
    "time": "16:00 – 18:00",
    "cat": "cultura",
    "title": "Dungeons & Dragons para niños (8+)",
    "venue": "La Canica",
-   "price": "$350 la sesión",
    "blurb": "Sesión de D&D para niños desde los 8 años con Azul Herrera en La Canica, Santa María. $1,200 al mes o $350 la sesión suelta; informes al 722 455 6079.",
-   "repeat": "cada jueves",
-   "links": []
+   "repeat": "cada jueves"
   },
   {
-   "id": "cuenco1105",
-   "date": "2026-11-05",
-   "s": 1170,
-   "e": 1320,
-   "time": "19:30 (puntual)",
-   "cat": "musica",
-   "title": "Noche acústica: el Harder Than Easy de Jack Savoretti",
-   "venue": "El Cuenco",
-   "price": "Cover $150",
-   "blurb": "David recorre en acústico el disco Harder Than Easy de Jack Savoretti, entre folk, soul y rock. Happy hour en martinis y coctelería sin alcohol de 5 a 8.",
+   "price": "",
    "links": [
     {
      "l": "Instagram",
      "h": "https://www.instagram.com/elcuencovalle/"
     }
-   ]
+   ],
+   "id": "cuenco1112",
+   "date": "2026-11-12",
+   "s": 1200,
+   "e": 1350,
+   "time": "20:00 · happy hour desde las 18:00",
+   "cat": "musica",
+   "title": "Girls Night Out: rock en español en acústico con Erick Tzintzún",
+   "venue": "El Cuenco",
+   "blurb": "Erick Tzintzún toca en acústico clásicos del rock en español para cantar en grupo; antes, martinis al 2x1 de 6 a 9."
   },
   {
-   "id": "velaria1105b",
-   "date": "2026-11-05",
-   "s": 1140,
-   "e": 1260,
-   "time": "19:00",
-   "cat": "musica",
-   "title": "Rock sinfónico: la OSEM y Metamorfeame, tributo a Caifanes y Jaguares",
-   "venue": "Alameda Bicentenario, La Velaría",
    "price": "Entrada libre",
-   "blurb": "La Orquesta Sinfónica del Estado de México con Metamorfeame tocan Caifanes y Jaguares en La Velaría. Es la noche grande del Festival de las Almas y no cuesta nada: llega temprano por lugar.",
    "links": [
     {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
+     "l": "Ayuntamiento",
+     "h": "https://www.facebook.com/ayuntamientovdb"
     }
-   ]
+   ],
+   "id": "granja1113",
+   "date": "2026-11-13",
+   "s": 600,
+   "e": 1020,
+   "time": "10:00 – 17:00",
+   "cat": "aire",
+   "title": "Mini Granja Interactiva Familiar",
+   "venue": "Alameda Bicentenario, La Velaría",
+   "blurb": "El Ayuntamiento monta una granja con animales para que niños y familias convivan con ellos en La Velaría, tres días seguidos."
   },
   {
-   "id": "naha1106",
-   "date": "2026-11-06",
+   "price": "",
+   "links": [
+    {
+     "l": "Instagram",
+     "h": "https://www.instagram.com/espacioodiseavb/"
+    }
+   ],
+   "id": "coro1113",
+   "date": "2026-11-13",
+   "s": 1080,
+   "e": 1200,
+   "time": "18:00 – 20:00",
+   "cat": "musica",
+   "title": "Coro Odisea",
+   "venue": "Espacio Odisea",
+   "blurb": "El coro de la biblioteca comunitaria de Santa María, que en su programa de noviembre aparece abierto a público general.",
+   "repeat": "cada viernes"
+  },
+  {
+   "price": "",
+   "links": [
+    {
+     "l": "Instagram",
+     "h": "https://www.instagram.com/elcuencovalle/"
+    }
+   ],
+   "id": "jam1113",
+   "date": "2026-11-13",
+   "s": 1200,
+   "e": 1410,
+   "time": "Lounge 18:00 · jam 20:00",
+   "cat": "musica",
+   "title": "Jam Session en El Cuenco con Viva Akto",
+   "venue": "El Cuenco",
+   "blurb": "Vuelve la noche de música improvisada de El Cuenco con Viva Akto: llevas tu instrumento y te subes, o nada más te sientas a escuchar. De lo mejor que pasa en Valle un viernes, y en fin de puente.",
+   "lead": true
+  },
+  {
+   "price": "",
+   "links": [
+    {
+     "l": "Reservar",
+     "h": "https://www.opentable.com/r/restaurante-naha-valle-de-bravo"
+    }
+   ],
+   "id": "naha1113",
+   "date": "2026-11-13",
    "s": 1230,
    "e": 1350,
    "time": "20:30 – 22:30",
    "cat": "musica",
    "title": "Música en vivo en Na-ha",
    "venue": "El Santuario, San Gaspar",
-   "price": "",
    "blurb": "El restaurante del Santuario programa música en vivo dos horas cada viernes y sábado, con el lago enfrente.",
-   "repeat": "viernes y sábado",
-   "links": [
-    {
-     "l": "Reservar",
-     "h": "https://www.opentable.com/r/restaurante-naha-valle-de-bravo"
-    }
-   ]
+   "repeat": "viernes y sábado"
   },
   {
-   "id": "velas1107",
-   "date": "2026-11-07",
+   "price": "Entrada libre",
+   "links": [
+    {
+     "l": "Ayuntamiento",
+     "h": "https://www.facebook.com/ayuntamientovdb"
+    }
+   ],
+   "id": "granja1114",
+   "date": "2026-11-14",
    "s": 600,
-   "e": 960,
-   "time": "10:00 – 16:00",
-   "cat": "cultura",
-   "title": "Taller de velas artesanales",
-   "venue": "Espacio Odisea",
-   "price": "$2,000 con reserva",
-   "blurb": "Taller de un día en la biblioteca comunitaria de Santa María para hacer velas artesanales; el cupo se reserva con Espacio Odisea.",
-   "links": [
-    {
-     "l": "Instagram",
-     "h": "https://www.instagram.com/espacioodiseavb/"
-    }
-   ]
+   "e": 1020,
+   "time": "10:00 – 17:00",
+   "cat": "aire",
+   "title": "Mini Granja Interactiva Familiar",
+   "venue": "Alameda Bicentenario, La Velaría",
+   "blurb": "Segundo día de la granja con animales del Ayuntamiento en La Velaría, para ir con niños."
   },
   {
-   "id": "el100_1107",
-   "date": "2026-11-07",
+   "price": "",
+   "links": [],
+   "id": "el100_1114",
+   "date": "2026-11-14",
    "s": 540,
    "e": 960,
    "time": "09:00 – 16:00",
    "cat": "mercado",
    "title": "Mercado El 100",
    "venue": "Del Salitre 104",
-   "price": "",
    "blurb": "Lácteos, verdura, fruta y pan de productores locales, frente al puerto municipal.",
-   "repeat": "cada sábado",
-   "links": []
+   "repeat": "cada sábado"
   },
   {
-   "id": "naha1107",
-   "date": "2026-11-07",
+   "price": "",
+   "links": [
+    {
+     "l": "Instagram",
+     "h": "https://www.instagram.com/marina33terraza/"
+    }
+   ],
+   "id": "marina1114",
+   "date": "2026-11-14",
+   "s": 1020,
+   "e": 1260,
+   "time": "17:00 – 21:00",
+   "cat": "noche",
+   "title": "DJ set al atardecer en Marina 33",
+   "venue": "Marina 33",
+   "blurb": "DJ set de cuatro horas en la terraza de Marina 33 frente al lago; el lugar sigue abierto hasta las 12:30. El volante no dice quién toca."
+  },
+  {
+   "price": "",
+   "links": [
+    {
+     "l": "Reservar",
+     "h": "https://www.opentable.com/r/restaurante-naha-valle-de-bravo"
+    }
+   ],
+   "id": "naha1114",
+   "date": "2026-11-14",
    "s": 1230,
    "e": 1350,
    "time": "20:30 – 22:30",
    "cat": "musica",
    "title": "Música en vivo en Na-ha",
    "venue": "El Santuario, San Gaspar",
-   "price": "",
    "blurb": "La segunda de las dos noches con música en vivo del restaurante del Santuario.",
-   "repeat": "viernes y sábado",
-   "links": [
-    {
-     "l": "Reservar",
-     "h": "https://www.opentable.com/r/restaurante-naha-valle-de-bravo"
-    }
-   ]
+   "repeat": "viernes y sábado"
   },
   {
-   "id": "brunch1108",
-   "date": "2026-11-08",
-   "s": 510,
-   "e": 780,
-   "time": "08:30 – 13:00",
-   "cat": "mercado",
-   "title": "Brunch dominical en Na-ha",
-   "venue": "El Santuario, San Gaspar",
+   "price": "Entrada libre",
+   "links": [
+    {
+     "l": "Ayuntamiento",
+     "h": "https://www.facebook.com/ayuntamientovdb"
+    }
+   ],
+   "id": "granja1115",
+   "date": "2026-11-15",
+   "s": 600,
+   "e": 1020,
+   "time": "10:00 – 17:00",
+   "cat": "aire",
+   "title": "Mini Granja Interactiva Familiar",
+   "venue": "Alameda Bicentenario, La Velaría",
+   "blurb": "Último día de la granja con animales del Ayuntamiento en La Velaría."
+  },
+  {
    "price": "",
-   "blurb": "Brunch de domingo en el restaurante del Santuario, sobre la orilla de San Gaspar. Se reserva por OpenTable.",
-   "repeat": "cada domingo",
-   "links": [
-    {
-     "l": "Reservar",
-     "h": "https://www.opentable.com/r/restaurante-naha-valle-de-bravo"
-    }
-   ]
-  },
-  {
-   "id": "tianguis1108",
-   "date": "2026-11-08",
+   "links": [],
+   "id": "tianguis1115",
+   "date": "2026-11-15",
    "s": 480,
    "e": 900,
    "time": "Desde temprano",
    "cat": "mercado",
    "title": "Domingo de tianguis",
    "venue": "Centro",
-   "price": "",
    "blurb": "El tianguis grande de la semana: fruta y verdura de la región, ropa, plantas y comida hecha ahí mismo. Por las obras, el municipio lo reubicó en la calle Independencia, junto a la parroquia, hasta nuevo aviso.",
-   "repeat": "cada domingo",
-   "links": []
+   "repeat": "cada domingo"
   },
   {
-   "id": "chamma1108",
-   "date": "2026-11-08",
+   "price": "",
+   "links": [
+    {
+     "l": "Reservar",
+     "h": "https://www.opentable.com/r/restaurante-naha-valle-de-bravo"
+    }
+   ],
+   "id": "brunch1115",
+   "date": "2026-11-15",
+   "s": 510,
+   "e": 780,
+   "time": "08:30 – 13:00",
+   "cat": "mercado",
+   "title": "Brunch dominical en Na-ha",
+   "venue": "El Santuario, San Gaspar",
+   "blurb": "Brunch de domingo en el restaurante del Santuario, sobre la orilla de San Gaspar. Se reserva por OpenTable.",
+   "repeat": "cada domingo"
+  },
+  {
+   "price": "Gratis",
+   "links": [
+    {
+     "l": "Ligmincha",
+     "h": "https://ligmincha.org/center-mexico-valledebravo/"
+    }
+   ],
+   "id": "chamma1115",
+   "date": "2026-11-15",
    "s": 750,
    "e": 870,
    "time": "12:30",
    "cat": "bienestar",
    "title": "Meditación guiada en Chamma Ling",
    "venue": "Chamma Ling",
-   "price": "Gratis",
    "blurb": "Práctica guiada de la tradición Bön al pie de la Gran Stupa, la más grande del hemisferio. Abierta a cualquiera.",
-   "repeat": "cada domingo",
-   "links": [
-    {
-     "l": "Ligmincha",
-     "h": "https://ligmincha.org/center-mexico-valledebravo/"
-    }
-   ]
+   "repeat": "cada domingo"
   },
   {
-   "id": "creciendo1109",
-   "date": "2026-11-09",
-   "s": 630,
-   "e": 750,
-   "time": "10:30 – 12:30",
-   "cat": "bienestar",
-   "title": "Creciendo Juntos",
-   "venue": "Espacio Odisea",
    "price": "",
-   "blurb": "Taller de estimulación temprana en la biblioteca comunitaria de Santa María para madres, padres y bebés.",
-   "repeat": "lunes y jueves",
-   "links": [
-    {
-     "l": "Instagram",
-     "h": "https://www.instagram.com/espacioodiseavb/"
-    }
-   ]
-  },
-  {
-   "id": "tianguisav1109",
-   "date": "2026-11-09",
+   "links": [],
+   "id": "tianguisav1116",
+   "date": "2026-11-16",
    "s": 540,
    "e": 960,
    "time": "Todo el día",
    "cat": "mercado",
    "title": "Tianguis de Avándaro",
    "venue": "Avándaro",
-   "price": "",
    "blurb": "El tianguis de los lunes en Avándaro: verdura, quesos, flores y comida, más tranquilo que el del centro.",
-   "repeat": "cada lunes",
-   "links": []
+   "repeat": "cada lunes"
   },
   {
-   "id": "martinis1110",
-   "date": "2026-11-10",
-   "s": 1080,
-   "e": 1260,
-   "time": "18:00 – 21:00",
-   "cat": "noche",
-   "title": "Martes de Martinis",
-   "venue": "El Cuenco",
-   "price": "2x1 en martinis",
-   "blurb": "Tres horas de martinis al dos por uno en El Cuenco.",
-   "repeat": "cada martes",
+   "price": "",
    "links": [
     {
      "l": "Instagram",
-     "h": "https://www.instagram.com/elcuencovalle/"
+     "h": "https://www.instagram.com/espacioodiseavb/"
     }
-   ]
+   ],
+   "id": "creciendo1116",
+   "date": "2026-11-16",
+   "s": 630,
+   "e": 750,
+   "time": "10:30 – 12:30 · por confirmar",
+   "cat": "bienestar",
+   "title": "Creciendo Juntos",
+   "venue": "Espacio Odisea",
+   "blurb": "Taller de estimulación temprana para madres, padres y bebés. Está en el programa de los lunes, pero el 16 es festivo: confirma con Odisea que abran.",
+   "repeat": "lunes y jueves"
   },
   {
-   "id": "labsuenos1110",
-   "date": "2026-11-10",
+   "price": "",
+   "links": [
+    {
+     "l": "Instagram",
+     "h": "https://www.instagram.com/espacioodiseavb/"
+    }
+   ],
+   "id": "poesia1116",
+   "date": "2026-11-16",
+   "s": 1020,
+   "e": 1140,
+   "time": "17:00 – 19:00 · por confirmar",
+   "cat": "cultura",
+   "title": "Poesía en Voz Alta",
+   "venue": "Espacio Odisea",
+   "blurb": "Lectura de poesía en voz alta, abierta a público general, en la biblioteca comunitaria de Santa María. Lunes festivo: confirma que abran.",
+   "repeat": "cada lunes"
+  },
+  {
+   "price": "",
+   "links": [],
+   "id": "labsuenos1117",
+   "date": "2026-11-17",
    "s": 660,
    "e": 780,
    "time": "11:00 – 13:00",
    "cat": "cultura",
    "title": "Laboratorio de Sueños",
    "venue": "La Canica",
-   "price": "",
    "blurb": "Sólo se sabe lo que dice su volante en La Canica: presencial todos los martes de 11 a 13, a cargo de @fdezaln. No dice de qué se trata ni cuánto cuesta; informes al 55 7944 2541.",
-   "repeat": "cada martes",
-   "links": []
+   "repeat": "cada martes"
   },
   {
-   "id": "dnd1110",
-   "date": "2026-11-10",
+   "price": "$350 la sesión",
+   "links": [],
+   "id": "dnd1117",
+   "date": "2026-11-17",
    "s": 960,
    "e": 1080,
    "time": "16:00 – 18:00",
    "cat": "cultura",
    "title": "Dungeons & Dragons para adultos",
    "venue": "La Canica",
-   "price": "$350 la sesión",
    "blurb": "Introducción a D&D con Azul Herrera en La Canica, Santa María: una historia colaborativa para quien nunca ha jugado. $1,200 al mes o $350 la sesión suelta; informes al 722 455 6079.",
-   "repeat": "cada martes",
-   "links": []
+   "repeat": "cada martes"
   },
   {
-   "id": "gamenight1111",
-   "date": "2026-11-11",
+   "price": "2x1 en martinis",
+   "links": [
+    {
+     "l": "Instagram",
+     "h": "https://www.instagram.com/elcuencovalle/"
+    }
+   ],
+   "id": "martinis1117",
+   "date": "2026-11-17",
+   "s": 1080,
+   "e": 1260,
+   "time": "18:00 – 21:00",
+   "cat": "noche",
+   "title": "Martes de Martinis",
+   "venue": "El Cuenco",
+   "blurb": "Tres horas de martinis al dos por uno en El Cuenco.",
+   "repeat": "cada martes"
+  },
+  {
+   "price": "",
+   "links": [
+    {
+     "l": "Instagram",
+     "h": "https://www.instagram.com/espacioodiseavb/"
+    }
+   ],
+   "id": "meditacion1117",
+   "date": "2026-11-17",
+   "s": 1080,
+   "e": 1140,
+   "time": "18:00 – 19:00",
+   "cat": "bienestar",
+   "title": "Meditación budista en Espacio Odisea",
+   "venue": "Espacio Odisea",
+   "blurb": "Una hora de meditación budista para público general en la biblioteca comunitaria de Santa María, según su programa de noviembre.",
+   "repeat": "cada martes"
+  },
+  {
+   "price": "Sin cover",
+   "links": [
+    {
+     "l": "Instagram",
+     "h": "https://www.instagram.com/elcuencovalle/"
+    }
+   ],
+   "id": "gamenight1118",
+   "date": "2026-11-18",
    "s": 1110,
    "e": 1290,
    "time": "18:30",
    "cat": "noche",
    "title": "Game Night",
    "venue": "El Cuenco",
-   "price": "Sin cover",
    "blurb": "Juegos de mesa, dominó y billar en El Cuenco.",
-   "repeat": "cada miércoles",
-   "links": [
-    {
-     "l": "Instagram",
-     "h": "https://www.instagram.com/elcuencovalle/"
-    }
-   ]
-  },
-  {
-   "id": "almas1106a",
-   "date": "2026-11-06",
-   "s": 780,
-   "e": 1260,
-   "time": "13:00 – 21:00",
-   "cat": "musica",
-   "title": "Festival de las Almas: la tarde en La Velaría",
-   "venue": "Alameda Bicentenario, La Velaría",
-   "price": "Entrada libre",
-   "blurb": "Danza folclórica de la Compañía Metztli a la 1, el dúo Voz entre Cuerdas con el Coro Polifónico del Estado de México a las 4 y Xocolatín Jazz a las 6.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ]
-  },
-  {
-   "id": "almas1106b",
-   "date": "2026-11-06",
-   "s": 1260,
-   "e": 1380,
-   "time": "21:00",
-   "cat": "musica",
-   "title": "Sonora Dinamita",
-   "venue": "Alameda Bicentenario, La Velaría",
-   "price": "Entrada libre",
-   "blurb": "La Sonora Dinamita de Lucho Argaín es el plato fuerte del viernes del Festival de las Almas: cumbia gratis frente al lago.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ]
-  },
-  {
-   "id": "estrella1106",
-   "date": "2026-11-06",
-   "s": 660,
-   "e": 1080,
-   "time": "11:00 – 18:00",
-   "cat": "cultura",
-   "title": "Talleres de Día de Muertos",
-   "venue": "La Estrella",
-   "price": "Gratis",
-   "blurb": "Talleres de Día de Muertos de 11 a 5 y, a las 5, el taller Plasmando Tradiciones, dentro del Festival de las Almas.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ]
-  },
-  {
-   "id": "pagaza1106a",
-   "date": "2026-11-06",
-   "s": 720,
-   "e": 1020,
-   "time": "12:00 y 16:00",
-   "cat": "cultura",
-   "title": "Dos libros: Ritos y prácticas funerarias · Sabores y saberes",
-   "venue": "Museo Joaquín Arcadio Pagaza",
-   "price": "Entrada libre",
-   "blurb": "Presentación de Ritos y prácticas funerarias al mediodía y de Sabores y saberes a las 4, en la casa de cultura de Valle.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ]
-  },
-  {
-   "id": "pagaza1106b",
-   "date": "2026-11-06",
-   "s": 1200,
-   "e": 1290,
-   "time": "20:00",
-   "cat": "cultura",
-   "title": "Recorrido de ofrendas",
-   "venue": "Museo Joaquín Arcadio Pagaza",
-   "price": "Entrada libre",
-   "blurb": "Recorrido nocturno por las ofrendas del Festival de las Almas en la casa de cultura de Valle.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ]
-  },
-  {
-   "id": "almas1107a",
-   "date": "2026-11-07",
-   "s": 840,
-   "e": 1020,
-   "time": "14:00 – 17:00",
-   "cat": "musica",
-   "title": "Festival de las Almas: la tarde en La Velaría",
-   "venue": "Alameda Bicentenario, La Velaría",
-   "price": "Entrada libre",
-   "blurb": "La Banda Filarmónica Infantil y Juvenil de Donato Guerra a las 2 y el rock de La Calle de los Locos, de Villa de Colorines, a las 3:30.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ]
-  },
-  {
-   "id": "almas1107b",
-   "date": "2026-11-07",
-   "s": 1260,
-   "e": 1380,
-   "time": "21:00",
-   "cat": "musica",
-   "title": "Alejandra Guzmán cierra el Festival de las Almas",
-   "venue": "Alameda Bicentenario, La Velaría",
-   "price": "Entrada libre",
-   "blurb": "La gran clausura: Alejandra Guzmán, gratis, en La Velaría. Es lo más grande que pasa en Valle en todo el año sin pagar boleto, así que llega con tiempo; antes, la tarde de bandas desde las 2.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ],
-   "lead": true
-  },
-  {
-   "id": "estrella1107",
-   "date": "2026-11-07",
-   "s": 660,
-   "e": 1020,
-   "time": "11:00 – 17:00",
-   "cat": "cultura",
-   "title": "Talleres de Día de Muertos",
-   "venue": "La Estrella",
-   "price": "Gratis",
-   "blurb": "Último día de los talleres de Día de Muertos del Festival de las Almas.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ]
-  },
-  {
-   "id": "pagaza1107",
-   "date": "2026-11-07",
-   "s": 960,
-   "e": 1260,
-   "time": "16:00 y 19:00",
-   "cat": "cultura",
-   "title": "La camaradería y obra de teatro de Día de Muertos",
-   "venue": "Museo Joaquín Arcadio Pagaza",
-   "price": "Entrada libre",
-   "blurb": "La camaradería a las 4 y una obra de teatro de Día de Muertos a las 7, en la casa de cultura de Valle, para cerrar el festival.",
-   "links": [
-    {
-     "l": "Festival de las Almas",
-     "h": "https://www.facebook.com/profile.php?id=100063463926712"
-    }
-   ]
+   "repeat": "cada miércoles"
   }
  ],
  "cdmx": [],
@@ -590,7 +503,7 @@ window.VS = {
    "cat": "aire",
    "title": "Parapente en El Peñón y Divisadero",
    "when": "A diario, según el clima",
-   "blurb": "Por lo que Valle es famoso. Vuelos tándem y escuela con Alas del Hombre, Flumen y Skyrides. Septiembre sigue siendo temporada de lluvias: habla antes de subir."
+   "blurb": "Por lo que Valle es famoso. Vuelos tándem y escuela con Alas del Hombre, Flumen y Skyrides. Noviembre ya es temporada seca, la buena para volar; el Club Peñón Open es del 14 al 19 de diciembre."
   },
   {
    "cat": "aire",
@@ -608,7 +521,7 @@ window.VS = {
    "cat": "aire",
    "title": "Vela en Avándaro",
    "when": "Fines de semana",
-   "blurb": "Navegación de club y clínicas en el Náutico Avándaro y El Zarco. El Oktoberfest y el 70 aniversario del Náutico Avándaro son el 17 y 18 de octubre."
+   "blurb": "Navegación de club y clínicas en el Náutico Avándaro y El Zarco. La Copa de la Champagne cierra el año a fines de diciembre."
   },
   {
    "cat": "aire",
@@ -650,7 +563,7 @@ window.VS = {
    "cat": "cultura",
    "title": "Espacio Odisea",
    "when": "Lun–vie 10–19 · sáb 12–17",
-   "blurb": "Biblioteca comunitaria en Santa María, con ciclo de cine, talleres y un bazar una vez al mes."
+   "blurb": "Biblioteca comunitaria en Santa María: guitarra los martes, taller de bordado entre semana, coro los viernes, ciclo de cine y un bazar una vez al mes."
   },
   {
    "cat": "cultura",
@@ -719,6 +632,6 @@ window.VS = {
    "blurb": "Mezcalería en Pagaza 316 que sí programa bandas en vivo, y de vez en cuando noche de stand-up."
   }
  ],
- "checked": "Barrido del jue 5 nov. Instagram: El Cuenco (jueves acústico 5 nov; sin volante semanal nuevo para el fin de semana), Marina 33 (último post lun 2 nov, sin agenda), Espacio Odisea (Poesía Dadá jue 5; Quinto Encuentro de Bibliotecas 4–6 nov con programa de los días 5 y 6 sin leer; Pasantía Perú–México hasta el 12 nov, con actividades virtuales o en asilo y TEC que no son de público), Turismo Valle de Bravo (sin agenda nueva) · Facebook: Festival de las Almas (cartelera del jueves 5; viernes 6 y sábado 7 aún sin publicar), Ayuntamiento (nada nuevo desde el 1 nov), página de El Cuenco, búsquedas del grupo sin resultados · eticket (sin eventos). No se alcanzó a revisar: Mestizo, Doña Barra, R27, Rancho Avándaro, Club Náutico, fmv.mx (primer jueves, pendiente) ni tritour.org (pide cuenta). · Corrección del vie 6 nov: se agregó la cartelera completa del Festival de las Almas del 6 y 7 nov (página de Facebook del festival, publicada el mismo viernes).",
- "soon": "Quinto Encuentro de Bibliotecas Comunitarias y Populares en Espacio Odisea, 4–6 nov, programa del 5 y 6 en el perfil @espacioodiseavb · Pasantía Perú–México en Odisea: encuentro virtual lun 9 nov 4 pm, lectura en el asilo mié 11, tendedero literario en el TEC jue 12 · Meditación Vipassana en La Canica jue 19 nov 17:30 · Club Peñón Open 14–19 dic · Monarca Paragliding Open 10–16 ene 2027"
+ "checked": "Barrido del jue 12 nov. Instagram: El Cuenco (Girls Night Out jue 12 con Erick Tzintzún; Jam Session vie 13 con Viva Akto; sin volante semanal todavía, así que sábado y lun–mié van con los fijos), Espacio Odisea (programa completo de noviembre: talleres fijos, Cine Odisea vie 20), Marina 33 (DJ set sáb 14, 17–21; jueves 2x1 en carta), Turismo Valle de Bravo, Surreal, Cinco Rodavento, El Santuario Music, Mestizo, Monkeys, R27, Doña Barra, Blue Social Club, Rancho Avándaro y Museo de Arte Popular (nada con fecha esta semana; @el.lugardelquetehabe sin posts visibles) · Facebook: Ayuntamiento (Mini Granja 13–15 nov en La Velaría), Festival de las Almas (terminó el 7 nov), búsquedas del grupo sin eventos públicos, búsqueda de eventos sólo con Toluca y excursiones · eticket (sin eventos). CDMX: se revisó RA por costumbre del prompt, pero el README dice que la sección ya no existe y no se publicó.",
+ "soon": "Meditación Vipassana en La Canica jue 19 nov 17:30 · Cine Odisea en Espacio Odisea vie 20 nov 19:00 · Modèle Vivant Drink & Draw en La Canica mar 24 nov 19:00 · Club Peñón Open 14–19 dic · Monarca Paragliding Open 10–16 ene 2027"
 };
